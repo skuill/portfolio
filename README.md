@@ -4,10 +4,11 @@
   <h1 align="center">Developer's Portfolio ✨</h1>
 
   <p align="center">
-    It is a personal static website/portfolio hosted with GitHub Pages. Forked and based on the template created by <a href="https://hashirshoaeb.github.io/home">hashirshoaeb.github.io/home</a>
+    It is a personal static website/portfolio hosted with GitHub Pages. 
+    Forked and based on the template created by <a href="https://hashirshoaeb.github.io/home">hashirshoaeb.github.io/home</a>
     <br/>
     <strong>Site URL » </strong> 
-    <a href="https://skuill.github.io/home">skuill.github.io/home</a>
+    <a href="https://skuill.github.io/portfolio">skuill.github.io/portfolio</a>
     <br />
     <br />
     <a href="https://skuill.github.io">About Me</a>
@@ -48,7 +49,7 @@
 
 # About the project
 
-[![Site preview](/public/social-image.png)](https://skuill.github.io/home)
+[![Site preview](/public/social-image.png)](https://skuill.github.io/portfolio)
 
 
 ## Technology stack 🛠️
@@ -75,7 +76,7 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 2. Clone the forked repo from your account using:
 
    ```bash
-     git clone https://github.com/<your-username>/home.git
+     git clone https://github.com/<your-username>/portfolio.git
    ```
 
 3. Open in editor and edit [src/editable-stuff/config.js](./src/editable-stuff/config.js) file.
@@ -86,7 +87,7 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 6. Change URL in [package.json](./package.json) file:
 
    ```json
-    "homepage": "https://<your-username>.github.io/home"
+    "homepage": "https://<your-username>.github.io/portfolio"
    ```
 
    Or for deployment at custom domain, refer [create-react-app.dev](https://create-react-app.dev/docs/deployment/#step-1-add-homepage-to-packagejson)
@@ -110,7 +111,7 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 9. Congrats your site is up and running. To see it live, visit:
 
    ```https
-     https://<your-username>.github.io/home
+     https://<your-username>.github.io/portfolio
    ```
 
 10. To change the thumbnail image:
