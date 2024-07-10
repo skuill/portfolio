@@ -1,11 +1,11 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <h1 align="center">Developer's Portfolio ✨</h1>
+  <h1 align="center">Vitaly's Portfolio ✨</h1>
 
   <p align="center">
     It is a personal static website/portfolio hosted with GitHub Pages. 
-    Forked and based on the template created by <a href="https://hashirshoaeb.github.io/home">hashirshoaeb.github.io/home</a>
+    Based on the template created by <a href="https://hashirshoaeb.github.io/home">hashirshoaeb.github.io/home</a>.
     <br/>
     <strong>Site URL » </strong> 
     <a href="https://skuill.github.io/portfolio">skuill.github.io/portfolio</a>
