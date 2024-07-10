@@ -5,11 +5,11 @@ const navBar = {
 
 // Main Body SECTION
 const mainBody = {
-  gradientColors: "#4484ce, #1ad7c0, #ff9b11, #9b59b6, #ff7f7f, #ecf0f1",
+  gradientColors: "#6293ca, #1ad7c0, #f0b35d, #9c62b3, #cf7171, #d2eaf0",
   firstName: "Vitaly",
   middleName: "",
   lastName: "Kvashin",
-  message: " Passionate Senior Software Developer. ",
+  message: " Passionate Senior Software Developer ",
   icons: [
     {
       image: "fa-github",
@@ -123,19 +123,34 @@ const getInTouch = {
 };
 
 const experiences = {
-  show: false,
+  show: true,
   heading: "Experiences",
   data: [
     {
-      role: 'Software Engineer',// Here Add Company Name
-      companylogo: require('../assets/img/dell.png'),
-      date: 'June 2018 – Present',
+      role: 'Senior Software Engineer', // Here Add Company Name
+      companylogo: require('../assets/img/epam.png'),
+      date: 'May 2022 - Jun 2024', 
     },
     {
-      role: 'Front-End Developer',
-      companylogo: require('../assets/img/boeing.png'),
-      date: 'May 2017 – May 2018',
+      role: 'Senior Software Developer',
+      companylogo: require('../assets/img/sbertech.png'),
+      date: 'Feb 2022 - Apr 2022',
     },
+    {
+      role: 'Senior Software Developer',
+      companylogo: require('../assets/img/MTS.png'),
+      date: 'Jun 2020 - Jun 2021',
+    },
+    {
+      role: 'Software Developer',
+      companylogo: require('../assets/img/MTS.png'),
+      date: 'Sep 2018 - Mar 2020',
+    },
+    {
+      role: 'Software Developer',
+      companylogo: require('../assets/img/ikva.png'),
+      date: 'Jul 2014 - Sep 2018',
+    }
   ]
 }
 
