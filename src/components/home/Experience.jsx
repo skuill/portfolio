@@ -4,7 +4,6 @@ import { Jumbotron } from './migration';
 import {
   Container,
   Row,
-  Col,
 } from "react-bootstrap";
 
 const Experience = ({ experiences }) => {
