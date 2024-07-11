@@ -11,7 +11,7 @@
     <a href="https://skuill.github.io/portfolio">skuill.github.io/portfolio</a>
     <br />
     <br />
-    <a href="https://skuill.github.io">About Me</a>
+    <a href="https://skuill.github.io/portfolio/#aboutme">About Me</a>
   </p>
 </p>
 
