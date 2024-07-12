@@ -1,7 +1,10 @@
 import React from "react";
 import bloglist from "../../editable-stuff/blog";
-const BlogPost = ({ match }) => {
-  const { id } = match.params;
+import { useLocation } from "react-router-dom"
+
+const BlogPost = () => {
+  const location = useLocation();
+  const id = location.pathname.split("/").pop();
   const post = bloglist[id];
 
   return (
@@ -9,7 +12,11 @@ const BlogPost = ({ match }) => {
       {post && (
         <div>
           <h1 className="display-2 text-center">{post.title}</h1>
-          <img className="img-fluid mb-2" src={post.image} alt={post.title} />
+          <img className="img-fluid mb-2" 
+            src={post.previewImage.src} 
+            width={post.previewImage.imageSize.width} 
+            height={post.previewImage.imageSize.height} 
+            alt={post.title} />
           {post.getBlog()}
         </div>
       )}

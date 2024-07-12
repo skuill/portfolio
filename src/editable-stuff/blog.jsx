@@ -2,41 +2,47 @@ import { BlogBuilder } from "../components/blog/BlogBuilder";
 const bloglist = [];
 
 const blog = new BlogBuilder({
-  title: "My First Blog",
-  image: "img",
+  title: "Cycling profiles",
+  previewImage: { 
+    src: require("../editable-stuff/blogpost-1_preview.png"),
+    imageSize: {
+      width:"50%",
+      height:"50%"
+    } 
+  },
   description:
-    "Description Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptatem, dolores? Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quia provident similique corporis rem ullam odio excepturi voluptas harum, architecto sit!",
+    "Information about my cycling addiction 😊",
 })
-  .addHeading("Heading")
+  .addHeading("Applications")
   .addParagraph(
-    "1st Paragraph Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vero reiciendis quas, autem sit culpa? Quibusdam, cupiditate voluptate a non nulla aliquid enim doloremque ullam, facilis quisquam similique hic omnis!"
+    "komoot: https://www.komoot.com/user/2275166299509"
   )
   .addParagraph(
-    "2nd Paragraph Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur ad, temporibus quae obcaecati eum expedita pariatur aspernatur recusandae beatae iste soluta sunt blanditiis dolore ipsam quia laboriosam quas perspiciatis architecto?"
+    "strava: https://www.strava.com/athletes/39721809"
+  )
+  .addImages(
+    {
+      images:
+      [
+        { 
+          src: require("../editable-stuff/blogpost-1_preview.png"), 
+          label: "First slide label", 
+          paragraph: "A picture drawn by my girlfriend Tata on the theme of my trip in Armenia And Georgia in 2023. Caucasus Crossing." 
+        },
+        { 
+          src: require("../editable-stuff/skuill.png"), 
+          label: "Second slide label", 
+          paragraph: "Nulla vitae elit libero, a pharetra augue mollis interdum." 
+        },
+      ],
+      imageSize: 
+      {
+        width:"615",
+        height:"450"
+      }
+    }
   );
 
-const blog1 = new BlogBuilder({
-  title: "My Second Blog",
-  image: "img",
-  description:
-    "Description Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure tempore aut neque consectetur voluptatem quam nihil, facere earum adipisci, animi beatae dicta maiores, ipsam delectus ab molestias dolorum aperiam? Sapiente?",
-})
-  .addHeading("Heading")
-  .addParagraph(
-    "1st Paragraph Aspernatur vero reiciendis quas, autem sit culpa? Quibusdam, cupiditate voluptate a non nulla aliquid enim doloremque ullam, facilis quisquam similique hic omnis!"
-  )
-  .addParagraph(
-    "2nd Paragraph Consequuntur ad, temporibus quae obcaecati eum expedita pariatur aspernatur recusandae beatae iste soluta sunt blanditiis dolore ipsam quia laboriosam quas perspiciatis architecto?"
-  )
-  .addHeading("New Heading")
-  .addParagraph(
-    "1st Paragraph Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur vero reiciendis quas, autem sit culpa? Quibusdam, cupiditate voluptate a non nulla aliquid enim doloremque ullam, facilis quisquam similique hic omnis!"
-  )
-  .addParagraph(
-    "2nd Paragraph Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur ad, temporibus quae obcaecati eum expedita pariatur aspernatur recusandae beatae iste soluta sunt blanditiis dolore ipsam quia laboriosam quas perspiciatis architecto?"
-  );
-
-bloglist.push(blog1);
 bloglist.push(blog);
 
 export default bloglist;

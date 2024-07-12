@@ -4,14 +4,15 @@ import bloglist from "../../editable-stuff/blog";
 import { Link } from "react-router-dom";
 const Blog = (props) => {
   return (
-    <div className="container-lg mt-5 bg-blue">
-      <h1 className="text-center">Blogs</h1>
+    <div className="pt-5 m-0 bg-light"> 
+      <h1 className="text-center pt-2">Blogs</h1>
       {bloglist.map((value, index) => {
         return (
           <BlogCard
             key={index}
             title={value.title}
             description={value.description}
+            previewImage={value.previewImage}
             index={index}
           />
         );
@@ -20,19 +21,24 @@ const Blog = (props) => {
   );
 };
 
-const BlogCard = ({ index, title, image, description }) => {
+const BlogCard = ({ index, title, previewImage, description }) => {
   return (
     <div className="m-5">
       <div className="">
         <div className="row">
-          <div className="col-4 col-lg-12">
-            {/* <img src={image} className="card-img" alt="..." /> */}
-          </div>
           <div className="col-8 col-lg-12">
             <div className="">
-              <h1 className="">{title}</h1>
+              <h2 className="">{title}</h2>
+              <img src={previewImage.src} 
+                className="img-fluid" 
+                alt="..." 
+                width={previewImage.imageSize.width}
+                height={previewImage.imageSize.height}/>
               <p className="lead">{description}</p>
-              <Link to={`${process.env.PUBLIC_URL}blog/${index}`}>
+              <Link className="btn btn-outline-secondary btn-lg " to={{
+                pathname: `/blog/${index}`,
+                state: { id: index },
+              }}>
                 Read more...{" "}
               </Link>
             </div>
