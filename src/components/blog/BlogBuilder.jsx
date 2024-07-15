@@ -31,12 +31,12 @@ class BlogBuilder {
 
   addImages = (props) => {
     this.list.push(
-      <Carousel key={this.list.length}>
+      <Carousel key={this.list.length} data-bs-theme="dark">
       {props.images.map((value, index) => {
         return (
-          <Carousel.Item key={index}>
+          <Carousel.Item key={index} >
             <img
-              className="d-block w-100 img-fluid"
+              className="d-block img-object-fit"
               src={value.src}
               alt="First slide"
               width={props.imageSize.width}
