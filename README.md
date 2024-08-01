@@ -108,6 +108,8 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 
    Or for deployment at \<username>.github.io, refer [READMEdocs/custom-deployment.md](./READMEdocs/custom-deployment.md) and [pages.js](./pages.js)
 
+   For containerized and deploy in docker refer [READMEdocs/docker-deployment.md](./READMEdocs/docker-deployment.md)
+
 9. Congrats your site is up and running. To see it live, visit:
 
    ```https
