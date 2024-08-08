@@ -89,27 +89,27 @@ const leadership = {
 
 // SKILLS SECTION
 const skills = {
-  show: false,
+  show: true,
   heading: "Skills",
   hardSkills: [
-    { name: "Python", value: 90 },
-    { name: "SQL", value: 75 },
-    { name: "Data Structures", value: 85 },
-    { name: "C/C++", value: 65 },
-    { name: "JavaScript", value: 90 },
-    { name: "React", value: 65 },
-    { name: "HTML/CSS", value: 55 },
-    { name: "C#", value: 80 },
+    { name: "Backend. C#, Java, Python", value: 90 },
+    { name: "Technologies. .NET, ASP.NET, WEB API, WPF, WCF, ...", value: 85 },
+    { name: "DevOps. Ansible, Azure DevOps, Jenkins, ...", value: 70 },
+    { name: "Cloud. AWS: EC2, ECS, S3, CloudFront, SQS, ...", value: 75 },
+    { name: "Data Structures and Algorithms", value: 80 },
+    { name: "Frontend. Javascript, Typescript, React", value: 60 },
+    { name: "Tools. Postman, Fiddler, Wireshark, Kibana, Grafana, Jaeger, ...", value: 80 },
+    { name: "Databases. MS SQL Server, Oracle, PostgreSQL, ElasticSearch, ...", value: 80 }
   ],
   softSkills: [
     { name: "Goal-Oriented", value: 80 },
     { name: "Collaboration", value: 90 },
     { name: "Positivity", value: 75 },
-    { name: "Adaptability", value: 85 },
-    { name: "Problem Solving", value: 75 },
-    { name: "Empathy", value: 90 },
+    { name: "Adaptability", value: 90 },
+    { name: "Problem Solving", value: 85 },
+    { name: "Empathy", value: 95 },
     { name: "Organization", value: 70 },
-    { name: "Creativity", value: 90 },
+    { name: "Creativity", value: 85 },
   ],
 };
 
@@ -131,13 +131,13 @@ const experiences = {
       title: 'May 2022 - Jun 2024. EPAM Systems.', 
       cardSubtitle: "Development of an alternative investment platform iLEVEL in a international distributed team for one of the largest client - S&P Global.",
       cardDetailedText: [
-        "Stabilization and improvement of the legacy Publishing Service hosted in IIS, which allows clients to build reports in PDF format based on financial data in charts and grids from FE reports or Excel worksheets.",
-        "Improvement of the service for exporting financial data to Excel hosted in AWS. Fixed CI/CD and integration with third-party libraries. Added a new feature for exporting data with grouping using multithreading.",
-        "Writing Cake scripts for automatic local deployment of services in Docker and IIS.",
-        "Migration of the backend services to the up-to-date technologies. Migration of microservices from .Net Core to .NET 6 and from old third-party libraries to supported new ones.",
-        "Fixing XSS vulnerabilities based on vendor reports.",
-        "Analysis and optimization of UI performance bugs. Fixed the problem of the browsers crashing due to OOM when loading large amounts of data by optimizing the entities graph caching strategy.",
-        "Mentoring Juniors developers, running meetings as a scrum master, participation in demo sessions, roadmap creation in Azure DevOps."
+        "• Stabilization and improvement of the legacy Publishing Service hosted in IIS, which allows clients to build reports in PDF format based on financial data in charts and grids from FE reports or Excel worksheets.",
+        "• Improvement of the service for exporting financial data to Excel hosted in AWS. Fixed CI/CD and integration with third-party libraries. Added a new feature for exporting data with grouping using multithreading.",
+        "• Writing Cake scripts for automatic local deployment of services in Docker and IIS.",
+        "• Migration of the backend services to the up-to-date technologies. Migration of microservices from .Net Core to .NET 6 and from old third-party libraries to supported new ones.",
+        "• Fixing XSS vulnerabilities based on vendor reports.",
+        "• Analysis and optimization of UI performance bugs. Fixed the problem of the browsers crashing due to OOM when loading large amounts of data by optimizing the entities graph caching strategy.",
+        "• Mentoring Juniors developers, running meetings as a scrum master, participation in demo sessions, roadmap creation in Azure DevOps."
       ],
       media: {
         type: "IMAGE",
@@ -163,23 +163,23 @@ const experiences = {
         { cardTitle: 'Senior Software Developer',
           title: 'Jun 2020 - Jun 2021',
           cardDetailedText: [
-            "Development of Observability Platform - a SaaS technological platform that ensures observability of the ecosystem of MTS products based on OpenTracing and Matomo. The platform collects and analyzes logs, metrics, distributed traces and web analytics.",
-            "Development and support of the project at all stages of the software development life cycle from MVP to a Full-Scale Product.",
-            "Designed and implemented LDAP authorization and Single Sign-on",
-            "Provided the connection of new JAVA consumers by stabilizing maven packages.",
-            "Created a Net core service that provides an API for collecting metrics and calculating links between products.",
-            "Solved emergency situations on PROD-like deployments, led retrospectives.",
-            "Participated in bandwidth optimization and resource calculation for 2021."
+            "• Development of Observability Platform - a SaaS technological platform that ensures observability of the ecosystem of MTS products based on OpenTracing and Matomo. The platform collects and analyzes logs, metrics, distributed traces and web analytics.",
+            "• Development and support of the project at all stages of the software development life cycle from MVP to a Full-Scale Product.",
+            "• Designed and implemented LDAP authorization and Single Sign-on",
+            "• Provided the connection of new JAVA consumers by stabilizing maven packages.",
+            "• Created a Net core service that provides an API for collecting metrics and calculating links between products.",
+            "• Solved emergency situations on PROD-like deployments, led retrospectives.",
+            "• Participated in bandwidth optimization and resource calculation for 2021."
           ]
          },
         { cardTitle: 'Software Developer',
           title: 'Sep 2018 - Mar 2020',
           cardDetailedText: [
-            "Development of CentralLogging - a tracing and centralized logging system. Added multithreading for processing data streams. Implementation and load testing of multitenancy.",
-            "Developed a methodology and performed load testing of the MVP named Observability platform. Made a presentation at the internal conference \"Demo Day\" (250+ people)",
-            "Implemented a prototype microservice for compatibility with the legacy CentralLogging system. The main element of the RND phase of the Observability Platform.",
-            "Built CI/CD for Observability Platform based on ansible technologies in the kubernetes environment from scratch using TFS.",
-            "Development of architectural solutions: encryption of transmitted data, a tutorial for connecting consumers to the platform, monitoring and deployment in kubernetes and docker."
+            "• Development of CentralLogging - a tracing and centralized logging system. Added multithreading for processing data streams. Implementation and load testing of multitenancy.",
+            "• Developed a methodology and performed load testing of the MVP named Observability platform. Made a presentation at the internal conference \"Demo Day\" (250+ people)",
+            "• Implemented a prototype microservice for compatibility with the legacy CentralLogging system. The main element of the RND phase of the Observability Platform.",
+            "• Built CI/CD for Observability Platform based on ansible technologies in the kubernetes environment from scratch using TFS.",
+            "• Development of architectural solutions: encryption of transmitted data, a tutorial for connecting consumers to the platform, monitoring and deployment in kubernetes and docker."
           ]
         },
       ],
@@ -194,11 +194,11 @@ const experiences = {
       cardTitle: 'Software Developer.',
       title: 'Jul 2014 - Sep 2018. IKVA LLC.', 
       cardDetailedText: [
-        "Development of a desktop application in WPF for the management console for remote and centralized performance of work on setting up, commissioning and maintenance of the traffic enforcement system.",
-        "Improvement of Zabbix monitoring system. Writing utilities, data collection scripts and system operation statistics both in terms of software and hardware.",
-        "Development of an application for software provisioning, configuration management, and application-deployment.",
-        "Participation in the development of the system core. Improvement of existing and development of new computer vision algorithms, creation of various utilities for analysis and data collection, testing.",
-        "Development of a highly loaded multi-threaded system for processing and transmitting data using various protocols like SOAP, ProtoBuf."
+        "• Development of a desktop application in WPF for the management console for remote and centralized performance of work on setting up, commissioning and maintenance of the traffic enforcement system.",
+        "• Improvement of Zabbix monitoring system. Writing utilities, data collection scripts and system operation statistics both in terms of software and hardware.",
+        "• Development of an application for software provisioning, configuration management, and application-deployment.",
+        "• Participation in the development of the system core. Improvement of existing and development of new computer vision algorithms, creation of various utilities for analysis and data collection, testing.",
+        "• Development of a highly loaded multi-threaded system for processing and transmitting data using various protocols like SOAP, ProtoBuf."
       ],
       media: {
         type: "IMAGE",
