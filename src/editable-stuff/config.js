@@ -37,7 +37,7 @@ const mainBody = {
 //d) If you do not want any picture to be displayed, just leave it empty :)
 //      i.e: profilePictureLink: "",
 // For Resume either provide link to your resume or import from "editable-stuff" directory
-//     i.e resume: require("../editable-stuff/resume.pdf"),
+//     i.e resume: require("../editable-stuff/CV_Vitaly_Kvashin.pdf"),
 //         resume: "https://docs.google.com/document/d/13_PWdhThMr6roxb-UFiJj4YAFOj8e_bv3Vx9UHQdyBQ/edit?usp=sharing",
 
 const about = {
@@ -47,7 +47,7 @@ const about = {
   imageSize: 375,
   message:
     "My name is Vitaly Kvashin. I have been developing software for 9 years already. After graduating in computer science from Moscow State University, I worked as a developer in a small startup specializing in computer vision for about 4 years. Then I grew up to Senior NET Developer at the largest telecom operator in Russia - MTS, where I worked on a project, that allow developers and businesses to monitor and troubleshoot interactions between complex distributed systems. Almost two years ago I moved to Armenia and work at EPAM, where I am developing an alternative financial platform for one of the large clients in a distributed team. I enjoy solving complex problems and helping other developers and customers create and deliver quality solutions. I have deep experience at all stages of the software development life cycle. Now I am open to any opportunities and interesting projects!",
-  resume: require("../editable-stuff/resume.pdf"),
+  resume: require("../editable-stuff/CV_Vitaly_Kvashin.pdf"),
 };
 
 // PROJECTS SECTION
@@ -127,29 +127,85 @@ const experiences = {
   heading: "Experiences",
   data: [
     {
-      role: 'Senior Software Engineer', // Here Add Company Name
-      companylogo: require('../assets/img/epam.png'),
-      date: 'May 2022 - Jun 2024', 
+      cardTitle: 'Senior Software Engineer',
+      title: 'May 2022 - Jun 2024. EPAM Systems.', 
+      cardSubtitle: "Development of an alternative investment platform iLEVEL in a international distributed team for one of the largest client - S&P Global.",
+      cardDetailedText: [
+        "Stabilization and improvement of the legacy Publishing Service hosted in IIS, which allows clients to build reports in PDF format based on financial data in charts and grids from FE reports or Excel worksheets.",
+        "Improvement of the service for exporting financial data to Excel hosted in AWS. Fixed CI/CD and integration with third-party libraries. Added a new feature for exporting data with grouping using multithreading.",
+        "Writing Cake scripts for automatic local deployment of services in Docker and IIS.",
+        "Migration of the backend services to the up-to-date technologies. Migration of microservices from .Net Core to .NET 6 and from old third-party libraries to supported new ones.",
+        "Fixing XSS vulnerabilities based on vendor reports.",
+        "Analysis and optimization of UI performance bugs. Fixed the problem of the browsers crashing due to OOM when loading large amounts of data by optimizing the entities graph caching strategy.",
+        "Mentoring Juniors developers, running meetings as a scrum master, participation in demo sessions, roadmap creation in Azure DevOps."
+      ],
+      media: {
+        type: "IMAGE",
+        source: {
+          url: require('../assets/img/epam.png')
+        }
+      }
     },
     {
-      role: 'Senior Software Developer',
-      companylogo: require('../assets/img/sbertech.png'),
-      date: 'Feb 2022 - Apr 2022',
+      cardTitle: 'Senior Software Developer',
+      cardSubtitle: 'Design and development of a helpdesk platform for internal processes in BPMN.',
+      title: 'Feb 2022 - Apr 2022. Sberbank-Technology', 
+      media: {
+        type: "IMAGE",
+        source: {
+          url: require('../assets/img/sbertech.png')
+        }
+      }
     },
     {
-      role: 'Senior Software Developer',
-      companylogo: require('../assets/img/MTS.png'),
-      date: 'Jun 2020 - Jun 2021',
+      title: 'Sep 2018 - Jun 2021. MTS Digital',
+      items: [
+        { cardTitle: 'Senior Software Developer',
+          title: 'Jun 2020 - Jun 2021',
+          cardDetailedText: [
+            "Development of Observability Platform - a SaaS technological platform that ensures observability of the ecosystem of MTS products based on OpenTracing and Matomo. The platform collects and analyzes logs, metrics, distributed traces and web analytics.",
+            "Development and support of the project at all stages of the software development life cycle from MVP to a Full-Scale Product.",
+            "Designed and implemented LDAP authorization and Single Sign-on",
+            "Provided the connection of new JAVA consumers by stabilizing maven packages.",
+            "Created a Net core service that provides an API for collecting metrics and calculating links between products.",
+            "Solved emergency situations on PROD-like deployments, led retrospectives.",
+            "Participated in bandwidth optimization and resource calculation for 2021."
+          ]
+         },
+        { cardTitle: 'Software Developer',
+          title: 'Sep 2018 - Mar 2020',
+          cardDetailedText: [
+            "Development of CentralLogging - a tracing and centralized logging system. Added multithreading for processing data streams. Implementation and load testing of multitenancy.",
+            "Developed a methodology and performed load testing of the MVP named Observability platform. Made a presentation at the internal conference \"Demo Day\" (250+ people)",
+            "Implemented a prototype microservice for compatibility with the legacy CentralLogging system. The main element of the RND phase of the Observability Platform.",
+            "Built CI/CD for Observability Platform based on ansible technologies in the kubernetes environment from scratch using TFS.",
+            "Development of architectural solutions: encryption of transmitted data, a tutorial for connecting consumers to the platform, monitoring and deployment in kubernetes and docker."
+          ]
+        },
+      ],
+      media: {
+        type: "IMAGE",
+        source: {
+          url: require('../assets/img/MTS.png')
+        }
+      }
     },
     {
-      role: 'Software Developer',
-      companylogo: require('../assets/img/MTS.png'),
-      date: 'Sep 2018 - Mar 2020',
-    },
-    {
-      role: 'Software Developer',
-      companylogo: require('../assets/img/ikva.png'),
-      date: 'Jul 2014 - Sep 2018',
+      cardTitle: 'Software Developer.',
+      title: 'Jul 2014 - Sep 2018. IKVA LLC.', 
+      cardDetailedText: [
+        "Development of a desktop application in WPF for the management console for remote and centralized performance of work on setting up, commissioning and maintenance of the traffic enforcement system.",
+        "Improvement of Zabbix monitoring system. Writing utilities, data collection scripts and system operation statistics both in terms of software and hardware.",
+        "Development of an application for software provisioning, configuration management, and application-deployment.",
+        "Participation in the development of the system core. Improvement of existing and development of new computer vision algorithms, creation of various utilities for analysis and data collection, testing.",
+        "Development of a highly loaded multi-threaded system for processing and transmitting data using various protocols like SOAP, ProtoBuf."
+      ],
+      media: {
+        type: "IMAGE",
+        source: {
+          url: require('../assets/img/ikva.png')
+        }
+      }
     }
   ]
 }
