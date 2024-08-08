@@ -134,7 +134,10 @@ code {
   object-fit: cover; */
 } 
 
-
+.img-relative-front{
+  position: relative;
+  z-index: 1;
+}
 
 .progress {
   transform-origin: left;

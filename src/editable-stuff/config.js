@@ -33,7 +33,7 @@ const mainBody = {
 //b) a link to an hosted image
 //      i.e:profilePictureLink:"www.picturesonline.com/johnDoeFancyAvatar.jpg",
 //c) image in "editable-stuff" directory and use require("") to import here,
-//      i.e: profilePictureLink: require("../editable-stuff/skuill.png"),
+//      i.e: profilePictureLink: require("../editable-stuff/portfolio.jpg"),
 //d) If you do not want any picture to be displayed, just leave it empty :)
 //      i.e: profilePictureLink: "",
 // For Resume either provide link to your resume or import from "editable-stuff" directory
@@ -43,10 +43,10 @@ const mainBody = {
 const about = {
   show: true,
   heading: "About Me",
-  imageLink: require("../editable-stuff/skuill.png"),
+  imageLink: require("../editable-stuff/portfolio.jpg"),
   imageSize: 375,
   message:
-    "My name is Vitaly Kvashin. I have been developing software for 9 years already. After graduating in computer science from Moscow State University, I worked as a developer in a small startup specializing in computer vision for about 4 years. Then I grew up to Senior NET Developer at the largest telecom operator in Russia - MTS, where I worked on a project, that allow developers and businesses to monitor and troubleshoot interactions between complex distributed systems. Almost two years ago I moved to Armenia and work at EPAM, where I am developing an alternative financial platform for one of the large clients in a distributed team. I enjoy solving complex problems and helping other developers and customers create and deliver quality solutions. I have deep experience at all stages of the software development life cycle. Now I am open to any opportunities and interesting projects!",
+    "My name is Vitaly Kvashin. I have been developing software for 9 years already. After graduating in computer science from Moscow State University, I worked as a developer in a small startup specializing in computer vision for about 4 years. Then I grew up to Senior NET Developer at the largest telecom operator in Russia, where I worked on a project, that allow developers and businesses to monitor and troubleshoot interactions between complex distributed systems. Almost two years ago I moved to Armenia to work for EPAM, where I contributed to the development of a large-scale alternative financial platform along side international team. I enjoy solving complex problems and find it deeply gratifying to deliver high-quality creative solutions that match the demands of involved stakeholders. I have deep experience at all stages of the software development life cycle. I am opened to any opportunities and interesting projects!",
   resume: require("../editable-stuff/CV_Vitaly_Kvashin.pdf"),
 };
 
@@ -94,12 +94,12 @@ const skills = {
   hardSkills: [
     { name: "Backend. C#, Java, Python", value: 90 },
     { name: "Technologies. .NET, ASP.NET, WEB API, WPF, WCF, ...", value: 85 },
-    { name: "DevOps. Ansible, Azure DevOps, Jenkins, ...", value: 70 },
-    { name: "Cloud. AWS: EC2, ECS, S3, CloudFront, SQS, ...", value: 75 },
-    { name: "Data Structures and Algorithms", value: 80 },
-    { name: "Frontend. Javascript, Typescript, React", value: 60 },
-    { name: "Tools. Postman, Fiddler, Wireshark, Kibana, Grafana, Jaeger, ...", value: 80 },
-    { name: "Databases. MS SQL Server, Oracle, PostgreSQL, ElasticSearch, ...", value: 80 }
+    { name: "DevOps. Ansible, Azure DevOps, Jenkins, ...", value: 60 },
+    { name: "Cloud. AWS: EC2, ECS, S3, CloudFront, SQS, ...", value: 55 },
+    { name: "Data Structures and Algorithms", value: 75 },
+    { name: "Frontend. Javascript, Typescript, React", value: 40 },
+    { name: "Tools. Postman, Fiddler, Wireshark, Kibana, Grafana, Jaeger, ...", value: 70 },
+    { name: "Databases. MS SQL Server, Oracle, PostgreSQL, ElasticSearch, ...", value: 60 }
   ],
   softSkills: [
     { name: "Goal-Oriented", value: 80 },

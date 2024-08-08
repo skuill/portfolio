@@ -20,7 +20,8 @@ const Experience = ({ experiences }) => {
               highlightCardsOnHover 
               mode="VERTICAL_ALTERNATING" 
               disableToolbar 
-             theme={{
+              mediaSettings={{ align: 'center', imageFit: 'contain' }}
+              theme={{
                 primary: '#212529',
                 secondary: '#e9ecef',
                 titleColor: '#083c87',
