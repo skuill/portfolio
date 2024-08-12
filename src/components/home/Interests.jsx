@@ -12,11 +12,11 @@ const Interests = ({ heading, message, img, imageSize }) => {
         </div>
         <div className="col-md-7">
           <Carousel>
-            {img.map((value, index) => {
+            {img.map((value, indexInterest) => {
               return (
-                <Carousel.Item key={index} interval={2000}>
+                <Carousel.Item key={indexInterest} interval={2000} className="justify-content-center">
                   <img
-                    className="d-block w-100 img-object-fit"
+                    className="d-block w-100 img-object-fit "
                     src={value.img}
                     alt="First slide"
                     width={imageSize.width}
@@ -29,8 +29,8 @@ const Interests = ({ heading, message, img, imageSize }) => {
                         {value.paragraph}
                       </p>
                       { value.links.length 
-                        ? value.links.map((link, index) => (
-                          <a href={`${link.url}`}>{link.description}</a>
+                        ? value.links.map((link, indexLink) => (
+                          <a key={`interest-${indexInterest}-link-${indexLink}`} href={`${link.url}`}>{link.description}</a>
                         ))
                         : null 
                       }
