@@ -22,6 +22,10 @@ const mainBody = {
     {
       image: "fa-instagram",
       url: "https://www.instagram.com/graznayagora/",
+    },
+    {
+      image: "fa-telegram",
+      url: "https://www.t.me/skuill/",
     }
   ],
 };
@@ -63,27 +67,32 @@ const repos = {
   specificRepos: [],
 };
 
-// Leadership SECTION
-const leadership = {
-  show: false,
-  heading: "Leadership",
+// Interests SECTION
+const interests = {
+  show: true,
+  heading: "Interests",
   message:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Vitae auctor eu augue ut lectus arcu bibendum at varius. Libero justo laoreet sit amet cursus sit amet. Imperdiet dui accumsan sit amet nulla facilisi morbi. At auctor urna nunc id. Iaculis urna id volutpat lacus laoreet non curabitur gravida. Et magnis dis parturient montes nascetur ridiculus mus mauris. In nisl nisi scelerisque eu ultrices vitae auctor. Mattis nunc sed blandit libero volutpat sed cras ornare. Pulvinar neque laoreet suspendisse interdum consectetur libero.",
+    "I like spending my free time and weekends in nature. I am interested in various outdoor activities such as cycling, bikepacking and hiking. I always choose quiet unpaved roads, in forests and mountains, along rivers in wild places, where you can relax your soul and body. Sometimes I take a camera with me to capture architecture or beautiful landscapes. Playing the ukulele and bass always gives me a positive feeling and helps me relax in the evening. I also enjoy reading fantasy and sci-fi literature before bed.",
   images: [
     { 
-      img: require("../editable-stuff/skuill.png"), 
-      label: "First slide label", 
-      paragraph: "Nulla vitae elit libero, a pharetra augue mollis interdum." 
+      img: require("../editable-stuff/blogpost-1_preview.png"), 
+      label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
+      paragraph: "A picture drawn by my girlfriend Tata on the theme of my trip on a bike." 
+    },
+    { 
+      img: require("../editable-stuff/blogpost-1_tourunite-start — копия.jpg"), 
+      label: "Tour Unite. Sortavala — Konakovo. 2021.", 
+      paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia. <a href=\"https://www.tourunite.info/2021/09/tui-itt21-kvashin.html\">Report about my trip.</a>" 
     },
     { 
       img: require("../editable-stuff/skuill.png"), 
-      label: "Second slide label", 
-      paragraph: "Nulla vitae elit libero, a pharetra augue mollis interdum." 
+      label: "A trip to the south of Russia in 2021.", 
+      paragraph: "The purpose of the trip was to capture in photographs the Soviet heritage of mosaic bus stops." 
     },
   ],
   imageSize: {
     width:"615",
-    height:"450"
+    height:"700"
   }
 };
 
@@ -215,4 +224,4 @@ const blogConfig = {
   show: false,
 };
 
-export { navBar, mainBody, about, repos, skills, leadership, getInTouch, experiences, blogConfig };
+export { navBar, mainBody, about, repos, skills, interests, getInTouch, experiences, blogConfig };

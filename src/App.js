@@ -5,7 +5,7 @@ import {
   mainBody,
   about,
   repos,
-  leadership,
+  interests,
   skills,
   getInTouch,
   experiences,
@@ -20,7 +20,7 @@ import Skills from "./components/home/Skills";
 import { Blog } from "./components/blog/Blog";
 import BlogPost from "./components/blog/BlogPost";
 import GetInTouch from "./components/home/GetInTouch.jsx";
-import Leadership from "./components/home/Leadership.jsx";
+import Interests from "./components/home/Interests.jsx";
 
 import Experience from "./components/home/Experience";
 
@@ -56,14 +56,6 @@ const Home = React.forwardRef((props, ref) => {
           specfic={repos.specificRepos}
         />
       )}
-      {leadership.show && (
-        <Leadership
-          heading={leadership.heading}
-          message={leadership.message}
-          img={leadership.images}
-          imageSize={leadership.imageSize}
-        />
-      )}
       {skills.show && (
         <Skills
           heading={skills.heading}
@@ -71,7 +63,14 @@ const Home = React.forwardRef((props, ref) => {
           softSkills={skills.softSkills}
         />
       )}
-      
+      {interests.show && (
+        <Interests
+          heading={interests.heading}
+          message={interests.message}
+          img={interests.images}
+          imageSize={interests.imageSize}
+        />
+      )}      
     </>
   );
 });

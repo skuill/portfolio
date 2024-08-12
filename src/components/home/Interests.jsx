@@ -2,35 +2,36 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Jumbotron } from "./migration";
 
-const Leadership = ({ heading, message, img, imageSize }) => {
+const Interests = ({ heading, message, img, imageSize }) => {
   return (
     <Jumbotron
-      id="leadership"
-      className="m-0"
-      style={{ backgroundColor: "white" }}
+      id="interests"
+      className="bg-light m-0"
     >
       <h2 className="display-4 pb-5 text-center">{heading}</h2>
       <div className="row">
         <div className="col-md-5">
-          <p className="lead">{message}</p>
+          <p className="lead text-center font-size-lg">{message}</p>
         </div>
         <div className="col-md-7">
-          <Carousel>
+          <Carousel dynamicHeight={false}>
             {img.map((value, index) => {
               return (
-                <Carousel.Item key={index}>
+                <Carousel.Item key={index} interval={2000}>
                   <img
-                    className="d-block w-100"
+                    className="d-block w-100 img-object-fit"
                     src={value.img}
                     alt="First slide"
                     width={imageSize.width}
                     height={imageSize.height}
                   />
                   <Carousel.Caption>
-                    <h3>{value.label}</h3>
-                    <p>
-                      {value.paragraph}
-                    </p>
+                    <div className="card shadow-sm p-1 mb-5 bg-white rounded opacity-75">
+                      <h3>{value.label}</h3>
+                      <p>
+                        {value.paragraph}
+                      </p>
+                    </div>
                   </Carousel.Caption>
                 </Carousel.Item>
               );
@@ -42,4 +43,4 @@ const Leadership = ({ heading, message, img, imageSize }) => {
   );
 };
 
-export default Leadership;
+export default Interests;
