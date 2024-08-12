@@ -25,9 +25,15 @@ const Interests = ({ heading, message, img, imageSize }) => {
                   <Carousel.Caption>
                     <div className="card shadow-sm p-1 mb-5 bg-white rounded opacity-75">
                       <h3>{value.label}</h3>
-                      <p>
+                      <p className="my-1">
                         {value.paragraph}
                       </p>
+                      { value.links.length 
+                        ? value.links.map((link, index) => (
+                          <a href={`${link.url}`}>{link.description}</a>
+                        ))
+                        : null 
+                      }
                     </div>
                   </Carousel.Caption>
                 </Carousel.Item>

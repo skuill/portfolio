@@ -77,17 +77,35 @@ const interests = {
     { 
       img: require("../editable-stuff/blogpost-1_preview.png"), 
       label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
-      paragraph: "A picture drawn by my girlfriend Tata on the theme of my trip on a bike." 
+      paragraph: "A picture drawn by my girlfriend Tata on the theme of my trip on a bike.",
+      links: [
+        {
+          description: "Post in Strava about the trip.",
+          url: "https://www.strava.com/athletes/39721809/posts/24797729"
+        }]
     },
     { 
       img: require("../editable-stuff/blogpost-1_tourunite-start — копия.jpg"), 
       label: "Tour Unite. Sortavala — Konakovo. 2021.", 
-      paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia. <a href=\"https://www.tourunite.info/2021/09/tui-itt21-kvashin.html\">Report about my trip.</a>" 
+      paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia.",
+      links: [
+        {
+          description: "Report about my trip.",
+          url: "https://www.tourunite.info/2021/09/tui-itt21-kvashin.html"
+        }
+      ]
     },
     { 
       img: require("../editable-stuff/skuill.png"), 
       label: "A trip to the south of Russia in 2021.", 
-      paragraph: "The purpose of the trip was to capture in photographs the Soviet heritage of mosaic bus stops." 
+      paragraph: "The purpose of the trip was to capture in photographs the Soviet heritage of mosaic bus stops.",
+      links: []
+    },
+    { 
+      img: require("../editable-stuff/blogpost-1_zekari.jpg"), 
+      label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
+      paragraph: "In beautiful Georgia on the Zekar Pass among mountains and forests.",
+      links: []
     },
   ],
   imageSize: {
