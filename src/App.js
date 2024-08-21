@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from 'react-ga4';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   navBar,
@@ -21,10 +22,13 @@ import { Blog } from "./components/blog/Blog";
 import BlogPost from "./components/blog/BlogPost";
 import GetInTouch from "./components/home/GetInTouch.jsx";
 import Interests from "./components/home/Interests.jsx";
-
 import Experience from "./components/home/Experience";
 
+const TRACKING_ID = "G-SLG56091CZ"; // your Measurement ID
+
 const Home = React.forwardRef((props, ref) => {
+  ReactGA.send({ hitType: "pageview", page: "/", title: "Home" });
+
   return (
     <>
       <MainBody
@@ -76,6 +80,8 @@ const Home = React.forwardRef((props, ref) => {
 
 const App = () => {
   const titleRef = React.useRef();
+
+  ReactGA.initialize(TRACKING_ID);
 
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL + "/"}>
