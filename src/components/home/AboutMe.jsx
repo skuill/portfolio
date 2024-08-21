@@ -1,4 +1,5 @@
 import React from "react";
+import ReactGA from 'react-ga4';
 
 import axios from "axios";
 import { Jumbotron } from "./migration";
@@ -31,7 +32,13 @@ const AboutMe = ({ heading, message, link, imgSize, resume }) => {
     }
   }, [link]);
 
-
+  const handleResumeClick = () => {
+    ReactGA.event({
+        category: 'Resume',
+        action: 'Click',
+        label: 'Resume Download',
+    });
+  };
 
   return (
     <Jumbotron id="aboutme" className="m-0">
@@ -62,6 +69,7 @@ const AboutMe = ({ heading, message, link, imgSize, resume }) => {
                   rel="noreferrer noopener"
                   role="button"
                   aria-label="Resume/CV"
+                  onClick={() => handleResumeClick()}
                 >
                   Resume
                 </a>
