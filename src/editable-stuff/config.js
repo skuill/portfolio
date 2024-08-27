@@ -85,7 +85,7 @@ const interests = {
         }]
     },
     { 
-      img: require("../editable-stuff/blogpost-1_tourunite-start — копия.jpg"), 
+      img: require("../editable-stuff/blogpost-1_tourunite-start.jpg"), 
       label: "Tour Unite. Sortavala — Konakovo. 2021.", 
       paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia.",
       links: [
