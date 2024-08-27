@@ -2,7 +2,7 @@
   "name": "developers-portfolio",
   "description": "A personal static website/portfolio hosted with GitHub Pages.",
   "homepage": "https://skuill.github.io/portfolio",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "dependencies": {
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
