@@ -9,8 +9,7 @@ import {
   interests,
   skills,
   getInTouch,
-  experiences,
-  blogConfig
+  experiences
 } from "./editable-stuff/config.js";
 import MainBody from "./components/home/MainBody";
 import AboutMe from "./components/home/AboutMe";
@@ -18,8 +17,6 @@ import Project from "./components/home/Project";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Skills from "./components/home/Skills";
-import { Blog } from "./components/blog/Blog";
-import BlogPost from "./components/blog/BlogPost";
 import GetInTouch from "./components/home/GetInTouch.jsx";
 import Interests from "./components/home/Interests.jsx";
 import Experience from "./components/home/Experience";
@@ -88,8 +85,6 @@ const App = () => {
       {navBar.show && <Navbar ref={titleRef} />}
       <Routes>
         <Route path="/" exact element={<Home ref={titleRef} />} />
-        {blogConfig.show && <Route path="/blog" exact element={<Blog />} />}
-        {blogConfig.show && <Route path="/blog/:id" exact element={<BlogPost />} />}
       </Routes>
       <Footer>
         {getInTouch.show && (

@@ -26,6 +26,10 @@ const mainBody = {
     {
       image: "fa-telegram",
       url: "https://www.t.me/skuill/",
+    },
+    {
+      image: "fa-strava",
+      url: "https://www.strava.com/athletes/39721809",
     }
   ],
 };
@@ -75,7 +79,7 @@ const interests = {
     "I like spending my free time and weekends in nature. I am interested in various outdoor activities such as cycling, bikepacking and hiking. I always choose quiet unpaved roads, in forests and mountains, along rivers in wild places, where you can relax your soul and body. Sometimes I take a camera with me to capture architecture or beautiful landscapes. Playing the ukulele and bass always gives me a positive feeling and helps me relax in the evening. I also enjoy reading fantasy and sci-fi literature before bed.",
   images: [
     { 
-      img: require("../editable-stuff/blogpost-1_preview.png"), 
+      img: require("../editable-stuff/interests_caucasus-collage.png"), 
       label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
       paragraph: "A picture drawn by my girlfriend Tata on the theme of my trip on a bike.",
       links: [
@@ -85,7 +89,7 @@ const interests = {
         }]
     },
     { 
-      img: require("../editable-stuff/blogpost-1_tourunite-start.jpg"), 
+      img: require("../editable-stuff/interests_tourunite-start.jpg"), 
       label: "Tour Unite. Sortavala — Konakovo. 2021.", 
       paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia.",
       links: [
@@ -96,13 +100,13 @@ const interests = {
       ]
     },
     { 
-      img: require("../editable-stuff/skuill.png"), 
+      img: require("../editable-stuff/interests_mosaic-skuill.png"), 
       label: "A trip to the south of Russia in 2021.", 
       paragraph: "The purpose of the trip was to capture in photographs the Soviet heritage of mosaic bus stops.",
       links: []
     },
-    { 
-      img: require("../editable-stuff/blogpost-1_zekari.jpg"), 
+    {
+      img: require("../editable-stuff/interests_caucasus-zekari.jpg"), 
       label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
       paragraph: "In beautiful Georgia on the Zekar Pass among mountains and forests.",
       links: []
@@ -237,9 +241,4 @@ const experiences = {
   ]
 }
 
-// Blog SECTION
-const blogConfig = {
-  show: false,
-};
-
-export { navBar, mainBody, about, repos, skills, interests, getInTouch, experiences, blogConfig };
+export { navBar, mainBody, about, repos, skills, interests, getInTouch, experiences };

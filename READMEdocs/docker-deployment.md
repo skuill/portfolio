@@ -11,10 +11,10 @@
    ```bash
       cd C:\Projects\portfolio
 
-      docker image build -t skuill/portfolio:4.0.0 .
+      docker image build -t skuill/portfolio:5.0.0 .
       docker image build -t skuill/portfolio:latest .
 
-      docker push skuill/portfolio:4.0.0
+      docker push skuill/portfolio:5.0.0
       docker push skuill/portfolio:latest
    ```
 
@@ -22,7 +22,7 @@
    ```bash
       docker pull skuill/portfolio:latest
 
-      docker run -dit --restart=always -p 3000:3000 --name skuill-portfolio skuill/portfolio:latest
+      docker run -dit --restart=always -p 3000:80 --name skuill-portfolio skuill/portfolio:latest
    ```
 
 3. Inspect image:

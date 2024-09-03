@@ -31,5 +31,7 @@
 **/build
 **/dist
 **/READMEdocs
+node_modules
+build
 LICENSE
 README.md
