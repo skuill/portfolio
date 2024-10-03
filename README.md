@@ -7,8 +7,11 @@
     It is a personal static website/portfolio hosted with GitHub Pages. 
     Based on the template created by <a href="https://hashirshoaeb.github.io/home">hashirshoaeb.github.io/home</a>.
     <br/>
-    <strong>Site URL » </strong> 
-    <a href="https://skuill.github.io/portfolio">skuill.github.io/portfolio</a>
+    <strong>Site URLs » </strong> 
+    <br />
+    <strong>1. </strong> <a href="https://skuill.github.io/portfolio">skuill.github.io/portfolio</a>
+    <br />
+    <strong>2. </strong> <a href="https://skuill.com/">skuill.com</a>
     <br />
     <br />
     <a href="https://skuill.github.io/portfolio/#aboutme">About Me</a>
