@@ -4,7 +4,7 @@ import useResizeObserver from "../hooks/useResizeObserver";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { mainBody, repos, about, skills, experiences, interests } from "../editable-stuff/config.js";
-import { NavLink } from "./home/migration";
+import { NavLink, StyledNavLink } from "./home/migration";
 
 const Navigation = React.forwardRef((props, ref) => {
   const [isTop, setIsTop] = useState(true);
@@ -16,7 +16,7 @@ const Navigation = React.forwardRef((props, ref) => {
     ({ prevPos, currPos }) => {
       if (!navbarDimensions) return;
       if (ref.current === undefined) return;
-      currPos.y + ref.current.offsetTop - navbarDimensions.bottom > 5
+      currPos.y + ref.current.offsetTop - navbarDimensions.bottom > 5 || (currPos.y === 0 && ref.current.offsetTop === 0)
         ? setIsTop(true)
         : setIsTop(false);
       setScrollPosition(currPos.y);
@@ -27,7 +27,8 @@ const Navigation = React.forwardRef((props, ref) => {
   React.useEffect(() => {
     if (!navbarDimensions) return;
     if (ref.current === undefined) return;
-    navBottom - scrollPosition >= ref.current.offsetTop
+    // The second condition fixed case when component with ref is on the top with fixed offset. 
+    navBottom - scrollPosition >= ref.current.offsetTop && !(-scrollPosition < navbarDimensions.bottom && ref.current.offsetTop === 0) 
       ? setIsTop(false)
       : setIsTop(true);
   }, [navBottom, navbarDimensions, ref, scrollPosition]);
@@ -46,44 +47,39 @@ const Navigation = React.forwardRef((props, ref) => {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="navbar-nav mr-auto">
           {about.show && (
-            <NavLink
-              className="nav-item lead"
-              href={process.env.PUBLIC_URL + "/#aboutme"}
+            <StyledNavLink
+              pathName="/#aboutme"
+              linkName="About"
             >
-              About
-            </NavLink>
+            </StyledNavLink>
           )}
           {experiences.show && (
-            <NavLink
-              className="nav-item lead"
-              href={process.env.PUBLIC_URL + "/#experience"}
+            <StyledNavLink
+              pathName="/#experience"
+              linkName="Experiences"
             >
-              Experiences
-            </NavLink>
+            </StyledNavLink>
           )}
           {repos.show && (
-
-            <NavLink
-              href={process.env.PUBLIC_URL + "/#projects"}
+            <StyledNavLink
+              pathName="/#projects"
+              linkName="Projects"
             >
-              Projects
-            </NavLink>
+            </StyledNavLink>
           )}
           {skills.show && (
-            <NavLink
-              className="nav-item lead"
-              href={process.env.PUBLIC_URL + "/#skills"}
+            <StyledNavLink
+              pathName="/#skills"
+              linkName="Skills"
             >
-              Skills
-            </NavLink>
+            </StyledNavLink>
           )}
           {interests.show && (
-            <NavLink
-              className="nav-item lead"
-              href={process.env.PUBLIC_URL + "/#interests"}
+            <StyledNavLink
+              pathName="/#interests"
+              linkName="Interests"
             >
-              Interests
-            </NavLink>
+            </StyledNavLink>
           )}
           <NavLink
             className="nav-item lead"
@@ -93,12 +89,11 @@ const Navigation = React.forwardRef((props, ref) => {
           >
             Resume
           </NavLink>
-          <NavLink
-            className="nav-item lead"
-            href={process.env.PUBLIC_URL + "/#contact"}
+          <StyledNavLink
+            pathName="/#contact"
+            linkName="Contact"
           >
-            Contact
-          </NavLink>
+          </StyledNavLink>
         </Nav>
       </Navbar.Collapse>
     </Navbar>

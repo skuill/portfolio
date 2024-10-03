@@ -41,7 +41,7 @@ const AboutMe = ({ heading, message, link, imgSize, resume }) => {
   };
 
   return (
-    <Jumbotron id="aboutme" className="m-0">
+    <Jumbotron id="aboutme" className="m-0 bg-gray">
       <div className="container">
         <div className="row">
           <h2 className="display-4 mb-5 text-center">{heading}</h2>
