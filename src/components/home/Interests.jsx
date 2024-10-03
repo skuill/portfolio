@@ -1,17 +1,23 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import { Jumbotron } from "./migration";
+import RotatingIcons from "../RotatingIcons/RotatingIcons.jsx";
 
 const Interests = ({ heading, message, img, imageSize }) => {
   return (
     <Jumbotron id="interests" className="bg-light m-0">
       <h2 className="display-4 pb-5 text-center">{heading}</h2>
-      <div className="row">
-        <div className="col-md-5">
-          <p className="lead text-center font-size-lg">{message}</p>
+      <div className="row justify-content-center">
+        <div className="col-lg-5">
+          <div className="row align-content-center p-2">
+            <p className="lead text-center font-size-lg">{message}</p>
+          </div>
+          <div className="row align-self-stretch p-2 d-flex justify-content-center align-items-center">
+              <RotatingIcons />
+          </div>
         </div>
-        <div className="col-md-7">
-          <Carousel>
+        <div className="col-lg-7">
+          <Carousel className="p-2">
             {img.map((value, indexInterest) => {
               return (
                 <Carousel.Item key={indexInterest} interval={2000} className="justify-content-center">
