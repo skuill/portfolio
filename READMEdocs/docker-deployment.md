@@ -11,10 +11,10 @@
    ```bash
       cd C:\Projects\portfolio
 
-      docker image build -t skuill/portfolio:5.0.0 .
+      docker image build -t skuill/portfolio:5.1.0 .
       docker image build -t skuill/portfolio:latest .
 
-      docker push skuill/portfolio:5.0.0
+      docker push skuill/portfolio:5.1.0
       docker push skuill/portfolio:latest
    ```
 
