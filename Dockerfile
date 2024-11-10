@@ -1,4 +1,4 @@
-ARG NODE_VERSION=20.15.0
+ARG NODE_VERSION=20.18.0
 
 # STAGE 1: install
 FROM node:${NODE_VERSION}-alpine AS base

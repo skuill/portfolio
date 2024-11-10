@@ -71,6 +71,18 @@ const repos = {
   specificRepos: [],
 };
 
+const projects = {
+  show: true,
+  websites: [
+    {
+      imageLink: require("../editable-stuff/tatevik_mamian_website.png"),
+      url: "https://tatevikmamian.com/",
+      description: "Architect's personal website",
+      technologies: "C#, .NET 8, WebApi, Javascript, Typescript, React, Nginx, Docker"
+    }
+  ],
+};
+
 // Interests SECTION
 const interests = {
   show: true,
@@ -159,16 +171,16 @@ const experiences = {
   data: [
     {
       cardTitle: 'Senior Software Engineer',
-      title: 'May 2022 - Jun 2024. EPAM Systems.', 
-      cardSubtitle: "Development of an alternative investment platform iLEVEL in a international distributed team for one of the largest client - S&P Global.",
+      title: '02 May 2022 - 10 Jun 2024. EPAM Systems.', 
+      cardSubtitle: "Contributed to the development of the alternative investment platform iLEVEL within an international, distributed team for S&P Global, one of the largest financial services providers.",
       cardDetailedText: [
-        "• Stabilization and improvement of the legacy Publishing Service hosted in IIS, which allows clients to build reports in PDF format based on financial data in charts and grids from FE reports or Excel worksheets.",
-        "• Improvement of the service for exporting financial data to Excel hosted in AWS. Fixed CI/CD and integration with third-party libraries. Added a new feature for exporting data with grouping using multithreading.",
-        "• Writing Cake scripts for automatic local deployment of services in Docker and IIS.",
-        "• Migration of the backend services to the up-to-date technologies. Migration of microservices from .Net Core to .NET 6 and from old third-party libraries to supported new ones.",
-        "• Fixing XSS vulnerabilities based on vendor reports.",
-        "• Analysis and optimization of UI performance bugs. Fixed the problem of the browsers crashing due to OOM when loading large amounts of data by optimizing the entities graph caching strategy.",
-        "• Mentoring Juniors developers, running meetings as a scrum master, participation in demo sessions, roadmap creation in Azure DevOps."
+        "• Stabilized and enhanced a legacy Publishing Service hosted on IIS, enabling clients to generate PDF reports with financial data displayed in charts and grids, sourced from FE reports or Excel worksheets.",
+        "• Enhanced a financial data export service hosted in AWS, fixing CI/CD processes and improving integration with third-party libraries. Introduced a multithreaded feature for data export with grouping.",
+        "• Developed Cake scripts to automate local deployment of services on Docker and IIS.",
+        "• Led the migration of backend services to modern technologies, upgrading microservices from .NET Core to .NET 6 and transitioning outdated third-party libraries to supported, latest versions.",
+        "• Remediated XSS vulnerabilities identified in vendor reports, ensuring secure and compliant applications.",
+        "• Analyzed and optimized UI performance issues, resolving browser crashes caused by out-of-memory (OOM) errors when loading large datasets by enhancing the entity graph caching strategy",
+        "• Mentored junior developers, facilitated meetings as Scrum Master, contributed to demo sessions, and managed roadmap creation in Azure DevOps."
       ],
       media: {
         type: "IMAGE",
@@ -179,8 +191,8 @@ const experiences = {
     },
     {
       cardTitle: 'Senior Software Developer',
-      cardSubtitle: 'Design and development of a helpdesk platform for internal processes in BPMN.',
-      title: 'Feb 2022 - Apr 2022. Sberbank-Technology', 
+      cardSubtitle: 'Contributed to the design and development of a helpdesk platform that streamlined internal processes using BPMN.',
+      title: '09 Feb 2022 - 08 Apr 2022. Sberbank-Technology', 
       media: {
         type: "IMAGE",
         source: {
@@ -189,28 +201,28 @@ const experiences = {
       }
     },
     {
-      title: 'Sep 2018 - Jun 2021. MTS Digital',
+      title: '17 Sep 2018 - 10 Jun 2021. MTS Digital',
       items: [
         { cardTitle: 'Senior Software Developer',
-          title: 'Jun 2020 - Jun 2021',
+          title: '01 Mar 2020 - 10 Jun 2021',
           cardDetailedText: [
-            "• Development of Observability Platform - a SaaS technological platform that ensures observability of the ecosystem of MTS products based on OpenTracing and Matomo. The platform collects and analyzes logs, metrics, distributed traces and web analytics.",
-            "• Development and support of the project at all stages of the software development life cycle from MVP to a Full-Scale Product.",
-            "• Designed and implemented LDAP authorization and Single Sign-on",
-            "• Provided the connection of new JAVA consumers by stabilizing maven packages.",
-            "• Created a Net core service that provides an API for collecting metrics and calculating links between products.",
-            "• Solved emergency situations on PROD-like deployments, led retrospectives.",
-            "• Participated in bandwidth optimization and resource calculation for 2021."
+            "• Contributed to the development of an Observability Platform, a SaaS technology solution that ensures the observability of the MTS product ecosystem. This platform leverages OpenTracing, ELK and Matomo to collect and analyze logs, metrics, distributed traces, and web analytics.",
+            "• Led the development and support of the project throughout all stages of the software development life cycle, from the MVP to a Full-Scale Product.",
+            "• Designed and implemented LDAP authorization and Single Sign-On solutions.",
+            "• Facilitated the integration of new Java consumers by optimizing and stabilizing Maven packages.",
+            "• Developed a .NET Core service that provides an API for gathering metrics and analyzing relationships between products.",
+            "• Resolved critical incidents during production-like deployments and facilitated retrospectives.",
+            "• Participated in bandwidth optimization and resource estimation for 2021."
           ]
          },
         { cardTitle: 'Software Developer',
-          title: 'Sep 2018 - Mar 2020',
+          title: '17 Sep 2018 - 01 Mar 2020',
           cardDetailedText: [
-            "• Development of CentralLogging - a tracing and centralized logging system. Added multithreading for processing data streams. Implementation and load testing of multitenancy.",
-            "• Developed a methodology and performed load testing of the MVP named Observability platform. Made a presentation at the internal conference \"Demo Day\" (250+ people)",
-            "• Implemented a prototype microservice for compatibility with the legacy CentralLogging system. The main element of the RND phase of the Observability Platform.",
-            "• Built CI/CD for Observability Platform based on ansible technologies in the kubernetes environment from scratch using TFS.",
-            "• Development of architectural solutions: encryption of transmitted data, a tutorial for connecting consumers to the platform, monitoring and deployment in kubernetes and docker."
+            "• Contributed to the development of CentralLogging, a centralized logging and tracing system, wich involved adding multithreading for data stream processing and performing load tests to ensure effective multitenancy support.",
+            "• Developed the methodology and conducted load testing for the MVP of the Observability platform, presenting at the internal \"Demo Day\" conference attended by over 250 people.",
+            "• Developed a prototype microservice for compatibility with the legacy CentralLogging system, which was a key component in the R&D phase of the Observability Platform.",
+            "• Configured CI/CD for the Observability Platform using Ansible technologies in a Kubernetes environment from scratch using TFS.",
+            "• Designed architectural solutions including data encryption, consumer connection tutorials, monitoring and deployment strategies in Kubernetes and Docker."
           ]
         },
       ],
@@ -223,13 +235,13 @@ const experiences = {
     },
     {
       cardTitle: 'Software Developer.',
-      title: 'Jul 2014 - Sep 2018. IKVA LLC.', 
+      title: '15 Jul 2014 - 14 Sep 2018. IKVA LLC.', 
       cardDetailedText: [
-        "• Development of a desktop application in WPF for the management console for remote and centralized performance of work on setting up, commissioning and maintenance of the traffic enforcement system.",
-        "• Improvement of Zabbix monitoring system. Writing utilities, data collection scripts and system operation statistics both in terms of software and hardware.",
-        "• Development of an application for software provisioning, configuration management, and application-deployment.",
-        "• Participation in the development of the system core. Improvement of existing and development of new computer vision algorithms, creation of various utilities for analysis and data collection, testing.",
-        "• Development of a highly loaded multi-threaded system for processing and transmitting data using various protocols like SOAP, ProtoBuf."
+        "• Developed a WPF desktop application for a management console, enabling remote and centralized operations for setting up, commissioning, and maintaining the traffic enforcement system.",
+        "• Enhanced the Zabbix monitoring system by developing utilities, data collection scripts, and operational statistics for both software and hardware performance.",
+        "• Developed an application for software provisioning, configuration management, and application deployment.",
+        "• Contributed to the development of the system core, enhancing existing and creating new computer vision algorithms, as well as developing various utilities for analysis, data collection, and testing.",
+        "• Developed a high-load multi-threaded system for processing and transmitting data using various protocols, including SOAP and ProtoBuf."
       ],
       media: {
         type: "IMAGE",
@@ -241,4 +253,4 @@ const experiences = {
   ]
 }
 
-export { navBar, mainBody, about, repos, skills, interests, getInTouch, experiences };
+export { navBar, mainBody, about, repos, projects, skills, interests, getInTouch, experiences };

@@ -6,6 +6,7 @@ import {
   mainBody,
   about,
   repos,
+  projects,
   interests,
   skills,
   getInTouch,
@@ -48,12 +49,13 @@ const Home = React.forwardRef((props, ref) => {
         <Experience experiences={experiences}/>
         )
       }
-      {repos.show && (
+      {(repos.show || projects.show) && (
         <Project
           heading={repos.heading}
           username={repos.gitHubUsername}
           length={repos.reposLength}
           specfic={repos.specificRepos}
+          projects={projects}
         />
       )}
       {skills.show && (

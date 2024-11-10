@@ -3,7 +3,7 @@ import { useScrollPosition } from "../hooks/useScrollPosition";
 import useResizeObserver from "../hooks/useResizeObserver";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import { mainBody, repos, about, skills, experiences, interests } from "../editable-stuff/config.js";
+import { mainBody, repos, about, skills, experiences, interests, projects } from "../editable-stuff/config.js";
 import { NavLink, StyledNavLink } from "./home/migration";
 
 const Navigation = React.forwardRef((props, ref) => {
@@ -60,7 +60,7 @@ const Navigation = React.forwardRef((props, ref) => {
             >
             </StyledNavLink>
           )}
-          {repos.show && (
+          {(repos.show || projects.show) && (
             <StyledNavLink
               pathName="/#projects"
               linkName="Projects"

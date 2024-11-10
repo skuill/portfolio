@@ -1,9 +1,29 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
 import { Jumbotron } from "./migration";
-import Row from "react-bootstrap/Row";
+import { Row, Col, Card } from "react-bootstrap";
 import ProjectCard from "./ProjectCard";
 import axios from "axios";
+import Skeleton from "react-loading-skeleton";
+
+const WebsiteCard = ({ website }) => {
+  const { imageLink, url, description, technologies } =
+    website;
+  return (
+    <Col md={6}>
+      <Card className="card shadow-lg p-3 mb-5 bg-white rounded">
+        <Card.Img fluid="true" src={imageLink} />
+        <Card.Body>
+          {description ? <Card.Title as="h5">{description || <Skeleton />} </Card.Title> : <Skeleton></Skeleton>}
+          <Card.Text>
+            {!technologies ? "" : "Created using: " + technologies || <Skeleton count={3} />}{" "}
+          </Card.Text>
+          {url ? <Card.Link href={url}>Website Link</Card.Link> : <Skeleton count={1}></Skeleton>}
+        </Card.Body>
+      </Card>
+    </Col>
+  );
+};
 
 const dummyProject = {
   name: null,
@@ -17,7 +37,7 @@ const API = "https://api.github.com";
 // const gitHubQuery = "/repos?sort=updated&direction=desc";
 // const specficQuerry = "https://api.github.com/repos/skuill/";
 
-const Project = ({ heading, username, length, specfic }) => {
+const Project = ({ heading, username, length, specfic, projects }) => {
   const allReposAPI = `${API}/users/${username}/repos?sort=updated&direction=desc`;
   const specficReposAPI = `${API}/repos/${username}`;
   const dummyProjectsArr = new Array(length + specfic.length).fill(
@@ -53,27 +73,38 @@ const Project = ({ heading, username, length, specfic }) => {
   useEffect(() => {
     fetchRepos();
   }, [fetchRepos]);
-
+  console.log(projects.websites.length);
   return (
     <Jumbotron fluid id="projects" className="bg-light m-0">
       <Container className="">
         <h2 className="display-4 pb-5 text-center">{heading}</h2>
         <Row>
-          {projectsArray.length
-            ? projectsArray.map((project, index) => (
-              <ProjectCard
-                key={`project-card-${index}`}
-                id={`project-card-${index}`}
-                value={project}
-              />
-            ))
-            : dummyProjectsArr.map((project, index) => (
-              <ProjectCard
-                key={`dummy-${index}`}
-                id={`dummy-${index}`}
-                value={project}
+          {projects.websites &&
+            projects.websites.length > 0 &&
+            projects.websites.map((website, index) => (
+              <WebsiteCard
+                key={`website-card-${index}`}
+                id={`website-card-${index}`}
+                website={website}
               />
             ))}
+        </Row>
+        <Row>
+          {projectsArray.length
+            ? projectsArray.map((project, index) => (
+                <ProjectCard
+                  key={`project-card-${index}`}
+                  id={`project-card-${index}`}
+                  value={project}
+                />
+              ))
+            : dummyProjectsArr.map((project, index) => (
+                <ProjectCard
+                  key={`dummy-${index}`}
+                  id={`dummy-${index}`}
+                  value={project}
+                />
+              ))}
         </Row>
       </Container>
     </Jumbotron>
