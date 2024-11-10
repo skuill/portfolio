@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/portfolio/static/css/main.626c3b40.css",
-    "main.js": "/portfolio/static/js/main.803f91b3.js",
+    "main.js": "/portfolio/static/js/main.48875f10.js",
     "static/js/488.a2ff7270.chunk.js": "/portfolio/static/js/488.a2ff7270.chunk.js",
     "static/media/interests_caucasus-collage.png": "/portfolio/static/media/interests_caucasus-collage.740de7f190727bbae082.png",
     "static/media/interests_tourunite-start.jpg": "/portfolio/static/media/interests_tourunite-start.a1d6896828a4c10c2d62.jpg",
@@ -10,16 +10,17 @@
     "static/media/interests_caucasus-zekari.jpg": "/portfolio/static/media/interests_caucasus-zekari.ca4d190967b3b6029ebe.jpg",
     "static/media/CV_Vitaly_Kvashin.pdf": "/portfolio/static/media/CV_Vitaly_Kvashin.eb1f711b87274cf42647.pdf",
     "static/media/ikva.png": "/portfolio/static/media/ikva.5546d178959b982169e6.png",
+    "static/media/tatevik_mamian_website.png": "/portfolio/static/media/tatevik_mamian_website.d85c0619d0785fe962cb.png",
     "static/media/sbertech.png": "/portfolio/static/media/sbertech.32b3662eecde4569c191.png",
     "static/media/epam.png": "/portfolio/static/media/epam.8762a624ccbd36dd999e.png",
     "static/media/MTS.png": "/portfolio/static/media/MTS.a576816a75c7270ddb49.png",
     "index.html": "/portfolio/index.html",
     "main.626c3b40.css.map": "/portfolio/static/css/main.626c3b40.css.map",
-    "main.803f91b3.js.map": "/portfolio/static/js/main.803f91b3.js.map",
+    "main.48875f10.js.map": "/portfolio/static/js/main.48875f10.js.map",
     "488.a2ff7270.chunk.js.map": "/portfolio/static/js/488.a2ff7270.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.626c3b40.css",
-    "static/js/main.803f91b3.js"
+    "static/js/main.48875f10.js"
   ]
 }
