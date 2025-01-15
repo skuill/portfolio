@@ -54,7 +54,7 @@ const about = {
   imageLink: require("../editable-stuff/portfolio.jpg"),
   imageSize: 375,
   message:
-    "My name is Vitaly Kvashin. I have been developing software for 9 years already. After graduating in computer science from Moscow State University, I worked as a developer in a small startup specializing in computer vision for about 4 years. Then I grew up to Senior NET Developer at the largest telecom operator in Russia, where I worked on a project, that allow developers and businesses to monitor and troubleshoot interactions between complex distributed systems. Almost two years ago I moved to Armenia to work for EPAM, where I contributed to the development of a large-scale alternative financial platform along side international team. I enjoy solving complex problems and find it deeply gratifying to deliver high-quality creative solutions that match the demands of involved stakeholders. I have deep experience at all stages of the software development life cycle. I am opened to any opportunities and interesting projects!",
+    "I’m Vitaly Kvashin, a software developer with 9 years of experience. After earning my degree in computer science from Moscow State University, I began my career in a startup focused on computer vision, where I spent 4 years honing my skills. I then advanced to Senior .NET Developer at Russia’s largest telecom operator, working on a project to monitor and troubleshoot interactions in complex distributed systems. Nearly two years ago, I joined EPAM in Armenia, contributing to a large-scale alternative financial platform with an international team. I excel in solving complex problems and delivering high-quality, creative solutions that meet stakeholder needs. With extensive experience across the full software development life cycle, I’m open to new opportunities and exciting projects.",
   resume: require("../editable-stuff/CV_Vitaly_Kvashin.pdf"),
 };
 
@@ -88,7 +88,7 @@ const interests = {
   show: true,
   heading: "Interests",
   message:
-    "I like spending my free time and weekends in nature. I am interested in various outdoor activities such as cycling, bikepacking and hiking. I always choose quiet unpaved roads, in forests and mountains, along rivers in wild places, where you can relax your soul and body. Sometimes I take a camera with me to capture architecture or beautiful landscapes. Playing the ukulele and bass always gives me a positive feeling and helps me relax in the evening. I also enjoy reading fantasy and sci-fi literature before bed.",
+    "I love spending my free time immersed in nature. Whether it's cycling, bikepacking, or hiking, I seek out quiet, unpaved trails through forests, mountains, and along rivers, where I can truly unwind and recharge. Occasionally, I bring along my camera to capture stunning landscapes or unique architectural details. In the evenings, I find joy and relaxation in playing the ukulele and bass. To end the day, I often dive into the captivating worlds of fantasy and sci-fi literature, which inspire and relax me before bed.",
   images: [
     { 
       img: require("../editable-stuff/interests_caucasus-collage.png"), 

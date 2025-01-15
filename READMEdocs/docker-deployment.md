@@ -11,17 +11,18 @@
    ```bash
       cd C:\Projects\portfolio
 
-      docker image build -t skuill/portfolio:5.3.0 .
+      docker image build -t skuill/portfolio:5.3.1 .
       docker image build -t skuill/portfolio:latest .
 
-      docker push skuill/portfolio:5.3.0
+      docker push skuill/portfolio:5.3.1
       docker push skuill/portfolio:latest
    ```
 
 2. Pull image, create and run container:
    ```bash
       docker pull skuill/portfolio:latest
-
+      
+      docker rm -f skuill-portfolio 
       docker run -dit --restart=always -p 3000:80 --name skuill-portfolio skuill/portfolio:latest
    ```
 
