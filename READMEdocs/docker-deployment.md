@@ -23,7 +23,7 @@
       docker pull skuill/portfolio:latest
       
       docker rm -f skuill-portfolio 
-      docker run -dit --restart=always -p 3000:80 --name skuill-portfolio skuill/portfolio:latest
+      docker run -dit --restart=always --network common-skuill-network -p 3000:80 --name skuill-portfolio skuill/portfolio:latest
    ```
 
 3. Inspect image:
