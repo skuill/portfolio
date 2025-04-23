@@ -33,10 +33,9 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: npm run build
-      - run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          npm run deploy
+      - run: npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-docker-image:
     needs: [build, publish-github-pages]
