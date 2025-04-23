@@ -75,6 +75,7 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 
 ## Setup And Deployment 🔧
 
+### How to fork and make changes
 1. To Get Started, Fork this repository to your GitHub account:
 2. Clone the forked repo from your account using:
 
@@ -95,38 +96,52 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 
    Or for deployment at custom domain, refer [create-react-app.dev](https://create-react-app.dev/docs/deployment/#step-1-add-homepage-to-packagejson)
 
-7. After editing run the following bash commands (visit site locally: http://localhost:3000/portfolio/):
+### How to run locally
+
+After editing run the following bash commands (visit site locally: http://localhost:3000/portfolio/):
 
    ```bash
    npm install
    npm start
    ```
-
-8. To deploy website, run:
+   
+### Manual deployment
+To deploy website, run:
 
    ```bash
     npm run build
     npm run deploy
    ```
 
-   Or for deployment at \<username>.github.io, refer [READMEdocs/custom-deployment.md](./READMEdocs/custom-deployment.md) and [pages.js](./pages.js)
+Or for deployment at \<username>.github.io, refer [READMEdocs/custom-deployment.md](./READMEdocs/custom-deployment.md) and [pages.js](./pages.js)
 
-   For containerized and deploy in docker refer [READMEdocs/docker-deployment.md](./READMEdocs/docker-deployment.md)
+For containerized and deploy in docker refer [READMEdocs/docker-deployment.md](./READMEdocs/docker-deployment.md)
 
-9. Congrats your site is up and running. To see it live, visit:
+### Automatic deployment
+
+To automatically build and deploy the website from the `master` branch using GitHub Actions:
+
+1. **Set the release version** in [`package.json`](https://github.com/skuill/portfolio/blob/master/package.json) under the `version` field.
+2. **Create a new release** on the [Releases page](https://github.com/skuill/portfolio/releases) using a new version tag.
+
+The latest changes will be deployed automatically via the [GitHub Actions workflow](https://github.com/skuill/portfolio/blob/master/.github/workflows/build-and-deploy.yml).
+
+### Additional information
+
+1. Congrats your site is up and running. To see it live, visit:
 
    ```https
      https://<your-username>.github.io/portfolio
    ```
 
-10. To change the thumbnail image:
+2.. To change the thumbnail image:
 
     - Navigate to the "public" folder.  
     - There you will see "social-image.png".  
     - Delete it.   
     - Take a screenshot of your version and rename it "social-image.png" and place it there.  
     
-   Next time if you make changes, repeat from step 8.
+   Next time if you make changes, repeat using deployment steps.
 
 Facing issues? Feel free to contact at sativkv@gmail.com or [telegram](https://t.me/skuill).
 
