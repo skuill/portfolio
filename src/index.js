@@ -5,6 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const packageJson = require("../package.json");
+console.log("Website version:", packageJson.version);
+
 root.render(
   <React.StrictMode>
     <App />

@@ -95,7 +95,7 @@ You should have [Node.js](https://nodejs.org/en/) and [Git](https://git-scm.com/
 
    Or for deployment at custom domain, refer [create-react-app.dev](https://create-react-app.dev/docs/deployment/#step-1-add-homepage-to-packagejson)
 
-7. After editing run the following bash commands:
+7. After editing run the following bash commands (visit site locally: http://localhost:3000/portfolio/):
 
    ```bash
    npm install

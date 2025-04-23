@@ -73,7 +73,6 @@ const Project = ({ heading, username, length, specfic, projects }) => {
   useEffect(() => {
     fetchRepos();
   }, [fetchRepos]);
-  console.log(projects.websites.length);
   return (
     <Jumbotron fluid id="projects" className="bg-light m-0">
       <Container className="">
