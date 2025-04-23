@@ -31,14 +31,15 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm ci
-      - run: npm run build
-      - run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          npm run gh-action-deploy
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install Packages
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Deploy to GH pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: build
 
   publish-docker-image:
     needs: [build, publish-github-pages]
