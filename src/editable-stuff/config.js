@@ -170,6 +170,17 @@ const experiences = {
   heading: "Experiences",
   data: [
     {
+      cardTitle: 'Backend Developer',
+      cardSubtitle: '',
+      title: '05 May 2025 - Present. MAJORITY Sweden AB.', 
+      media: {
+        type: "IMAGE",
+        source: {
+          url: require('../assets/img/MAJORITY.png')
+        }
+      }
+    },
+    {
       cardTitle: 'Senior Software Engineer',
       title: '02 May 2022 - 10 Jun 2024. EPAM Systems.', 
       cardSubtitle: "Contributed to the development of the alternative investment platform iLEVEL within an international, distributed team for S&P Global, one of the largest financial services providers.",
