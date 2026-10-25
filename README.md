@@ -10,7 +10,7 @@
 ## Stack
 React 19 built with Vite, React Bootstrap + Bootstrap 5, Sass, react-icons; Vitest + Testing Library, ESLint. Node 24 or newer (CI and Docker use Node 26). Recent projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `index.html`). Served by nginx in Docker and by GitHub Pages.
 
-Planned: gzip and caching in nginx, a Lighthouse check on every pull request, Dependabot ([#3](https://github.com/skuill/portfolio/issues/3)); then a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
+Planned: SEO and link previews ([#12](https://github.com/skuill/portfolio/issues/12)), a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
 
 ## Repository layout
 | Path | What |
@@ -28,7 +28,10 @@ Planned: gzip and caching in nginx, a Lighthouse check on every pull request, De
 | `cv/cv.typ` | Resume source (Typst), builds the PDF |
 | `branding/linkedin-cover/` | LinkedIn cover and its generator |
 | `.github/workflows/build-and-deploy.yml` | CI (lint, tests, build) and release deploy |
-| `Dockerfile` | nginx image that serves the site under `/portfolio` |
+| `Dockerfile`, `nginx/default.conf` | nginx image that serves the site under `/portfolio`, with compression and cache headers |
+| `lighthouserc.json` | Lighthouse thresholds checked on every pull request |
+| `scripts/check-container.sh` | Checks the image's nginx: compression, cache headers, redirects |
+| `.github/dependabot.yml` | Monthly dependency update pull requests |
 | `CLAUDE.md` | Notes for AI coding agents |
 
 ## Run locally
@@ -59,7 +62,15 @@ npx lighthouse https://skuill.com/portfolio/ --view                   # the live
 npx lighthouse http://localhost:4173/portfolio/ --view                # a local build (npm run build && npm run preview)
 ```
 
-Lighthouse needs Chrome or Edge; without Chrome set `CHROME_PATH` to Edge (`C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`). An automatic Lighthouse check on every pull request is planned with the move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)).
+Lighthouse needs Chrome or Edge; without Chrome set `CHROME_PATH` to Edge (`C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`). `vite preview` serves files without compression, so a local build scores lower than the live site.
+
+Every pull request also runs the `lighthouse` job: it builds the Docker image, checks its nginx with `scripts/check-container.sh` and runs Lighthouse (mobile, 3 runs, analytics and the GitHub API blocked) against the thresholds in `lighthouserc.json`. The scores are in the run's summary, the full reports in its `lighthouse` artifact. To run the same locally:
+
+```bash
+docker build -t portfolio . && docker run -d -p 8080:80 portfolio
+bash scripts/check-container.sh http://localhost:8080
+npx @lhci/cli@0.15.1 autorun
+```
 
 ## Resume PDF
 The "Resume" button opens `src/editable-stuff/CV_Vitaly_Kvashin.pdf`, built from `cv/cv.typ` with [Typst](https://typst.app/) 0.15.1 (Windows: `winget install Typst.Typst`). Edit `cv/cv.typ`, keeping its text in sync with `config.js`, then:

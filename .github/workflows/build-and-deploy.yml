@@ -35,6 +35,35 @@ jobs:
         run: npm test
       - run: npm run build
 
+  # Pull requests: the Docker image as the droplet runs it. Checks its nginx (compression, caching)
+  # and measures the page with Lighthouse against the thresholds in lighthouserc.json.
+  lighthouse:
+    needs: build
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and start the site container
+        run: |
+          docker build -t portfolio:ci .
+          docker run -d --name portfolio -p 8080:80 portfolio:ci
+      - name: Check the container nginx
+        run: bash scripts/check-container.sh http://localhost:8080
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+      - name: Lighthouse
+        run: npx --yes @lhci/cli@0.15.1 autorun
+      - name: Lighthouse summary
+        if: always()
+        run: node scripts/lighthouse-summary.js >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse
+          path: .lighthouseci/reports/
+
   publish-github-pages:
     needs: build
     runs-on: ubuntu-latest

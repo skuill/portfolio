@@ -35,3 +35,4 @@ node_modules
 build
 LICENSE
 README.md
+.lighthouseci

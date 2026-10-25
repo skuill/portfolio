@@ -1,0 +1,19 @@
+# Monthly update pull requests: minor and patch versions together in one, each major version on its own
+# (majors can break things and need a look). CI runs on every one of them.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      npm-minor-and-patch:
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions-minor-and-patch:
+        update-types: [minor, patch]
