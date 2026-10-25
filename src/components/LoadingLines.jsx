@@ -1,4 +1,3 @@
-import React from "react";
 import Placeholder from "react-bootstrap/Placeholder";
 
 // Grey animated lines shown while data is loading (Bootstrap placeholders).

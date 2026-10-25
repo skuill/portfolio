@@ -1,5 +1,3 @@
-import React from "react";
-
 const GetInTouch = ({ heading, message, email }) => {
   return (
     <div id="contact">

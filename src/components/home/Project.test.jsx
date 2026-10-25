@@ -56,11 +56,11 @@ const renderedCards = () =>
       updated: within(card).getByText(/^Updated/).textContent,
     };
   });
-const requestedUrls = () => global.fetch.mock.calls.map(([url]) => url).sort();
+const requestedUrls = () => globalThis.fetch.mock.calls.map(([url]) => url).sort();
 
 // Test double for the GitHub API: answers with `responses[url]`, a 403 for anything else.
 const githubAnswers = (responses) => {
-  global.fetch = jest.fn(async (url) =>
+  globalThis.fetch = vi.fn(async (url) =>
     url in responses
       ? { ok: true, status: 200, json: async () => responses[url] }
       : { ok: false, status: 403, statusText: "Forbidden", json: async () => ({}) }
@@ -70,9 +70,9 @@ const githubAnswers = (responses) => {
 let viewport;
 beforeEach(() => {
   viewport = installIntersectionObserver();
-  jest.spyOn(console, "error").mockImplementation(() => {});
+  vi.spyOn(console, "error").mockImplementation(() => {});
 });
-afterEach(() => jest.restoreAllMocks());
+afterEach(() => vi.restoreAllMocks());
 
 const renderProjects = () =>
   render(<Project heading="Recent Projects" github={github} projects={{ websites: [] }} />);
@@ -83,7 +83,7 @@ test("shows the snapshot at once and asks GitHub nothing until the reader scroll
   renderProjects();
 
   expect(renderedCards()).toEqual(snapshot.map(expectedCard));
-  expect(global.fetch).not.toHaveBeenCalled();
+  expect(globalThis.fetch).not.toHaveBeenCalled();
 });
 
 test("replaces the snapshot with live GitHub data once the reader scrolls near the projects", async () => {

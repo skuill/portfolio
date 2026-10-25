@@ -8,9 +8,9 @@
 [![Site preview](/public/social-image.png)](https://skuill.com/portfolio/)
 
 ## Stack
-React 18 (Create React App), React Bootstrap + Bootstrap 5, Sass, react-icons; Jest + Testing Library. Recent projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `public/index.html`). Served by nginx in Docker and by GitHub Pages.
+React 19 built with Vite, React Bootstrap + Bootstrap 5, Sass, react-icons; Vitest + Testing Library, ESLint. Node 24 or newer (CI and Docker use Node 26). Recent projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `index.html`). Served by nginx in Docker and by GitHub Pages.
 
-Planned: move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)), then a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
+Planned: gzip and caching in nginx, a Lighthouse check on every pull request, Dependabot ([#3](https://github.com/skuill/portfolio/issues/3)); then a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
 
 ## Repository layout
 | Path | What |
@@ -18,37 +18,45 @@ Planned: move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)), then
 | `src/editable-stuff/config.js` | All site content: about, experience, projects, skills, interests, contacts |
 | `src/editable-stuff/` | Images and the resume PDF used by the site |
 | `src/editable-stuff/github-projects.json` | Which GitHub repositories the Projects section shows (`username`, `latest`, `specific`) and their snapshot (`repos`) |
-| `scripts/github-projects.mjs` | Refreshes that snapshot: `npm run projects` |
+| `scripts/github-projects.js` | Refreshes that snapshot: `npm run projects` |
 | `src/components/` | Page sections (`home/`), navbar, footer |
 | `src/scss/` | Styles |
-| `public/index.html` | Page title and meta description; `public/social-image.png` is the link preview |
+| `index.html` | Page title and meta description, the entry point of the build |
+| `public/` | Files served as they are: favicon, `social-image.png` (the link preview), `robots.txt` |
+| `vite.config.js` | Build (base path `/portfolio/`, Sass options) and test settings |
+| `eslint.config.js` | Lint rules |
 | `cv/cv.typ` | Resume source (Typst), builds the PDF |
 | `branding/linkedin-cover/` | LinkedIn cover and its generator |
-| `.github/workflows/build-and-deploy.yml` | CI (tests, build) and release deploy |
+| `.github/workflows/build-and-deploy.yml` | CI (lint, tests, build) and release deploy |
 | `Dockerfile` | nginx image that serves the site under `/portfolio` |
 | `CLAUDE.md` | Notes for AI coding agents |
 
 ## Run locally
+Needs Node 24 or newer.
+
 ```bash
 npm install
-npm start          # http://localhost:3000/portfolio/
+npm start                          # dev server: http://localhost:5173/portfolio/
+npm run build && npm run preview   # production build: http://localhost:4173/portfolio/
 ```
 
 ## Tests
-Tests live next to the components (`*.test.js`):
+Tests ([Vitest](https://vitest.dev/) + Testing Library) live next to the code (`*.test.js`, `*.test.jsx`):
 
 ```bash
-npm test -- --watchAll=false
+npm test           # all tests once
+npx vitest         # watch mode
+npm run lint       # ESLint
 ```
 
-CI runs the same command on every pull request; `master` accepts only pull requests with a green `build` check.
+CI runs lint, tests and the build on every pull request; `master` accepts only pull requests with a green `build` check.
 
 ## Performance (Lighthouse)
 Every change that affects what the page loads or shows is measured with [Lighthouse](https://developer.chrome.com/docs/lighthouse) before and after, and the scores go into the pull request (mobile preset first: it is the strict one).
 
 ```bash
 npx lighthouse https://skuill.com/portfolio/ --view                   # the live site
-npx lighthouse http://127.0.0.1:8080/portfolio/ --view                # a local build served under /portfolio/
+npx lighthouse http://localhost:4173/portfolio/ --view                # a local build (npm run build && npm run preview)
 ```
 
 Lighthouse needs Chrome or Edge; without Chrome set `CHROME_PATH` to Edge (`C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`). An automatic Lighthouse check on every pull request is planned with the move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)).

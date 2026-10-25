@@ -1,5 +1,4 @@
-// GitHub projects for the Projects section: the page loads them live, scripts/github-projects.mjs saves a snapshot.
-// An .mjs module, so that Node can import it as well.
+// GitHub projects for the Projects section: the page loads them live, scripts/github-projects.js saves a snapshot.
 const API = "https://api.github.com";
 
 // GET a JSON document with fetch; throws on HTTP errors so callers can fall back.

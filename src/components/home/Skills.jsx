@@ -1,10 +1,9 @@
-import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Section from "../Section";
 import { Container } from "react-bootstrap";
 
-const Skills = React.forwardRef(({ heading, groups }, ref) => {
+const Skills = ({ heading, groups }) => {
   return (
     <Section className="bg-white m-0" id="skills">
       <Container className="p-3">
@@ -26,6 +25,6 @@ const Skills = React.forwardRef(({ heading, groups }, ref) => {
       </Container>
     </Section>
   );
-});
+};
 
 export default Skills;

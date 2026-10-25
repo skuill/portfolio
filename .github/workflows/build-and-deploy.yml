@@ -1,4 +1,4 @@
-# Every push and pull request to master: install, test, build (the "build" check is required to merge).
+# Every push and pull request to master: install, lint, test, build (the "build" check is required to merge).
 # A published release also deploys to GitHub Pages, Docker Hub and the droplet.
 
 name: Build and Deploy to Github Pages and DockerHub
@@ -14,6 +14,11 @@ on:
 permissions:
   contents: read
 
+# Releases deploy one at a time, in the order they were published; a new push to a pull request cancels its older run.
+concurrency:
+  group: ${{ github.event_name == 'release' && 'release' || format('ci-{0}', github.ref) }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,11 +26,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26
           cache: npm
       - run: npm ci
+      - name: Lint
+        run: npm run lint
       - name: Test
-        run: npm test -- --watchAll=false
+        run: npm test
       - run: npm run build
 
   publish-github-pages:
@@ -38,7 +45,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 26
           cache: npm
       - name: Install Packages
         run: npm ci
@@ -48,7 +55,7 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: build
+          folder: dist
 
   publish-docker-image:
     needs: [build, publish-github-pages]
