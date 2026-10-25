@@ -1,64 +1,33 @@
 import React from "react";
-import ReactGA from 'react-ga4';
+import Section from "../Section";
 
-import axios from "axios";
-import { Jumbotron } from "./migration";
-
-const pictureLinkRegex = new RegExp(
-  /[(http(s)?):(www.)?a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_+.~#?&//=]*)/
-);
+const handleResumeClick = () => {
+  // Same event as before the move from react-ga4 to the gtag snippet in public/index.html.
+  window.gtag?.("event", "Click", { event_category: "Resume", event_label: "Resume Download" });
+};
 
 const AboutMe = ({ heading, message, link, imgSize, resume }) => {
-  const [profilePicUrl, setProfilePicUrl] = React.useState("");
-  const [showPic, setShowPic] = React.useState(Boolean(link));
-  // https://stackoverflow.com/questions/55840294/how-to-fix-missing-dependency-warning-when-using-useeffect-react-hook
-  React.useEffect(() => {
-    const handleRequest = async () => {
-      const instaLink = "https://www.instagram.com/";
-      const instaQuery = "/?__a=1";
-      try {
-        const response = await axios.get(instaLink + link + instaQuery);
-        setProfilePicUrl(response.data.graphql.user.profile_pic_url_hd);
-      } catch (error) {
-        setShowPic(false);
-        console.error(error.message);
-      }
-    };
-
-    if (link && !pictureLinkRegex.test(link)) {
-      handleRequest();
-    } else {
-      setProfilePicUrl(link);
-    }
-  }, [link]);
-
-  const handleResumeClick = () => {
-    ReactGA.event({
-        category: 'Resume',
-        action: 'Click',
-        label: 'Resume Download',
-    });
-  };
-
   return (
-    <Jumbotron id="aboutme" className="m-0 bg-gray">
+    <Section id="aboutme" className="m-0 bg-gray">
       <div className="container">
         <div className="row">
           <h2 className="display-4 mb-5 text-center">{heading}</h2>
         </div>
         <div className="row">
           <div className="mb-5 col-lg-5 d-block align-self-center d-flex justify-content-center text-center">
-            {showPic && (
+            {link && (
               <img
                 className="rounded-circle img-relative-front"
-                src={profilePicUrl}
-                alt="profilepicture"
+                src={link}
+                alt="Vitaly Kvashin"
                 width={imgSize}
                 height={imgSize}
+                loading="lazy"
+                decoding="async"
               />
             )}
           </div>
-          <div className={`col-lg-${showPic ? "7" : "12"}`}>
+          <div className={`col-lg-${link ? "7" : "12"}`}>
             <p className="lead text-center">{message}</p>
             {resume && (
               <p className="lead text-center">
@@ -69,7 +38,7 @@ const AboutMe = ({ heading, message, link, imgSize, resume }) => {
                   rel="noreferrer noopener"
                   role="button"
                   aria-label="Resume/CV"
-                  onClick={() => handleResumeClick()}
+                  onClick={handleResumeClick}
                 >
                   Resume
                 </a>
@@ -78,7 +47,7 @@ const AboutMe = ({ heading, message, link, imgSize, resume }) => {
           </div>
         </div>
       </div>
-    </Jumbotron>
+    </Section>
   );
 };
 

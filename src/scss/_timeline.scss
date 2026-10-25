@@ -1,0 +1,143 @@
+// Experience timeline: a vertical line with company logos, one card per company.
+.timeline {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 31px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: #dbe3ee;
+  }
+}
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 22px;
+  margin-bottom: 26px;
+}
+.timeline-logo {
+  z-index: 1;
+  width: 64px;
+  height: 64px;
+  padding: 9px;
+  border-radius: 16px;
+  background: $white;
+  border: 2px solid #dbe3ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+}
+.timeline-card {
+  min-width: 0;
+  border: 1px solid $gray-200;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(16, 24, 40, 0.1);
+  }
+}
+.timeline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.timeline-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #083c87;
+}
+.timeline-company { font-weight: 400; color: $gray-700; }
+.timeline-dates { color: $gray-600; font-size: 0.9rem; white-space: nowrap; }
+.timeline-summary { margin: 10px 0 6px; }
+.timeline-achievements {
+  list-style: disc;
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  li { margin-bottom: 4px; }
+}
+// Hidden achievements slide open: the grid row animates from 0fr to 1fr.
+.timeline-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.3s ease, visibility 0s linear 0.3s;
+  &.open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.3s ease, visibility 0s;
+  }
+  .timeline-achievements { margin-top: 0; }
+}
+.timeline-collapse-inner { overflow: hidden; min-height: 0; }
+.timeline-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #09639e;
+  font-size: 0.9rem;
+  cursor: pointer;
+  &:hover { text-decoration: underline; }
+  &:focus { outline: none; }
+  &:focus-visible { outline: 2px solid #09639e; outline-offset: 3px; border-radius: 4px; }
+}
+.timeline-toggle-icon { font-size: 0.75rem; transition: transform 0.3s ease; }
+.timeline-toggle[aria-expanded="true"] .timeline-toggle-icon { transform: rotate(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-collapse, .timeline-collapse.open, .timeline-toggle-icon, .timeline-card { transition: none; }
+}
+// Several roles at one company: a small timeline inside the card, dates under each role title.
+.timeline-role.nested {
+  position: relative;
+  margin-top: 16px;
+  padding-left: 24px;
+  .timeline-head { flex-direction: column; align-items: flex-start; gap: 2px; }
+  .timeline-title { font-size: 1rem; }
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $white;
+    border: 3px solid #083c87;
+  }
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 21px;
+    bottom: -21px; // reaches the next role's dot (16px gap + 5px dot offset)
+    width: 2px;
+    background: #dbe3ee;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .timeline::before { left: 21px; }
+  .timeline-item { grid-template-columns: 44px 1fr; gap: 12px; }
+  .timeline-logo { width: 44px; height: 44px; padding: 6px; border-radius: 12px; }
+  .timeline-card { padding: 14px; }
+}

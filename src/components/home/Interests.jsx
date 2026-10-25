@@ -1,11 +1,11 @@
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
-import { Jumbotron } from "./migration";
+import Section from "../Section";
 import RotatingIcons from "../RotatingIcons/RotatingIcons.jsx";
 
 const Interests = ({ heading, message, img, imageSize }) => {
   return (
-    <Jumbotron id="interests" className="bg-light m-0">
+    <Section id="interests" className="bg-light m-0">
       <h2 className="display-4 pb-5 text-center">{heading}</h2>
       <div className="row justify-content-center">
         <div className="col-lg-5">
@@ -24,7 +24,9 @@ const Interests = ({ heading, message, img, imageSize }) => {
                   <img
                     className="d-block w-100 img-object-fit "
                     src={value.img}
-                    alt="First slide"
+                    alt={value.label}
+                    loading="lazy"
+                    decoding="async"
                     width={imageSize.width}
                     height={imageSize.height}
                   />
@@ -48,7 +50,7 @@ const Interests = ({ heading, message, img, imageSize }) => {
           </Carousel>
         </div>
       </div>
-    </Jumbotron>
+    </Section>
   );
 };
 

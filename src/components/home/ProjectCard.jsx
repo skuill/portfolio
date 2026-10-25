@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
-import Skeleton from "react-loading-skeleton";
-import axios from "axios";
+import { FaGithub } from "react-icons/fa";
+import { fetchJson } from "../../utils/fetchJson";
+import LoadingLines from "../LoadingLines";
 
 const ProjectCard = ({ value }) => {
   const {
@@ -17,19 +18,19 @@ const ProjectCard = ({ value }) => {
     <Col md={6}>
       <Card className="card shadow-lg p-3 mb-5 bg-white rounded">
         <Card.Body>
-          <Card.Title as="h5">{name || <Skeleton />} </Card.Title>
-          <Card.Text>{(!description) ? "" : description || <Skeleton count={3} />} </Card.Text>
-          {svn_url ? <CardButtons svn_url={svn_url} /> : <Skeleton count={2} />}
+          <Card.Title as="h5">{name || <LoadingLines />}</Card.Title>
+          <Card.Text>{description || ""}</Card.Text>
+          {svn_url ? <CardButtons svn_url={svn_url} /> : <LoadingLines count={2} />}
           <hr />
           {languages_url ? (
             <Language languages_url={languages_url} repo_url={svn_url} />
           ) : (
-            <Skeleton count={3} />
+            <LoadingLines count={3} />
           )}
           {value ? (
             <CardFooter star_count={stargazers_count} repo_url={svn_url} pushed_at={pushed_at} />
           ) : (
-            <Skeleton />
+            <LoadingLines />
           )}
         </Card.Body>
       </Card>
@@ -44,10 +45,10 @@ const CardButtons = ({ svn_url }) => {
         href={`${svn_url}/archive/master.zip`}
         className="btn btn-outline-secondary mx-2"
       >
-        <i className="fab fa-github" /> Clone Project
+        <FaGithub aria-hidden="true" /> Clone Project
       </a>
       <a href={svn_url} target=" _blank" className="btn btn-outline-secondary mx-2">
-        <i className="fab fa-github" /> Repo
+        <FaGithub aria-hidden="true" /> Repo
       </a>
     </div>
   );
@@ -58,8 +59,7 @@ const Language = ({ languages_url, repo_url }) => {
 
   const handleRequest = useCallback(async () => {
     try {
-      const response = await axios.get(languages_url);
-      return setData(response.data);
+      return setData(await fetchJson(languages_url));
     } catch (error) {
       console.error(error.message);
     }
@@ -132,7 +132,7 @@ const CardFooter = ({ star_count, repo_url, pushed_at }) => {
         className="text-dark text-decoration-none"
       >
         <span className="text-dark card-link mr-4">
-          <i className="fab fa-github" /> Stars{" "}
+          <FaGithub aria-hidden="true" /> Stars{" "}
           <span className="badge badge-dark">{star_count}</span>
         </span>
       </a>

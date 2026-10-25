@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "react-bootstrap/Container";
+import { FaCode, FaHeart, FaReact } from "react-icons/fa";
 
 const Footer = (props) => {
   const bgStyle = { backgroundColor: "#f0eded" };
@@ -8,7 +9,7 @@ const Footer = (props) => {
     <footer style={bgStyle} className="mt-auto py-5 text-center">
       <Container>
         {props.children}
-        <i className="fas fa-code" /> with <i className="fas fa-heart" /> by{" "}
+        <FaCode aria-label="Code" /> with <FaHeart aria-label="love" /> by{" "}
         <a
           rel="noopener"
           href="https://github.com/skuill"
@@ -17,7 +18,7 @@ const Footer = (props) => {
             Vitaly Kvashin
           </span>
         </a>{" "}
-        using <i className="fab fa-react" />
+        using <FaReact aria-label="React" />
         <p>
           <small className="text-muted">
             Project code is open source. Feel free to fork and make your own
