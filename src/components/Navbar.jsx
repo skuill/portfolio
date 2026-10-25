@@ -19,7 +19,7 @@ const Navigation = React.forwardRef((props, ref) => {
   const navbarDimensions = useResizeObserver(navbarMenuRef);
   const navBottom = navbarDimensions ? navbarDimensions.bottom : 0;
   useScrollPosition(
-    ({ prevPos, currPos }) => {
+    ({ currPos }) => {
       if (!navbarDimensions) return;
       if (ref.current === undefined) return;
       currPos.y + ref.current.offsetTop - navbarDimensions.bottom > 5 || (currPos.y === 0 && ref.current.offsetTop === 0)

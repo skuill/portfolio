@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef } from "react";
 import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
 
@@ -15,22 +14,24 @@ function getScrollPosition({ element, useWindow }) {
     : { x: position.left, y: position.top };
 }
 
-export function useScrollPosition(effect, deps, element, useWindow, wait) {
+// Calls effect({ prevPos, currPos }) on every scroll (at most once per `wait` ms when it is set);
+// subscribes again when `deps` change.
+export function useScrollPosition(effect, deps = [], element = null, useWindow = false, wait = null) {
   const position = useRef(getScrollPosition({ useWindow }));
-
-  let throttleTimeout = null;
-
-  const callBack = () => {
-    const currPos = getScrollPosition({ element, useWindow });
-    effect({ prevPos: position.current, currPos });
-    position.current = currPos;
-    throttleTimeout = null;
-  };
 
   useIsomorphicLayoutEffect(() => {
     if (!isBrowser) {
       return;
     }
+
+    let throttleTimeout = null;
+
+    const callBack = () => {
+      const currPos = getScrollPosition({ element, useWindow });
+      effect({ prevPos: position.current, currPos });
+      position.current = currPos;
+      throttleTimeout = null;
+    };
 
     const handleScroll = () => {
       if (wait) {
@@ -50,10 +51,3 @@ export function useScrollPosition(effect, deps, element, useWindow, wait) {
     };
   }, deps);
 }
-
-useScrollPosition.defaultProps = {
-  deps: [],
-  element: false,
-  useWindow: false,
-  wait: null,
-};

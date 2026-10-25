@@ -1,4 +1,3 @@
-import React from "react";
 import { GiMountains, GiForestCamp, GiPhotoCamera, GiGuitar, GiCycling, GiSpellBook } from "react-icons/gi";
 import "./RotatingIcons.scss";
 

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Section from "../Section";
 import { Row, Col, Card } from "react-bootstrap";
 import ProjectCard from "./ProjectCard";
 import LoadingLines from "../LoadingLines";
 import useNearViewport from "../../hooks/useNearViewport";
-import { loadGithubProjects } from "../../utils/githubProjects.mjs";
+import { loadGithubProjects } from "../../utils/githubProjects.js";
 
 const WebsiteCard = ({ website }) => {
   const { imageLink, url, description, technologies } =

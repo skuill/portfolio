@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { FaGithub } from "react-icons/fa";
@@ -77,29 +77,21 @@ const Language = ({ data, repo_url }) => {
   );
 };
 
+// "just now", "5 hours ago" or "on October 1, 2026".
+const updatedAgo = (pushed_at, now) => {
+  const date = new Date(pushed_at);
+  const hours = Math.trunc((now - date.getTime()) / 1000 / 60 / 60);
+
+  if (hours < 1) return "just now";
+  if (hours < 24) return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  return `on ${new Intl.DateTimeFormat("en-US", options).format(date)}`;
+};
+
 const CardFooter = ({ star_count, repo_url, pushed_at }) => {
-  const [updated_at, setUpdated_at] = useState("0 mints");
-
-  const handleUpdatetime = useCallback(() => {
-    const date = new Date(pushed_at);
-    const nowdate = new Date();
-    const diff = nowdate.getTime() - date.getTime();
-    const hours = Math.trunc(diff / 1000 / 60 / 60);
-
-    if (hours < 24) {
-      if (hours < 1) return setUpdated_at("just now");
-      let measurement = hours === 1 ? "hour" : "hours";
-      return setUpdated_at(`${hours.toString()} ${measurement} ago`);
-    } else {
-      const options = { day: "numeric", month: "long", year: "numeric" };
-      const time = new Intl.DateTimeFormat("en-US", options).format(date);
-      return setUpdated_at(`on ${time}`);
-    }
-  }, [pushed_at]);
-
-  useEffect(() => {
-    handleUpdatetime();
-  }, [handleUpdatetime]);
+  // The time of the first render: rendering stays pure, the text does not change while the page is open.
+  const [now] = useState(Date.now);
+  const updated_at = updatedAgo(pushed_at, now);
 
   return (
     <p className="card-text">

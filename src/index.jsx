@@ -2,11 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import "./scss/custom.scss";
 import App from './App';
+import { version } from "../package.json";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
-const packageJson = require("../package.json");
-console.log("Website version:", packageJson.version);
+console.log("Website version:", version);
 
 root.render(
   <React.StrictMode>

@@ -1,3 +1,7 @@
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
+
 // migration
 $font-size-display-base: null;
 // end migration
@@ -16,9 +20,9 @@ $heading-type-scale-base: minor-third;
 $display-type-scale-base: minor-third;
 
 @function check-type-scale-value($scale) {
-  @if map-has-key($type-scales, $scale) {
-    @return map-get($type-scales, $scale);
-  } @else if type-of($scale) == number and unitless($scale) {
+  @if map.has-key($type-scales, $scale) {
+    @return map.get($type-scales, $scale);
+  } @else if meta.type-of($scale) == number and math.is-unitless($scale) {
     @return $scale;
   } @else {
     @error "Sorry, `#{$scale}` is not a unitless number value or a pre-defined key in the $type-scales map.";

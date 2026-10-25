@@ -30,12 +30,12 @@ const jsonResponse = (body) => ({ ok: true, status: 200, json: async () => body 
 let viewport;
 beforeEach(() => {
   viewport = installIntersectionObserver();
-  global.fetch = jest.fn(async (url) => {
+  globalThis.fetch = vi.fn(async (url) => {
     if (url === allReposUrl) return jsonResponse(githubRepos);
     if (url.endsWith("/languages")) return jsonResponse({ "C#": 1000 });
     throw new Error(`Unexpected request: ${url}`);
   });
-  window.gtag = jest.fn();
+  window.gtag = vi.fn();
   // jsdom has no ResizeObserver; the navbar only uses it to switch its background on scroll.
   window.ResizeObserver = class {
     observe() {}
@@ -73,12 +73,12 @@ test("renders the name and every enabled section in order", async () => {
 
 test("loads the latest repositories and their languages from GitHub once the reader scrolls, nothing else", async () => {
   render(<App />);
-  expect(global.fetch).not.toHaveBeenCalled();
+  expect(globalThis.fetch).not.toHaveBeenCalled();
 
   viewport.scrollThroughPage();
   await waitForRepos();
 
-  expect(global.fetch.mock.calls.map(([url]) => url).sort()).toEqual(
+  expect(globalThis.fetch.mock.calls.map(([url]) => url).sort()).toEqual(
     [allReposUrl, ...shownRepos.map((r) => r.languages_url)].sort()
   );
 });

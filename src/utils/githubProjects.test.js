@@ -1,4 +1,4 @@
-import { loadGithubProjects } from "./githubProjects.mjs";
+import { loadGithubProjects } from "./githubProjects.js";
 
 const API = "https://api.github.com";
 const username = "skuill";
@@ -26,7 +26,7 @@ const project = (name) => ({
 
 // Test double for the GitHub API: answers with `responses[url]`, a 403 for anything else.
 const githubAnswers = (responses) => {
-  global.fetch = jest.fn(async (url) =>
+  globalThis.fetch = vi.fn(async (url) =>
     url in responses
       ? { ok: true, status: 200, json: async () => responses[url] }
       : { ok: false, status: 403, statusText: "Forbidden", json: async () => ({}) }
@@ -34,7 +34,7 @@ const githubAnswers = (responses) => {
 };
 const languagesOf = (...names) =>
   Object.fromEntries(names.map((name) => [githubRepo(name).languages_url, { "C#": 1000, [name]: 1 }]));
-const requestedUrls = () => global.fetch.mock.calls.map(([url]) => url).sort();
+const requestedUrls = () => globalThis.fetch.mock.calls.map(([url]) => url).sort();
 
 test("returns the latest repositories and the specific ones with their languages and only the fields the cards show", async () => {
   githubAnswers({

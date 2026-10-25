@@ -1,4 +1,3 @@
-import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 import Section from "../Section";
 import RotatingIcons from "../RotatingIcons/RotatingIcons.jsx";
