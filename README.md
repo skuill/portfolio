@@ -105,6 +105,16 @@ After editing run the following bash commands (visit site locally: http://localh
    npm start
    ```
 
+### How to run the tests
+
+Tests live next to the components (`*.test.js`, Jest + Testing Library). Run them once:
+
+   ```bash
+   npm test -- --watchAll=false
+   ```
+
+CI runs the same command on every pull request; `master` only accepts pull requests with a green `build` check.
+
 ### How to update the resume PDF
 
 The "Resume" button opens `src/editable-stuff/CV_Vitaly_Kvashin.pdf`, built from `cv/cv.typ` with [Typst](https://typst.app/) (0.15.1; on Windows: `winget install Typst.Typst`). Edit `cv/cv.typ`, keeping its text in sync with `src/editable-stuff/config.js`, then run:
