@@ -2,7 +2,7 @@
   "name": "developers-portfolio",
   "description": "A personal static website/portfolio hosted with GitHub Pages.",
   "homepage": "https://skuill.github.io/portfolio",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "dependencies": {
     "bootstrap": "^5.3.5",
     "react": "^18.3.1",
