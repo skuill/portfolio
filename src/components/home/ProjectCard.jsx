@@ -2,36 +2,27 @@ import React, { useState, useEffect, useCallback } from "react";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import { FaGithub } from "react-icons/fa";
-import { fetchJson } from "../../utils/fetchJson";
-import LoadingLines from "../LoadingLines";
 
+// value: a repository as loadGithubProjects returns it (languages: bytes per language).
 const ProjectCard = ({ value }) => {
   const {
     name,
     description,
     svn_url,
     stargazers_count,
-    languages_url,
+    languages,
     pushed_at,
   } = value;
   return (
     <Col md={6}>
       <Card className="card shadow-lg p-3 mb-5 bg-white rounded">
         <Card.Body>
-          <Card.Title as="h5">{name || <LoadingLines />}</Card.Title>
+          <Card.Title as="h5">{name}</Card.Title>
           <Card.Text>{description || ""}</Card.Text>
-          {svn_url ? <CardButtons svn_url={svn_url} /> : <LoadingLines count={2} />}
+          <CardButtons svn_url={svn_url} />
           <hr />
-          {languages_url ? (
-            <Language languages_url={languages_url} repo_url={svn_url} />
-          ) : (
-            <LoadingLines count={3} />
-          )}
-          {value ? (
-            <CardFooter star_count={stargazers_count} repo_url={svn_url} pushed_at={pushed_at} />
-          ) : (
-            <LoadingLines />
-          )}
+          <Language data={languages} repo_url={svn_url} />
+          <CardFooter star_count={stargazers_count} repo_url={svn_url} pushed_at={pushed_at} />
         </Card.Body>
       </Card>
     </Col>
@@ -47,28 +38,14 @@ const CardButtons = ({ svn_url }) => {
       >
         <FaGithub aria-hidden="true" /> Clone Project
       </a>
-      <a href={svn_url} target=" _blank" className="btn btn-outline-secondary mx-2">
+      <a href={svn_url} target="_blank" rel="noopener noreferrer" className="btn btn-outline-secondary mx-2">
         <FaGithub aria-hidden="true" /> Repo
       </a>
     </div>
   );
 };
 
-const Language = ({ languages_url, repo_url }) => {
-  const [data, setData] = useState([]);
-
-  const handleRequest = useCallback(async () => {
-    try {
-      return setData(await fetchJson(languages_url));
-    } catch (error) {
-      console.error(error.message);
-    }
-  }, [languages_url]);
-
-  useEffect(() => {
-    handleRequest();
-  }, [handleRequest]);
-
+const Language = ({ data, repo_url }) => {
   const array = [];
   let total_count = 0;
   for (let index in data) {
@@ -85,7 +62,7 @@ const Language = ({ languages_url, repo_url }) => {
             key={language}
             className="card-link"
             href={repo_url + `/search?l=${language}`}
-            target=" _blank"
+            target="_blank"
             rel="noopener noreferrer"
           >
             <span className="badge bg-light text-dark">
@@ -128,12 +105,13 @@ const CardFooter = ({ star_count, repo_url, pushed_at }) => {
     <p className="card-text">
       <a
         href={repo_url + "/stargazers"}
-        target=" _blank"
+        target="_blank"
+        rel="noopener noreferrer"
         className="text-dark text-decoration-none"
       >
-        <span className="text-dark card-link mr-4">
+        <span className="text-dark card-link me-4">
           <FaGithub aria-hidden="true" /> Stars{" "}
-          <span className="badge badge-dark">{star_count}</span>
+          <span className="badge text-bg-dark">{star_count}</span>
         </span>
       </a>
       <small className="text-muted">Updated {updated_at}</small>

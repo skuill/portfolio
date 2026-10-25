@@ -1,0 +1,55 @@
+{
+  "username": "skuill",
+  "latest": 4,
+  "specific": [],
+  "repos": [
+    {
+      "name": "portfolio",
+      "description": "The personal website/portfolio. Built using React and Bootstrap.",
+      "svn_url": "https://github.com/skuill/portfolio",
+      "stargazers_count": 1,
+      "pushed_at": "2026-10-25T16:44:58Z",
+      "languages": {
+        "JavaScript": 51026,
+        "SCSS": 46594,
+        "Typst": 10161,
+        "Python": 7453,
+        "HTML": 2401,
+        "Dockerfile": 1253
+      }
+    },
+    {
+      "name": "LyricsScraperNET",
+      "description": "🎼LyricsScraperNET is a versatile .NET library that provides an API for searching song lyrics from the web.",
+      "svn_url": "https://github.com/skuill/LyricsScraperNET",
+      "stargazers_count": 9,
+      "pushed_at": "2026-09-05T20:23:49Z",
+      "languages": {
+        "C#": 301759,
+        "Shell": 643
+      }
+    },
+    {
+      "name": "LyricsScraperApi",
+      "description": "🎼 LyricsScraperApi is a .NET-based API service for searching and retrieving song lyrics from various web sources.",
+      "svn_url": "https://github.com/skuill/LyricsScraperApi",
+      "stargazers_count": 2,
+      "pushed_at": "2025-04-23T16:11:23Z",
+      "languages": {
+        "C#": 70187,
+        "Dockerfile": 909
+      }
+    },
+    {
+      "name": "ConcertBuddy",
+      "description": "Your personal Telegram bot-buddy for concerts — discover artists, setlists, and lyrics effortlessly! Built with C#/.NET 😎",
+      "svn_url": "https://github.com/skuill/ConcertBuddy",
+      "stargazers_count": 8,
+      "pushed_at": "2025-04-16T14:46:20Z",
+      "languages": {
+        "C#": 152976,
+        "Dockerfile": 1010
+      }
+    }
+  ]
+}

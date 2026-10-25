@@ -10,6 +10,7 @@ import epamLogo from "../assets/img/epam.png";
 import sbertechLogo from "../assets/img/sbertech.png";
 import mtsLogo from "../assets/img/MTS.png";
 import ikvaLogo from "../assets/img/ikva.png";
+import githubProjects from "./github-projects.json";
 
 // Navigation Bar SECTION
 const navBar = {
@@ -60,16 +61,13 @@ const about = {
 };
 
 // PROJECTS SECTION
-// Setting up project lenght will automatically fetch your that number of recently updated projects, or you can set this field 0 to show none.
-//      i.e: reposLength: 0,
-// If you want to display specfic projects, add the repository names,
-//      i.e ["repository-1", "repo-2"]
+// GitHub projects live in github-projects.json: the username, how many recently updated repositories to show (latest),
+// extra repository names (specific) and the last snapshot of them. The page shows the snapshot at once and replaces it
+// with live data from GitHub when the reader scrolls to the section. Refresh the snapshot: npm run projects.
 const repos = {
   show: true,
   heading: "Recent Projects",
-  gitHubUsername: "skuill", //i.e."johnDoe12Gh"
-  reposLength: 4,
-  specificRepos: [],
+  github: githubProjects,
 };
 
 const projects = {

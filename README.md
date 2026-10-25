@@ -8,7 +8,7 @@
 [![Site preview](/public/social-image.png)](https://skuill.com/portfolio/)
 
 ## Stack
-React 18 (Create React App), React Bootstrap + Bootstrap 5, Sass, react-icons; Jest + Testing Library. Recent projects come from the GitHub API (browser `fetch`); analytics: Google Analytics 4 (gtag snippet in `public/index.html`). Served by nginx in Docker and by GitHub Pages.
+React 18 (Create React App), React Bootstrap + Bootstrap 5, Sass, react-icons; Jest + Testing Library. Recent projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `public/index.html`). Served by nginx in Docker and by GitHub Pages.
 
 Planned: move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)), then a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
 
@@ -17,6 +17,8 @@ Planned: move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)), then
 |---|---|
 | `src/editable-stuff/config.js` | All site content: about, experience, projects, skills, interests, contacts |
 | `src/editable-stuff/` | Images and the resume PDF used by the site |
+| `src/editable-stuff/github-projects.json` | Which GitHub repositories the Projects section shows (`username`, `latest`, `specific`) and their snapshot (`repos`) |
+| `scripts/github-projects.mjs` | Refreshes that snapshot: `npm run projects` |
 | `src/components/` | Page sections (`home/`), navbar, footer |
 | `src/scss/` | Styles |
 | `public/index.html` | Page title and meta description; `public/social-image.png` is the link preview |
@@ -60,7 +62,7 @@ npm run cv
 
 ## Deploy
 Automatic, from a GitHub release:
-1. Bump `version` in `package.json` (through a pull request).
+1. Bump `version` in `package.json` (through a pull request); worth running `npm run projects` in the same pull request to refresh the projects snapshot.
 2. Publish a [release](https://github.com/skuill/portfolio/releases) with a new version tag.
 
 The [workflow](.github/workflows/build-and-deploy.yml) then deploys to GitHub Pages, pushes the Docker image `skuill/portfolio` to Docker Hub and restarts the container on the droplet. Manual Docker commands: [READMEdocs/docker-deployment.md](READMEdocs/docker-deployment.md).

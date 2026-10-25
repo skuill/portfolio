@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cv": "typst compile cv/cv.typ src/editable-stuff/CV_Vitaly_Kvashin.pdf"
+    "cv": "typst compile cv/cv.typ src/editable-stuff/CV_Vitaly_Kvashin.pdf",
+    "projects": "node scripts/github-projects.mjs"
   },
   "engines": {
     "npm": "^10.8.2",
