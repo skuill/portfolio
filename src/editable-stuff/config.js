@@ -54,7 +54,7 @@ const about = {
   imageLink: require("../editable-stuff/portfolio.jpg"),
   imageSize: 375,
   message:
-    "I’m Vitaly Kvashin, a software developer with 9 years of experience. After earning my degree in computer science from Moscow State University, I began my career in a startup focused on computer vision, where I spent 4 years honing my skills. I then advanced to Senior .NET Developer at Russia’s largest telecom operator, working on a project to monitor and troubleshoot interactions in complex distributed systems. Nearly two years ago, I joined EPAM in Armenia, contributing to a large-scale alternative financial platform with an international team. I excel in solving complex problems and delivering high-quality, creative solutions that meet stakeholder needs. With extensive experience across the full software development life cycle, I’m open to new opportunities and exciting projects.",
+    "I have been developing software for over 12 years. After graduating in computer science from Moscow State University, I worked as a developer in a small startup specializing in computer vision for about 4 years. Then I grew to Senior .NET Developer at MTS, the largest telecom operator in Russia, where I worked on a platform that allows developers and businesses to monitor and troubleshoot interactions between complex distributed systems. In 2022 I moved to Armenia and joined EPAM, where I developed an alternative financial platform for one of the large clients in a distributed team. Since May 2025 I have been a backend developer at MAJORITY, a mobile financial app for migrants, where I build payment services and integrations with payment providers, from the first API investigation to a stable production flow, and work with the team on the stability of the wider platform. I enjoy solving complex problems, finding root causes instead of fixing symptoms, and helping other developers and customers create and deliver quality solutions. I have deep experience at all stages of the software development life cycle, and I use AI coding agents as a daily part of my work.",
   resume: require("../editable-stuff/CV_Vitaly_Kvashin.pdf"),
 };
 
@@ -102,7 +102,7 @@ const interests = {
     },
     { 
       img: require("../editable-stuff/interests_tourunite-start.jpg"), 
-      label: "Tour Unite. Sortavala — Konakovo. 2021.", 
+      label: "Tour Unite. Sortavala - Konakovo. 2021.", 
       paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia.",
       links: [
         {
@@ -134,25 +134,56 @@ const interests = {
 const skills = {
   show: true,
   heading: "Skills",
-  hardSkills: [
-    { name: "Backend. C#, Java, Python", value: 90 },
-    { name: "Technologies. .NET, ASP.NET, WEB API, WPF, WCF, ...", value: 85 },
-    { name: "DevOps. Ansible, Azure DevOps, Jenkins, ...", value: 60 },
-    { name: "Cloud. AWS: EC2, ECS, S3, CloudFront, SQS, ...", value: 55 },
-    { name: "Data Structures and Algorithms", value: 75 },
-    { name: "Frontend. Javascript, Typescript, React", value: 40 },
-    { name: "Tools. Postman, Fiddler, Wireshark, Kibana, Grafana, Jaeger, ...", value: 70 },
-    { name: "Databases. MS SQL Server, Oracle, PostgreSQL, ElasticSearch, ...", value: 60 }
-  ],
-  softSkills: [
-    { name: "Goal-Oriented", value: 80 },
-    { name: "Collaboration", value: 90 },
-    { name: "Positivity", value: 75 },
-    { name: "Adaptability", value: 90 },
-    { name: "Problem Solving", value: 85 },
-    { name: "Empathy", value: 95 },
-    { name: "Organization", value: 70 },
-    { name: "Creativity", value: 85 },
+  groups: [
+    {
+      name: "Core",
+      items: ["C#", ".NET / ASP.NET Core", "Web API", "MS SQL Server (T-SQL)", "RabbitMQ", "Docker", "Kubernetes"],
+    },
+    {
+      name: "Architecture",
+      items: ["Microservices", "Event-driven architecture", "DDD", "Distributed systems"],
+    },
+    {
+      name: "Payments and Integrations",
+      items: [
+        "Third-party payment provider integrations",
+        "Cross-border payments",
+        "Webhooks",
+        "Idempotency",
+        "Retry and dead-letter handling",
+        "Distributed locks",
+        "KYC",
+        "Fraud and risk limits",
+      ],
+    },
+    {
+      name: "Observability",
+      items: ["Datadog", "Elasticsearch / Kibana", "Grafana", "Jaeger"],
+    },
+    {
+      name: "Testing",
+      items: ["xUnit", "NUnit", "Integration and regression tests"],
+    },
+    {
+      name: "AI-assisted Development",
+      items: ["Claude Code", "Cursor", "MCP servers", "Agent skills", "CLAUDE.md / AGENTS.md context files"],
+    },
+    {
+      name: "Also worked with",
+      items: [
+        "Python",
+        "TypeScript / React",
+        "Java",
+        "PostgreSQL",
+        "Oracle",
+        "Redis",
+        "Apache Kafka",
+        "AWS (EC2, ECS, S3, CloudFront, SQS, SNS)",
+        "WPF",
+        "WCF",
+        "Ansible",
+      ],
+    },
   ],
 };
 
@@ -161,7 +192,7 @@ const getInTouch = {
   show: true,
   heading: "Get In Touch",
   message:
-    "I'm currently looking for full-time Senior Software Developer opportunities! If you know of any positions available, if you have any questions, or if you just want to say hi, please feel free to email me at",
+    "Have a question, an idea, or just want to say hi? Feel free to email me at",
   email: "sativkv@gmail.com",
 };
 
@@ -171,8 +202,18 @@ const experiences = {
   data: [
     {
       cardTitle: 'Backend Developer',
-      cardSubtitle: '',
-      title: '05 May 2025 - Present. MAJORITY Sweden AB.', 
+      title: '05 May 2025 - Present. MAJORITY Sweden AB.',
+      cardSubtitle: "Backend developer in the Services team at MAJORITY, a mobile financial app for migrants. The team shares the backend for cross-border deposits, money transfers, phone plans and calling, built in C#/.NET with SQL Server, RabbitMQ and Kubernetes.",
+      cardDetailedText: [
+        "• Built a new deposit (on-ramping) service from scratch: a .NET microservice that lets users fund their digital wallet with local bank transfers in Latin America, including currency conversion, limits, notifications and regression tests.",
+        "• Designed and built a new payment provider integration service from scratch, from the provider's API documentation to the architecture and implementation.",
+        "• Worked with the team on other payment provider integrations and hardened them after launch with idempotency, automatic retries and recovery, and expiry handling.",
+        "• Implemented fraud and risk controls for deposits, with rules the Risk team can configure without code changes.",
+        "• Contributed to the stability and new features of the phone plan (eSIM) backend: renewals, payment pre-authorisations, provider webhooks and notifications.",
+        "• Improved other parts of the platform: money-transfer reliability (payer routing, provider rate-limit handling), calling features, and lower database load with caching.",
+        "• Production on-call and support: root-cause analysis of incidents, permanent fixes instead of manual clean-ups, and production investigations for customer support.",
+        "• Built AI tooling for development and testing: an MCP server for the test environment, tools for an AI customer-support assistant, and agent-ready documentation for services. I work inside an AI coding agent (Claude Code) every day."
+      ],
       media: {
         type: "IMAGE",
         source: {
@@ -229,7 +270,7 @@ const experiences = {
         { cardTitle: 'Software Developer',
           title: '17 Sep 2018 - 01 Mar 2020',
           cardDetailedText: [
-            "• Contributed to the development of CentralLogging, a centralized logging and tracing system, wich involved adding multithreading for data stream processing and performing load tests to ensure effective multitenancy support.",
+            "• Contributed to the development of CentralLogging, a centralized logging and tracing system, which involved adding multithreading for data stream processing and performing load tests to ensure effective multitenancy support.",
             "• Developed the methodology and conducted load testing for the MVP of the Observability platform, presenting at the internal \"Demo Day\" conference attended by over 250 people.",
             "• Developed a prototype microservice for compatibility with the legacy CentralLogging system, which was a key component in the R&D phase of the Observability Platform.",
             "• Configured CI/CD for the Observability Platform using Ansible technologies in a Kubernetes environment from scratch using TFS.",
@@ -245,7 +286,7 @@ const experiences = {
       }
     },
     {
-      cardTitle: 'Software Developer.',
+      cardTitle: 'Software Developer',
       title: '15 Jul 2014 - 14 Sep 2018. IKVA LLC.', 
       cardDetailedText: [
         "• Developed a WPF desktop application for a management console, enabling remote and centralized operations for setting up, commissioning, and maintaining the traffic enforcement system.",

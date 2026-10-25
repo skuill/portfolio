@@ -104,6 +104,14 @@ After editing run the following bash commands (visit site locally: http://localh
    npm install
    npm start
    ```
+
+### How to update the resume PDF
+
+The "Resume" button opens `src/editable-stuff/CV_Vitaly_Kvashin.pdf`, built from `cv/cv.typ` with [Typst](https://typst.app/) (0.15.1; on Windows: `winget install Typst.Typst`). Edit `cv/cv.typ`, keeping its text in sync with `src/editable-stuff/config.js`, then run:
+
+   ```bash
+   npm run cv
+   ```
    
 ### Manual deployment
 To deploy website, run:
