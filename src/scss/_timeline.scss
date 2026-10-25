@@ -1,0 +1,99 @@
+// Experience timeline: a vertical line with company logos, one card per company.
+.timeline {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  &::before {
+    content: "";
+    position: absolute;
+    left: 27px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: #dbe3ee;
+  }
+}
+.timeline-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 22px;
+  margin-bottom: 26px;
+}
+.timeline-logo {
+  z-index: 1;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $white;
+  border: 2px solid #dbe3ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  img { width: 40px; height: 40px; object-fit: contain; }
+}
+.timeline-card {
+  min-width: 0;
+  border: 1px solid $gray-200;
+  border-radius: 12px;
+  padding: 16px 20px;
+  box-shadow: 0 2px 10px rgba(16, 24, 40, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(16, 24, 40, 0.1);
+  }
+}
+.timeline-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+.timeline-title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #083c87;
+}
+.timeline-company { font-weight: 400; color: $gray-700; }
+.timeline-dates { color: $gray-600; font-size: 0.9rem; white-space: nowrap; }
+.timeline-summary { margin: 10px 0 6px; }
+.timeline-achievements {
+  list-style: disc;
+  margin: 6px 0 0;
+  padding-left: 18px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  li { margin-bottom: 4px; }
+}
+.timeline-more {
+  summary {
+    cursor: pointer;
+    color: #09639e;
+    font-size: 0.9rem;
+    margin-top: 6px;
+  }
+  .show-less { display: none; }
+  &[open] {
+    .show-all { display: none; }
+    .show-less { display: inline; }
+  }
+}
+.timeline-role.nested {
+  border-left: 2px solid $gray-200;
+  margin-top: 12px;
+  padding-left: 14px;
+  .timeline-title { font-size: 1rem; }
+}
+
+@media (max-width: 575.98px) {
+  .timeline::before { left: 17px; }
+  .timeline-item { grid-template-columns: 36px 1fr; gap: 12px; }
+  .timeline-logo { width: 36px; height: 36px; img { width: 26px; height: 26px; } }
+  .timeline-card { padding: 14px; }
+}

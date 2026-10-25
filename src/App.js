@@ -1,6 +1,4 @@
 import React from "react";
-import ReactGA from 'react-ga4';
-import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   navBar,
   mainBody,
@@ -22,19 +20,19 @@ import GetInTouch from "./components/home/GetInTouch.jsx";
 import Interests from "./components/home/Interests.jsx";
 import Experience from "./components/home/Experience";
 
-const TRACKING_ID = "G-SLG56091CZ"; // your Measurement ID
-
-const Home = React.forwardRef((props, ref) => {
-  ReactGA.send({ hitType: "pageview", page: "/", title: "Home" });
+// Google Analytics: the gtag snippet in public/index.html sends the page view.
+const App = () => {
+  const titleRef = React.useRef();
 
   return (
     <>
+      {navBar.show && <Navbar ref={titleRef} />}
       <MainBody
         gradient={mainBody.gradientColors}
         title={`${mainBody.firstName} ${mainBody.middleName} ${mainBody.lastName}`}
         message={mainBody.message}
         icons={mainBody.icons}
-        ref={ref}
+        ref={titleRef}
       />
       {about.show && (
         <AboutMe
@@ -45,10 +43,7 @@ const Home = React.forwardRef((props, ref) => {
           resume={about.resume}
         />
       )}
-      {experiences.show && (
-        <Experience experiences={experiences}/>
-        )
-      }
+      {experiences.show && <Experience experiences={experiences} />}
       {(repos.show || projects.show) && (
         <Project
           heading={repos.heading}
@@ -71,22 +66,7 @@ const Home = React.forwardRef((props, ref) => {
           img={interests.images}
           imageSize={interests.imageSize}
         />
-      )}      
-    </>
-  );
-});
-
-const App = () => {
-  const titleRef = React.useRef();
-
-  ReactGA.initialize(TRACKING_ID);
-
-  return (
-    <BrowserRouter basename={process.env.PUBLIC_URL + "/"}>
-      {navBar.show && <Navbar ref={titleRef} />}
-      <Routes>
-        <Route path="/" exact element={<Home ref={titleRef} />} />
-      </Routes>
+      )}
       <Footer>
         {getInTouch.show && (
           <GetInTouch
@@ -96,7 +76,7 @@ const App = () => {
           />
         )}
       </Footer>
-    </BrowserRouter>
+    </>
   );
 };
 

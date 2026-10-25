@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from "react";
 import Container from "react-bootstrap/Container";
-import { Jumbotron } from "./migration";
+import Section from "../Section";
 import { Row, Col, Card } from "react-bootstrap";
 import ProjectCard from "./ProjectCard";
-import axios from "axios";
-import Skeleton from "react-loading-skeleton";
+import { fetchJson } from "../../utils/fetchJson";
+import LoadingLines from "../LoadingLines";
 
 const WebsiteCard = ({ website }) => {
   const { imageLink, url, description, technologies } =
@@ -12,13 +12,13 @@ const WebsiteCard = ({ website }) => {
   return (
     <Col md={6}>
       <Card className="card shadow-lg p-3 mb-5 bg-white rounded">
-        <Card.Img fluid="true" src={imageLink} />
+        <Card.Img src={imageLink} alt={description} loading="lazy" decoding="async" />
         <Card.Body>
-          {description ? <Card.Title as="h5">{description || <Skeleton />} </Card.Title> : <Skeleton></Skeleton>}
+          {description ? <Card.Title as="h5">{description}</Card.Title> : <LoadingLines />}
           <Card.Text>
-            {!technologies ? "" : "Created using: " + technologies || <Skeleton count={3} />}{" "}
+            {technologies ? `Created using: ${technologies}` : ""}
           </Card.Text>
-          {url ? <Card.Link href={url}>Website Link</Card.Link> : <Skeleton count={1}></Skeleton>}
+          {url ? <Card.Link href={url}>Website Link</Card.Link> : <LoadingLines />}
         </Card.Body>
       </Card>
     </Col>
@@ -50,14 +50,13 @@ const Project = ({ heading, username, length, specfic, projects }) => {
     let repoList = [];
     try {
       // getting all repos
-      const response = await axios.get(allReposAPI);
+      const allRepos = await fetchJson(allReposAPI);
       // slicing to the length
-      repoList = [...response.data.slice(0, length)];
+      repoList = [...allRepos.slice(0, length)];
       // adding specified repos
       try {
         for (let repoName of specfic) {
-          const response = await axios.get(`${specficReposAPI}/${repoName}`);
-          repoList.push(response.data);
+          repoList.push(await fetchJson(`${specficReposAPI}/${repoName}`));
         }
       } catch (error) {
         console.error(error.message);
@@ -74,7 +73,7 @@ const Project = ({ heading, username, length, specfic, projects }) => {
     fetchRepos();
   }, [fetchRepos]);
   return (
-    <Jumbotron fluid id="projects" className="bg-light m-0">
+    <Section id="projects" className="bg-light m-0">
       <Container className="">
         <h2 className="display-4 pb-5 text-center">{heading}</h2>
         <Row>
@@ -106,7 +105,7 @@ const Project = ({ heading, username, length, specfic, projects }) => {
               ))}
         </Row>
       </Container>
-    </Jumbotron>
+    </Section>
   );
 };
 

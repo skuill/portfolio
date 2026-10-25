@@ -8,9 +8,9 @@
 [![Site preview](/public/social-image.png)](https://skuill.com/portfolio/)
 
 ## Stack
-React 18 (Create React App), React Bootstrap + Bootstrap 5, Sass; Jest + Testing Library. Recent projects come from the GitHub API; analytics: Google Analytics 4. Served by nginx in Docker and by GitHub Pages.
+React 18 (Create React App), React Bootstrap + Bootstrap 5, Sass, react-icons; Jest + Testing Library. Recent projects come from the GitHub API (browser `fetch`); analytics: Google Analytics 4 (gtag snippet in `public/index.html`). Served by nginx in Docker and by GitHub Pages.
 
-Planned: move to Vite and drop outdated libraries ([#3](https://github.com/skuill/portfolio/issues/3)), then a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
+Planned: move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)), then a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
 
 ## Repository layout
 | Path | What |
@@ -40,6 +40,16 @@ npm test -- --watchAll=false
 ```
 
 CI runs the same command on every pull request; `master` accepts only pull requests with a green `build` check.
+
+## Performance (Lighthouse)
+Every change that affects what the page loads or shows is measured with [Lighthouse](https://developer.chrome.com/docs/lighthouse) before and after, and the scores go into the pull request (mobile preset first: it is the strict one).
+
+```bash
+npx lighthouse https://skuill.com/portfolio/ --view                   # the live site
+npx lighthouse http://127.0.0.1:8080/portfolio/ --view                # a local build served under /portfolio/
+```
+
+Lighthouse needs Chrome or Edge; without Chrome set `CHROME_PATH` to Edge (`C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe`). An automatic Lighthouse check on every pull request is planned with the move to Vite ([#3](https://github.com/skuill/portfolio/issues/3)).
 
 ## Resume PDF
 The "Resume" button opens `src/editable-stuff/CV_Vitaly_Kvashin.pdf`, built from `cv/cv.typ` with [Typst](https://typst.app/) 0.15.1 (Windows: `winget install Typst.Typst`). Edit `cv/cv.typ`, keeping its text in sync with `config.js`, then:
