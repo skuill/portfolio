@@ -1,9 +1,13 @@
 import React from "react";
+import { FaChevronDown } from "react-icons/fa";
 import Section from "../Section";
 
 const VISIBLE_ACHIEVEMENTS = 2;
 
+// The first achievements are always shown; the rest slide open under them, with the toggle below.
 const Achievements = ({ items }) => {
+  const [open, setOpen] = React.useState(false);
+  const regionId = React.useId();
   if (!items || items.length === 0) return null;
   const visible = items.slice(0, VISIBLE_ACHIEVEMENTS);
   const hidden = items.slice(VISIBLE_ACHIEVEMENTS);
@@ -13,15 +17,25 @@ const Achievements = ({ items }) => {
         {visible.map((item) => <li key={item}>{item}</li>)}
       </ul>
       {hidden.length > 0 && (
-        <details className="timeline-more">
-          <summary>
-            <span className="show-all">Show all</span>
-            <span className="show-less">Show less</span>
-          </summary>
-          <ul className="timeline-achievements">
-            {hidden.map((item) => <li key={item}>{item}</li>)}
-          </ul>
-        </details>
+        <>
+          <div id={regionId} className={open ? "timeline-collapse open" : "timeline-collapse"} aria-hidden={!open}>
+            <div className="timeline-collapse-inner">
+              <ul className="timeline-achievements">
+                {hidden.map((item) => <li key={item}>{item}</li>)}
+              </ul>
+            </div>
+          </div>
+          <button
+            type="button"
+            className="timeline-toggle"
+            aria-expanded={open}
+            aria-controls={regionId}
+            onClick={() => setOpen(!open)}
+          >
+            {open ? "Show less" : `Show ${hidden.length} more`}
+            <FaChevronDown className="timeline-toggle-icon" aria-hidden="true" />
+          </button>
+        </>
       )}
     </>
   );
@@ -48,7 +62,7 @@ const Experience = ({ experiences }) => (
       {experiences.data.map((job) => (
         <li className="timeline-item" key={`${job.company}-${job.dates}`}>
           <div className="timeline-logo">
-            <img src={job.logo} alt={`${job.company} logo`} loading="lazy" width="40" height="40" />
+            <img src={job.logo} alt={`${job.company} logo`} loading="lazy" />
           </div>
           <div className="timeline-card">
             {job.roles ? (

@@ -8,7 +8,7 @@
   &::before {
     content: "";
     position: absolute;
-    left: 27px;
+    left: 31px;
     top: 8px;
     bottom: 8px;
     width: 2px;
@@ -18,22 +18,22 @@
 .timeline-item {
   position: relative;
   display: grid;
-  grid-template-columns: 56px 1fr;
+  grid-template-columns: 64px 1fr;
   gap: 22px;
   margin-bottom: 26px;
 }
 .timeline-logo {
   z-index: 1;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+  padding: 9px;
+  border-radius: 16px;
   background: $white;
   border: 2px solid #dbe3ee;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  img { width: 40px; height: 40px; object-fit: contain; }
+  img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
 }
 .timeline-card {
   min-width: 0;
@@ -71,18 +71,40 @@
   line-height: 1.5;
   li { margin-bottom: 4px; }
 }
-.timeline-more {
-  summary {
-    cursor: pointer;
-    color: #09639e;
-    font-size: 0.9rem;
-    margin-top: 6px;
+// Hidden achievements slide open: the grid row animates from 0fr to 1fr.
+.timeline-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  visibility: hidden;
+  transition: grid-template-rows 0.3s ease, visibility 0s linear 0.3s;
+  &.open {
+    grid-template-rows: 1fr;
+    visibility: visible;
+    transition: grid-template-rows 0.3s ease, visibility 0s;
   }
-  .show-less { display: none; }
-  &[open] {
-    .show-all { display: none; }
-    .show-less { display: inline; }
-  }
+  .timeline-achievements { margin-top: 0; }
+}
+.timeline-collapse-inner { overflow: hidden; min-height: 0; }
+.timeline-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #09639e;
+  font-size: 0.9rem;
+  cursor: pointer;
+  &:hover { text-decoration: underline; }
+  &:focus { outline: none; }
+  &:focus-visible { outline: 2px solid #09639e; outline-offset: 3px; border-radius: 4px; }
+}
+.timeline-toggle-icon { font-size: 0.75rem; transition: transform 0.3s ease; }
+.timeline-toggle[aria-expanded="true"] .timeline-toggle-icon { transform: rotate(180deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-collapse, .timeline-collapse.open, .timeline-toggle-icon, .timeline-card { transition: none; }
 }
 .timeline-role.nested {
   border-left: 2px solid $gray-200;
@@ -92,8 +114,8 @@
 }
 
 @media (max-width: 575.98px) {
-  .timeline::before { left: 17px; }
-  .timeline-item { grid-template-columns: 36px 1fr; gap: 12px; }
-  .timeline-logo { width: 36px; height: 36px; img { width: 26px; height: 26px; } }
+  .timeline::before { left: 21px; }
+  .timeline-item { grid-template-columns: 44px 1fr; gap: 12px; }
+  .timeline-logo { width: 44px; height: 44px; padding: 6px; border-radius: 12px; }
   .timeline-card { padding: 14px; }
 }
