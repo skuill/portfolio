@@ -106,11 +106,33 @@
 @media (prefers-reduced-motion: reduce) {
   .timeline-collapse, .timeline-collapse.open, .timeline-toggle-icon, .timeline-card { transition: none; }
 }
+// Several roles at one company: a small timeline inside the card, dates under each role title.
 .timeline-role.nested {
-  border-left: 2px solid $gray-200;
-  margin-top: 12px;
-  padding-left: 14px;
+  position: relative;
+  margin-top: 16px;
+  padding-left: 24px;
+  .timeline-head { flex-direction: column; align-items: flex-start; gap: 2px; }
   .timeline-title { font-size: 1rem; }
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: $white;
+    border: 3px solid #083c87;
+  }
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 21px;
+    bottom: -21px; // reaches the next role's dot (16px gap + 5px dot offset)
+    width: 2px;
+    background: #dbe3ee;
+  }
 }
 
 @media (max-width: 575.98px) {
