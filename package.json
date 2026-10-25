@@ -2,7 +2,7 @@
   "name": "developers-portfolio",
   "description": "A personal static website/portfolio hosted with GitHub Pages.",
   "homepage": "https://skuill.github.io/portfolio",
-  "version": "5.4.0",
+  "version": "5.4.1",
   "dependencies": {
     "bootstrap": "^5.3.5",
     "react": "^18.3.1",
@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "cv": "typst compile cv/cv.typ src/editable-stuff/CV_Vitaly_Kvashin.pdf"
+    "cv": "typst compile cv/cv.typ src/editable-stuff/CV_Vitaly_Kvashin.pdf",
+    "projects": "node scripts/github-projects.mjs"
   },
   "engines": {
     "npm": "^10.8.2",

@@ -1,5 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import App from "./App";
+import { installIntersectionObserver } from "./testing/intersectionObserver";
 import {
   mainBody,
   about,
@@ -11,22 +12,24 @@ import {
 } from "./editable-stuff/config";
 
 const API = "https://api.github.com";
-const allReposUrl = `${API}/users/${repos.gitHubUsername}/repos?sort=updated&direction=desc`;
+const allReposUrl = `${API}/users/${repos.github.username}/repos?sort=updated&direction=desc`;
 const repo = (name) => ({
   id: name,
   name,
   description: `${name} description`,
-  svn_url: `https://github.com/${repos.gitHubUsername}/${name}`,
+  svn_url: `https://github.com/${repos.github.username}/${name}`,
   stargazers_count: 3,
-  languages_url: `${API}/repos/${repos.gitHubUsername}/${name}/languages`,
+  languages_url: `${API}/repos/${repos.github.username}/${name}/languages`,
   pushed_at: "2026-10-01T10:00:00Z",
 });
 const githubRepos = ["repo-a", "repo-b", "repo-c", "repo-d", "repo-e"].map(repo);
-const shownRepos = githubRepos.slice(0, repos.reposLength);
+const shownRepos = githubRepos.slice(0, repos.github.latest);
 
 // Test doubles for the page's external clients: the GitHub API (fetch) and Google Analytics (gtag).
 const jsonResponse = (body) => ({ ok: true, status: 200, json: async () => body });
+let viewport;
 beforeEach(() => {
+  viewport = installIntersectionObserver();
   global.fetch = jest.fn(async (url) => {
     if (url === allReposUrl) return jsonResponse(githubRepos);
     if (url.endsWith("/languages")) return jsonResponse({ "C#": 1000 });
@@ -41,11 +44,15 @@ beforeEach(() => {
   };
 });
 
-const renderPage = async () => {
-  render(<App />);
+const waitForRepos = async () => {
   for (const { name } of shownRepos) {
     await screen.findByText(name);
   }
+};
+const renderPage = async () => {
+  render(<App />);
+  viewport.scrollThroughPage();
+  await waitForRepos();
 };
 
 test("renders the name and every enabled section in order", async () => {
@@ -64,8 +71,12 @@ test("renders the name and every enabled section in order", async () => {
   ]);
 });
 
-test("loads the latest repositories and their languages from GitHub, nothing else", async () => {
-  await renderPage();
+test("loads the latest repositories and their languages from GitHub once the reader scrolls, nothing else", async () => {
+  render(<App />);
+  expect(global.fetch).not.toHaveBeenCalled();
+
+  viewport.scrollThroughPage();
+  await waitForRepos();
 
   expect(global.fetch.mock.calls.map(([url]) => url).sort()).toEqual(
     [allReposUrl, ...shownRepos.map((r) => r.languages_url)].sort()

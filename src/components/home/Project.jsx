@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Section from "../Section";
 import { Row, Col, Card } from "react-bootstrap";
 import ProjectCard from "./ProjectCard";
-import { fetchJson } from "../../utils/fetchJson";
 import LoadingLines from "../LoadingLines";
+import useNearViewport from "../../hooks/useNearViewport";
+import { loadGithubProjects } from "../../utils/githubProjects.mjs";
 
 const WebsiteCard = ({ website }) => {
   const { imageLink, url, description, technologies } =
@@ -25,53 +26,21 @@ const WebsiteCard = ({ website }) => {
   );
 };
 
-const dummyProject = {
-  name: null,
-  description: null,
-  svn_url: null,
-  stargazers_count: null,
-  languages_url: null,
-  pushed_at: null,
-};
-const API = "https://api.github.com";
-// const gitHubQuery = "/repos?sort=updated&direction=desc";
-// const specficQuerry = "https://api.github.com/repos/skuill/";
+// GitHub allows 60 requests per hour per IP without a token, so live data loads only when the reader
+// scrolls close to the cards (this far ahead, to be ready on arrival); until then the snapshot is shown.
+const PRELOAD_MARGIN = "600px 0px";
 
-const Project = ({ heading, username, length, specfic, projects }) => {
-  const allReposAPI = `${API}/users/${username}/repos?sort=updated&direction=desc`;
-  const specficReposAPI = `${API}/repos/${username}`;
-  const dummyProjectsArr = new Array(length + specfic.length).fill(
-    dummyProject
-  );
-
-  const [projectsArray, setProjectsArray] = useState([]);
-
-  const fetchRepos = useCallback(async () => {
-    let repoList = [];
-    try {
-      // getting all repos
-      const allRepos = await fetchJson(allReposAPI);
-      // slicing to the length
-      repoList = [...allRepos.slice(0, length)];
-      // adding specified repos
-      try {
-        for (let repoName of specfic) {
-          repoList.push(await fetchJson(`${specficReposAPI}/${repoName}`));
-        }
-      } catch (error) {
-        console.error(error.message);
-      }
-      // setting projectArray
-      // TODO: remove the duplication.
-      setProjectsArray(repoList);
-    } catch (error) {
-      console.error(error.message);
-    }
-  }, [allReposAPI, length, specfic, specficReposAPI]);
+// github: { username, latest, specific, repos } from github-projects.json; repos is the snapshot.
+const Project = ({ heading, github, projects }) => {
+  const reposRef = useRef(null);
+  const near = useNearViewport(reposRef, PRELOAD_MARGIN);
+  const [repoList, setRepoList] = useState(github.repos);
 
   useEffect(() => {
-    fetchRepos();
-  }, [fetchRepos]);
+    if (!near) return;
+    loadGithubProjects(github).then(setRepoList, (error) => console.error(error.message));
+  }, [near, github]);
+
   return (
     <Section id="projects" className="bg-light m-0">
       <Container className="">
@@ -87,22 +56,10 @@ const Project = ({ heading, username, length, specfic, projects }) => {
               />
             ))}
         </Row>
-        <Row>
-          {projectsArray.length
-            ? projectsArray.map((project, index) => (
-                <ProjectCard
-                  key={`project-card-${index}`}
-                  id={`project-card-${index}`}
-                  value={project}
-                />
-              ))
-            : dummyProjectsArr.map((project, index) => (
-                <ProjectCard
-                  key={`dummy-${index}`}
-                  id={`dummy-${index}`}
-                  value={project}
-                />
-              ))}
+        <Row ref={reposRef}>
+          {repoList.map((project) => (
+            <ProjectCard key={project.name} value={project} />
+          ))}
         </Row>
       </Container>
     </Section>

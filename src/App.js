@@ -47,9 +47,7 @@ const App = () => {
       {(repos.show || projects.show) && (
         <Project
           heading={repos.heading}
-          username={repos.gitHubUsername}
-          length={repos.reposLength}
-          specfic={repos.specificRepos}
+          github={repos.github}
           projects={projects}
         />
       )}
