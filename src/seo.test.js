@@ -30,6 +30,7 @@ test("points search engines to skuill.com and gives link previews a title, a des
       "theme-color": "#000000",
       description: tags.description,
       "og:type": "website",
+      "og:site_name": name,
       "og:url": SITE,
       "og:title": `${name} · ${role}`,
       "og:description": tags.description,

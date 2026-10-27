@@ -76,7 +76,13 @@ npx @lhci/cli@0.15.1 autorun
 ## Search and link previews
 Search engines and link previews (LinkedIn, Telegram, Slack, X) read the static `<head>` of `index.html` without running the app: the title and description, the canonical address `https://skuill.com/portfolio/` (the same on both hosts, so search engines index skuill.com), Open Graph and X tags with an absolute image URL, and a schema.org `Person` in JSON-LD. `src/seo.test.js` checks them, matches the name and profile links with `config.js` and the image size with `public/social-image.png` (built by [branding/social-image](branding/social-image/README.md)).
 
-After a release that changes them, check the live page: [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) (also refreshes LinkedIn's cached preview), the link sent in Telegram, [Google Rich Results Test](https://search.google.com/test/rich-results).
+After a release that changes them, check the live page:
+- [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/): the preview as LinkedIn shows it; inspecting also refreshes LinkedIn's cached copy.
+- Telegram: send the link to [@WebpageBot](https://t.me/WebpageBot) first (it refreshes Telegram's cached preview), then to yourself.
+- [validator.schema.org](https://validator.schema.org/) (Fetch URL): one `Person`, no errors. Google's Rich Results Test finds nothing here: `Person` alone is not a rich result type.
+- Lighthouse SEO 100 on the live page needs the root `https://skuill.com/robots.txt`, which the droplet's front nginx serves ([#13](https://github.com/skuill/portfolio/issues/13)); the copy in `public/` is served at `/portfolio/robots.txt`, where crawlers do not look.
+
+Google Search Console has the property `https://skuill.com/portfolio/`, verified through the Google Analytics snippet in `index.html`.
 
 ## Resume PDF
 The "Resume" button opens `src/editable-stuff/CV_Vitaly_Kvashin.pdf`, built from `cv/cv.typ` with [Typst](https://typst.app/) 0.15.1 (Windows: `winget install Typst.Typst`). Edit `cv/cv.typ`, keeping its text in sync with `config.js`, then:
