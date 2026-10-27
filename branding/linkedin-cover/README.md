@@ -14,6 +14,6 @@ python mosaic.py        # rebuilds linkedin-cover.png
 python mosaic.py all    # also writes variant-panel.png and variant-frieze.png (not committed)
 ```
 
-The tiles use a fixed random seed, so the same script always produces the same image.
+The tiles use a fixed random seed, so the same script always produces the same image. The round mosaic (`round_mosaic`) is also drawn on the site's link preview, [branding/social-image](../social-image/README.md): after changing it, rebuild that picture too.
 
 Upload on LinkedIn: profile → pencil on the cover → Change photo.
