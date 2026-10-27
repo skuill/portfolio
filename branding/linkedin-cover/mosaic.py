@@ -143,18 +143,28 @@ def panel():
     image.save(OUT / "variant-panel.png")
 
 
+def round_mosaic(image, cx, cy, r, tile=9, ring=3):
+    """A round mosaic in a terracotta ring centred at (cx, cy). The scene is laid out for r=168 and scaled to r.
+    Also used by branding/social-image/social_image.py."""
+    k = r / 168
+    back = [(cx - r, cy + 40 * k), (cx - 90 * k, cy - 40 * k), (cx - 20 * k, cy + 20 * k), (cx + 60 * k, cy - 60 * k),
+            (cx + r, cy + 30 * k)]
+    front = [(cx - r, cy + 80 * k), (cx - 60 * k, cy + 30 * k), (cx + 30 * k, cy + 75 * k), (cx + 110 * k, cy + 40 * k),
+             (cx + r, cy + 85 * k)]
+    trees = [(cx - 100 * k, cy + 118 * k, 62 * k, 20 * k), (cx - 74 * k, cy + 118 * k, 46 * k, 15 * k),
+             (cx + 80 * k, cy + 118 * k, 56 * k, 18 * k)]
+    scene = landscape((cx + 10 * k, cy - 40 * k, 62 * k), back, front, trees, cy + 118 * k)
+    lay_tiles(image, scene, (cx - r, cy - r, cx + r, cy + r), tile=tile, seed=5,
+              inside=lambda x, y: math.hypot(x - cx, y - cy) <= r - ring - 1)
+    draw = ImageDraw.Draw(image)
+    draw.ellipse(((cx - r) * S, (cy - r) * S, (cx + r) * S, (cy + r) * S), outline=TERRACOTTA, width=ring * S)
+
+
 def medallion():
     """2. White space, a round mosaic medallion on the right, tagline next to it."""
     image = Image.new("RGB", (W * S, H * S), PAPER)
     cx, cy, r = 1330, 198, 168
-    back = [(cx - r, cy + 40), (cx - 90, cy - 40), (cx - 20, cy + 20), (cx + 60, cy - 60), (cx + r, cy + 30)]
-    front = [(cx - r, cy + 80), (cx - 60, cy + 30), (cx + 30, cy + 75), (cx + 110, cy + 40), (cx + r, cy + 85)]
-    trees = [(cx - 100, cy + 118, 62, 20), (cx - 74, cy + 118, 46, 15), (cx + 80, cy + 118, 56, 18)]
-    scene = landscape((cx + 10, cy - 40, 62), back, front, trees, cy + 118)
-    lay_tiles(image, scene, (cx - r, cy - r, cx + r, cy + r), tile=9, seed=5,
-              inside=lambda x, y: math.hypot(x - cx, y - cy) <= r - 4)
-    draw = ImageDraw.Draw(image)
-    draw.ellipse(((cx - r) * S, (cy - r) * S, (cx + r) * S, (cy + r) * S), outline=TERRACOTTA, width=3 * S)
+    round_mosaic(image, cx, cy, r)
     text_block(image, cx - r - 56, cy, TAGLINE)
     image.save(OUT / "linkedin-cover.png")
 

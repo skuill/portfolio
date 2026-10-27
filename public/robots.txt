@@ -1,2 +1,5 @@
 # https://www.robotstxt.org/robotstxt.html
+# Crawlers read robots.txt only at the root of a host; this copy is served at /portfolio/robots.txt.
+# For skuill.com the root file belongs to the droplet's front nginx (#13).
 User-agent: *
+Allow: /

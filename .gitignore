@@ -25,3 +25,6 @@ yarn-error.log*
 
 # Lighthouse CI
 /.lighthouseci
+
+# Python bytecode of the branding generators (social_image.py imports mosaic.py)
+__pycache__/

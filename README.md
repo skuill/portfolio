@@ -10,7 +10,7 @@
 ## Stack
 React 19 built with Vite, React Bootstrap + Bootstrap 5, Sass, react-icons; Vitest + Testing Library, ESLint. Node 24 or newer (CI and Docker use Node 26). Recent projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `index.html`). Served by nginx in Docker and by GitHub Pages.
 
-Planned: SEO and link previews ([#12](https://github.com/skuill/portfolio/issues/12)), a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
+Planned: a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
 
 ## Repository layout
 | Path | What |
@@ -21,12 +21,13 @@ Planned: SEO and link previews ([#12](https://github.com/skuill/portfolio/issues
 | `scripts/github-projects.js` | Refreshes that snapshot: `npm run projects` |
 | `src/components/` | Page sections (`home/`), navbar, footer |
 | `src/scss/` | Styles |
-| `index.html` | Page title and meta description, the entry point of the build |
+| `index.html` | Page title, meta description, canonical address, link preview tags and structured data; the entry point of the build |
 | `public/` | Files served as they are: favicon, `social-image.png` (the link preview), `robots.txt` |
 | `vite.config.js` | Build (base path `/portfolio/`, Sass options) and test settings |
 | `eslint.config.js` | Lint rules |
 | `cv/cv.typ` | Resume source (Typst), builds the PDF |
 | `branding/linkedin-cover/` | LinkedIn cover and its generator |
+| `branding/social-image/` | Generator of `public/social-image.png`, the link preview picture |
 | `.github/workflows/build-and-deploy.yml` | CI (lint, tests, build) and release deploy |
 | `Dockerfile`, `nginx/default.conf` | nginx image that serves the site under `/portfolio`, with compression and cache headers |
 | `lighthouserc.json` | Lighthouse thresholds checked on every pull request |
@@ -71,6 +72,11 @@ docker build -t portfolio . && docker run -d -p 8080:80 portfolio
 bash scripts/check-container.sh http://localhost:8080
 npx @lhci/cli@0.15.1 autorun
 ```
+
+## Search and link previews
+Search engines and link previews (LinkedIn, Telegram, Slack, X) read the static `<head>` of `index.html` without running the app: the title and description, the canonical address `https://skuill.com/portfolio/` (the same on both hosts, so search engines index skuill.com), Open Graph and X tags with an absolute image URL, and a schema.org `Person` in JSON-LD. `src/seo.test.js` checks them, matches the name and profile links with `config.js` and the image size with `public/social-image.png` (built by [branding/social-image](branding/social-image/README.md)).
+
+After a release that changes them, check the live page: [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/) (also refreshes LinkedIn's cached preview), the link sent in Telegram, [Google Rich Results Test](https://search.google.com/test/rich-results).
 
 ## Resume PDF
 The "Resume" button opens `src/editable-stuff/CV_Vitaly_Kvashin.pdf`, built from `cv/cv.typ` with [Typst](https://typst.app/) 0.15.1 (Windows: `winget install Typst.Typst`). Edit `cv/cv.typ`, keeping its text in sync with `config.js`, then:
