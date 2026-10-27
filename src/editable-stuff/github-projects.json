@@ -8,14 +8,14 @@
       "description": "The personal website/portfolio. Built using React and Bootstrap.",
       "svn_url": "https://github.com/skuill/portfolio",
       "stargazers_count": 1,
-      "pushed_at": "2026-10-27T19:06:46Z",
+      "pushed_at": "2026-10-27T19:35:51Z",
       "languages": {
-        "JavaScript": 62370,
+        "JavaScript": 65298,
         "SCSS": 46655,
         "Typst": 10161,
-        "Python": 7453,
+        "Python": 9358,
+        "HTML": 3014,
         "Shell": 2152,
-        "HTML": 1448,
         "Dockerfile": 584
       }
     },

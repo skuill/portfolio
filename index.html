@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- Google Analytics (gtag.js), the standard snippet; sends the page view. -->
+    <!-- Google Analytics (gtag.js), the standard snippet; sends the page view.
+         It also proves ownership of the site in Google Search Console: removing it loses the verification. -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SLG56091CZ"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -28,6 +29,8 @@
     <!-- Link previews (LinkedIn, Telegram, Slack, X). Absolute URLs: not every crawler resolves relative ones.
          The picture is built by branding/social-image/social_image.py. -->
     <meta property="og:type" content="website" />
+    <!-- Shown above the title in Telegram and Slack; without it they take the domain ("Skuill"). -->
+    <meta property="og:site_name" content="Vitaly Kvashin" />
     <meta property="og:url" content="https://skuill.com/portfolio/" />
     <meta property="og:title" content="Vitaly Kvashin · Backend Developer (C# / .NET)" />
     <meta

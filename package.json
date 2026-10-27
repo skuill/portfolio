@@ -1,8 +1,8 @@
 {
   "name": "developers-portfolio",
   "description": "A personal static website/portfolio hosted with GitHub Pages.",
-  "homepage": "https://skuill.github.io/portfolio",
-  "version": "5.6.0",
+  "homepage": "https://skuill.com/portfolio/",
+  "version": "5.6.1",
   "type": "module",
   "dependencies": {
     "bootstrap": "^5.3.8",
