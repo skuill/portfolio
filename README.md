@@ -101,9 +101,7 @@ The [workflow](.github/workflows/build-and-deploy.yml) then deploys to GitHub Pa
 ## Contact
 [sativkv@gmail.com](mailto:sativkv@gmail.com) · [Telegram](https://t.me/skuill) · [LinkedIn](https://www.linkedin.com/in/vitaly-kvashin/)
 
-## Credits
-Started as a fork of the [hashirshoaeb/home](https://github.com/hashirshoaeb/home) template; the licence from that project (LGPL-3.0) is in [LICENSE](LICENSE).
-
+## Support
 If you like the site, you can [buy me a coffee](https://www.buymeacoffee.com/skuill) or donate via [PayPal](https://paypal.me/VitalyKvashin) or crypto. Send crypto only on the networks listed, a coin sent on another network may be lost:
 
 | Network | Coins | Address |
@@ -112,3 +110,6 @@ If you like the site, you can [buy me a coffee](https://www.buymeacoffee.com/sku
 | Ethereum, Base, Arbitrum, Polygon, BNB Chain | ETH, USDT, USDC | `0xa56541B7DF6263ab84c3e1B69bD37f2a6d848412` |
 | Solana | SOL, USDT, USDC | `BZcuV721p9XPsdreiKY9rsmxZDVf8qHNRk3EoPp25nrS` |
 | Tron | USDT (TRC-20) | `TGyoTufYzVPU6igcQmFGwH1SFrNes9q3UP` |
+
+## Credits
+Started as a fork of the [hashirshoaeb/home](https://github.com/hashirshoaeb/home) template; the licence from that project (LGPL-3.0) is in [LICENSE](LICENSE).
