@@ -9,6 +9,6 @@ Personal site of Vitaly Kvashin (skuill.com/portfolio). Commands, repository lay
 - Do not add workarounds to keep outdated libraries alive (polyfills, module mappers); replace the library instead. Prefer what the browser or Bootstrap already gives (`fetch`, `<details>`, placeholders) over a new dependency.
 - Changes to what the page loads or shows: Lighthouse (mobile and desktop) before and after, scores in the pull request (README → Performance). Images: sized for display, WebP, `loading="lazy"` below the first screen.
 - Follow existing patterns. Never change CI, Docker or deploy settings silently: call it out in the pull request.
-- The droplet side (host nginx, the compose file in `/srv/docker/portfolio`) lives in the private repository `skuill/infrastructure` (`C:\Projects\infrastructure`): change it there with its Deploy workflow, never by hand on the server. This repository builds the image and deploys it with its own Deploy workflow.
+- The droplet side (host nginx, the compose file on the server) lives in a separate server configuration repository: change it there with its Deploy workflow, never by hand on the server. This repository builds the image and deploys it with its own Deploy workflow.
 - Branches `feature/<issue#>_<desc>`; `master` accepts only pull requests with a green `build` check.
 - Texts on the site: no long dashes (— or –) inside sentences.
