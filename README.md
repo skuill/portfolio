@@ -97,7 +97,7 @@ npm run cv
 2. Publish a [release](https://github.com/skuill/portfolio/releases) with a new version tag. The [workflow](.github/workflows/build-and-deploy.yml) deploys to GitHub Pages and pushes the Docker image `skuill/portfolio` (the version and `latest`) to Docker Hub.
 3. When it is green: Actions → [Deploy](.github/workflows/deploy.yml) → Run workflow. On the droplet it pulls the image and recreates the container with `docker compose` in `/srv/docker/portfolio`, checks that the container runs the pulled image, then that https://skuill.com/portfolio/ answers.
 
-The droplet's compose file and its nginx live in the server configuration repository, not here. Manual Docker commands: [READMEdocs/docker-deployment.md](READMEdocs/docker-deployment.md).
+The droplet's compose file and its nginx live in the server configuration repository, not here. Without GitHub Actions, the same by hand on the droplet: `cd /srv/docker/portfolio && docker compose pull && docker compose up -d --force-recreate`.
 
 ## Contact
 [sativkv@gmail.com](mailto:sativkv@gmail.com) · [Telegram](https://t.me/skuill) · [LinkedIn](https://www.linkedin.com/in/vitaly-kvashin/)

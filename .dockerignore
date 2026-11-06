@@ -30,7 +30,6 @@
 **/values.dev.yaml
 **/build
 **/dist
-**/READMEdocs
 node_modules
 build
 LICENSE
