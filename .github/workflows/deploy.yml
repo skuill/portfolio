@@ -1,0 +1,53 @@
+# Deploys the latest image from Docker Hub to the droplet. Started by hand (Actions -> Deploy -> Run workflow) after a
+# release has pushed it (build-and-deploy.yml); then the live page is checked. The compose file in
+# /srv/docker/portfolio comes from the server configuration repository; README -> Deploy.
+
+name: Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time.
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull and restart on the droplet
+        uses: appleboy/ssh-action@v1.2.5
+        with:
+          host: ${{ secrets.DIGITALOCEAN_HOST }}
+          username: ${{ secrets.DIGITALOCEAN_USERNAME }}
+          key: ${{ secrets.DIGITALOCEAN_SSHKEY }}
+          # --force-recreate: with an unchanged compose file "up -d" can keep the old container after a pull.
+          # Then the container must run the image its tag now points to.
+          script: |
+            set -e
+            cd /srv/docker/portfolio
+            docker compose pull
+            docker compose up -d --force-recreate
+            for container in $(docker compose ps -q); do
+              name=$(docker inspect -f '{{.Name}}' "$container")
+              running=$(docker inspect -f '{{.Image}}' "$container")
+              pulled=$(docker image inspect -f '{{.Id}}' "$(docker inspect -f '{{.Config.Image}}' "$container")")
+              echo "$name runs $running, pulled $pulled"
+              [ "$running" = "$pulled" ] || { echo "$name does not run the pulled image"; exit 1; }
+            done
+            docker image prune -f
+            docker compose ps
+      - name: The live page answers
+        run: |
+          for i in $(seq 1 12); do
+            status=$(curl -s -o /dev/null -w "%{http_code}" https://skuill.com/portfolio/)
+            echo "try $i: $status"
+            [ "$status" = 200 ] && exit 0
+            sleep 5
+          done
+          echo "::error::https://skuill.com/portfolio/ did not answer 200 within a minute"
+          exit 1
