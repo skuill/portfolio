@@ -18,12 +18,11 @@
       docker push skuill/portfolio:latest
    ```
 
-2. Pull image, create and run container:
+2. Pull the image and restart the container on the droplet (what the Deploy workflow does; the compose file comes from the server configuration repository):
    ```bash
-      docker pull skuill/portfolio:latest
-      
-      docker rm -f skuill-portfolio 
-      docker run -dit --restart=always --network common-skuill-network -p 3000:80 --name skuill-portfolio skuill/portfolio:latest
+      cd /srv/docker/portfolio
+      docker compose pull
+      docker compose up -d --force-recreate
    ```
 
 3. Inspect image:

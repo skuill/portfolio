@@ -1,5 +1,6 @@
 # Every push and pull request to master: install, lint, test, build (the "build" check is required to merge).
-# A published release also deploys to GitHub Pages, Docker Hub and the droplet.
+# A published release also deploys to GitHub Pages and pushes the image to Docker Hub; the droplet gets it by the
+# manual Deploy workflow (deploy.yml).
 
 name: Build and Deploy to Github Pages and DockerHub
 
@@ -109,21 +110,3 @@ jobs:
         docker tag ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:${{ env.RELEASE_VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:${{ env.RELEASE_VERSION }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/portfolio:latest
-
-  deploy-to-droplet:
-    runs-on: ubuntu-latest
-    needs: publish-docker-image
-    if: startsWith(github.ref, 'refs/tags/') # runs only when release with a new tag
-    steps:
-      - name: Deploy to Digital Ocean droplet via SSH action
-        uses: appleboy/ssh-action@v1.2.5
-        with:
-          host: ${{ secrets.DIGITALOCEAN_HOST }}
-          username: ${{ secrets.DIGITALOCEAN_USERNAME }}
-          key: ${{ secrets.DIGITALOCEAN_SSHKEY }}
-          passphrase: ${{ secrets.DIGITALOCEAN_PASSPHRASE }}
-          script: |
-            docker pull skuill/portfolio:latest
-            docker rm -f skuill-portfolio 
-            docker run -dit --restart=always --network common-skuill-network -p 3000:80 --name skuill-portfolio skuill/portfolio:latest
-  

@@ -28,7 +28,8 @@ Planned: a redesign ([#4](https://github.com/skuill/portfolio/issues/4)).
 | `cv/cv.typ` | Resume source (Typst), builds the PDF |
 | `branding/linkedin-cover/` | LinkedIn cover and its generator |
 | `branding/social-image/` | Generator of `public/social-image.png`, the link preview picture |
-| `.github/workflows/build-and-deploy.yml` | CI (lint, tests, build) and release deploy |
+| `.github/workflows/build-and-deploy.yml` | CI (lint, tests, build); a release deploys to GitHub Pages and Docker Hub |
+| `.github/workflows/deploy.yml` | Manual deploy of the Docker image to the droplet |
 | `Dockerfile`, `nginx/default.conf` | nginx image that serves the site under `/portfolio`, with compression and cache headers |
 | `lighthouserc.json` | Lighthouse thresholds checked on every pull request |
 | `scripts/check-container.sh` | Checks the image's nginx: compression, cache headers, redirects |
@@ -80,7 +81,7 @@ After a release that changes them, check the live page:
 - [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/): the preview as LinkedIn shows it; inspecting also refreshes LinkedIn's cached copy.
 - Telegram: send the link to [@WebpageBot](https://t.me/WebpageBot) first (it refreshes Telegram's cached preview), then to yourself.
 - [validator.schema.org](https://validator.schema.org/) (Fetch URL): one `Person`, no errors. Google's Rich Results Test finds nothing here: `Person` alone is not a rich result type.
-- Lighthouse SEO 100 on the live page needs the root `https://skuill.com/robots.txt`, which the droplet's front nginx serves ([#13](https://github.com/skuill/portfolio/issues/13)); the copy in `public/` is served at `/portfolio/robots.txt`, where crawlers do not look.
+- Lighthouse SEO 100 on the live page needs the root `https://skuill.com/robots.txt`, which the droplet's front nginx serves (configured in the server configuration repository); the copy in `public/` is served at `/portfolio/robots.txt`, where crawlers do not look.
 
 Google Search Console has the property `https://skuill.com/portfolio/`, verified through the Google Analytics snippet in `index.html`.
 
@@ -92,11 +93,11 @@ npm run cv
 ```
 
 ## Deploy
-Automatic, from a GitHub release:
 1. Bump `version` in `package.json` (through a pull request); worth running `npm run projects` in the same pull request to refresh the projects snapshot.
-2. Publish a [release](https://github.com/skuill/portfolio/releases) with a new version tag.
+2. Publish a [release](https://github.com/skuill/portfolio/releases) with a new version tag. The [workflow](.github/workflows/build-and-deploy.yml) deploys to GitHub Pages and pushes the Docker image `skuill/portfolio` (the version and `latest`) to Docker Hub.
+3. When it is green: Actions → [Deploy](.github/workflows/deploy.yml) → Run workflow. On the droplet it pulls the image and recreates the container with `docker compose` in `/srv/docker/portfolio`, checks that the container runs the pulled image, then that https://skuill.com/portfolio/ answers.
 
-The [workflow](.github/workflows/build-and-deploy.yml) then deploys to GitHub Pages, pushes the Docker image `skuill/portfolio` to Docker Hub and restarts the container on the droplet. Manual Docker commands: [READMEdocs/docker-deployment.md](READMEdocs/docker-deployment.md).
+The droplet's compose file and its nginx live in the server configuration repository, not here. Manual Docker commands: [READMEdocs/docker-deployment.md](READMEdocs/docker-deployment.md).
 
 ## Contact
 [sativkv@gmail.com](mailto:sativkv@gmail.com) · [Telegram](https://t.me/skuill) · [LinkedIn](https://www.linkedin.com/in/vitaly-kvashin/)
