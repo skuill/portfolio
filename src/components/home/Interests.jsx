@@ -9,16 +9,17 @@ const FIRST_FIGURE = 1;
 const TRIP_EDGE = [240, 214, 160];
 
 const Photo = ({ photo }) => {
+  const [loaded, setLoaded] = useState(false);
   const content = (
     <>
-      <img src={photo.img} alt={photo.alt} loading="lazy" decoding="async" />
+      <img src={photo.img} alt={photo.alt} className={loaded ? "loaded" : undefined} loading="lazy" decoding="async" onLoad={() => setLoaded(true)} />
       <figcaption>
         {photo.distance && <b>{photo.distance}</b>}
         {photo.label}
       </figcaption>
     </>
   );
-  return <figure>{photo.url ? <a href={photo.url}>{content}</a> : content}</figure>;
+  return <figure style={{ "--blur": `url(${photo.blur})` }}>{photo.url ? <a href={photo.url}>{content}</a> : content}</figure>;
 };
 
 const Interests = ({ heading, intro, strava, trip, images }) => {

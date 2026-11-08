@@ -444,6 +444,38 @@
   }
 }
 
+// Projects that belong together: one title, then each of them, selectable on its own.
+.pick-family {
+  padding: 6px 0 2px 18px;
+  border-left: 2px solid var(--ring);
+
+  > b {
+    display: block;
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: calc(23px * 1.12);
+    line-height: 1.2;
+  }
+
+  > span {
+    display: block;
+    font-size: 16px;
+    line-height: 1.4;
+    color: var(--muted);
+    margin: 3px 0 4px;
+  }
+
+  .pick {
+    padding: 8px 12px;
+
+    b {
+      font-family: inherit;
+      font-weight: 500;
+      font-size: 17px;
+    }
+  }
+}
+
 /* Skills */
 #skills {
   background: var(--deep);
@@ -461,13 +493,29 @@
   gap: 20px clamp(32px, 5vw, 72px);
   margin-top: 30px;
 
-  > div:last-child {
-    grid-column: 1 / -1;
-  }
-
   dt {
     color: #bccbd8;
     font-size: 16px;
+  }
+
+  // The main stack is the headline of the screen; the rest supports it.
+  > div:first-child {
+    grid-column: 1 / -1;
+
+    dd {
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: clamp(30px, 3.6vw, 46px);
+      line-height: 1.15;
+    }
+  }
+
+  > div:last-child {
+    grid-column: 1 / -1;
+
+    dd {
+      color: #bccbd8;
+    }
   }
 }
 
@@ -522,6 +570,16 @@
     position: relative;
     border-radius: 12px;
     overflow: hidden;
+    background: var(--sky);
+
+    // The blurred preview under the photo, seen until the photo has loaded and faded in.
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -14px;
+      background: var(--blur) center / cover;
+      filter: blur(12px);
+    }
 
     &:hover img {
       transform: scale(1.04);
@@ -529,10 +587,16 @@
   }
 
   img {
+    position: relative;
     width: 100%;
     aspect-ratio: 0.82;
     object-fit: cover;
-    transition: transform 0.8s ease;
+    opacity: 0;
+    transition: opacity 0.7s ease, transform 0.8s ease;
+
+    &.loaded {
+      opacity: 1;
+    }
   }
 
   figcaption {

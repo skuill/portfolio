@@ -9,8 +9,8 @@ vi.mock("../Mosaic/Mosaic", () => ({ default: vi.fn(() => null) }));
 vi.mock("../../utils/shuffle", () => ({ shuffle: vi.fn() }));
 
 const images = [
-  { img: "a.webp", alt: "Photo A", distance: "1,000 km", label: "Trip A", url: "https://example.com/a" },
-  { img: "b.webp", alt: "Photo B", label: "Trip B" },
+  { img: "a.webp", blur: "data:blur-a", alt: "Photo A", distance: "1,000 km", label: "Trip A", url: "https://example.com/a" },
+  { img: "b.webp", blur: "data:blur-b", alt: "Photo B", label: "Trip B" },
 ];
 const props = {
   heading: "Interests",
@@ -71,6 +71,19 @@ test("a picture the mosaic moves to by itself lights up its word", async () => {
   act(() => Mosaic.mock.lastCall[0].onFigureChange(6));
 
   expect(pressedWords()).toEqual([FIGURES[6].name]);
+});
+
+test("each photo shows its blurred preview and fades in on its own once it has loaded", () => {
+  const { container } = render(<Interests {...props} />);
+  const figures = () => [...container.querySelectorAll("figure")];
+  const loaded = () => figures().map((figure) => figure.querySelector("img").classList.contains("loaded"));
+
+  expect(figures().map((figure) => figure.style.getPropertyValue("--blur"))).toEqual(["url(data:blur-b)", "url(data:blur-a)"]);
+  expect(loaded()).toEqual([false, false]);
+
+  fireEvent.load(screen.getByAltText("Photo A"));
+
+  expect(loaded()).toEqual([false, true]);
 });
 
 test("keeps one shuffled order while the reader plays with the words", () => {

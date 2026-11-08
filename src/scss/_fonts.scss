@@ -1,0 +1,25 @@
+// font-display: block keeps text invisible for the moment until its font arrives (the fonts are preloaded,
+// see scripts/preloadFonts.js): with swap the page first shows a fallback of another width and then jumps.
+@font-face {
+  font-family: "Big Shoulders Display";
+  font-style: normal;
+  font-weight: 700;
+  font-display: block;
+  src: url("@fontsource/big-shoulders-display/files/big-shoulders-display-latin-700-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Golos Text";
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+  src: url("@fontsource/golos-text/files/golos-text-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Golos Text";
+  font-style: normal;
+  font-weight: 500;
+  font-display: block;
+  src: url("@fontsource/golos-text/files/golos-text-latin-500-normal.woff2") format("woff2");
+}

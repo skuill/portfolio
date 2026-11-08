@@ -12,6 +12,7 @@ import sbertechLogo from "../assets/img/sbertech.png";
 import mtsLogo from "../assets/img/MTS.png";
 import ikvaLogo from "../assets/img/ikva.png";
 import githubProjects from "./github-projects.json";
+import photoPreviews from "./photo-placeholders.json";
 
 // Navigation Bar SECTION
 const navBar = {
@@ -64,17 +65,25 @@ const about = {
 // PROJECTS SECTION
 // github: which repositories get live star counts (github-projects.json, snapshot refreshed with npm run projects).
 // repo: the name in that file. stat: a figure of the project, rounded down so it stays true.
+// family: neighbouring projects with the same family share one title from `families`.
 // preview: { image, alt } for a picture, { code } for a code sample, { chat } for a sketch of a conversation.
+// Keep the texts true over time: no versions and no counts that change.
 const projects = {
   show: true,
   heading: "Recent projects",
   github: githubProjects,
+  families: {
+    lyrics: {
+      title: "Song lyrics in one call",
+      text: "One search across many lyrics sites, as a library or as a service.",
+    },
+  },
   items: [
     {
       name: "tatevikmamian.com",
       hook: "An architect's work, online",
       text: "Projects, sketches, zines and museum floors, served by my own image API.",
-      stack: "React 19, TypeScript, Vite, ASP.NET Core 10, Nginx, Docker",
+      stack: "React, TypeScript, Vite, ASP.NET Core, Nginx, Docker",
       url: "https://tatevikmamian.com/",
       links: [],
       preview: { image: tatevikWebsite, alt: "The start page of tatevikmamian.com" },
@@ -82,10 +91,11 @@ const projects = {
     {
       name: "LyricsScraperNET",
       repo: "LyricsScraperNET",
-      hook: "Song lyrics in one call",
-      text: "A .NET library that searches six lyrics providers through a single client.",
+      family: "lyrics",
+      hook: "LyricsScraperNET",
+      text: "A .NET library: one client for all the sites.",
       stat: "8,600+ NuGet downloads",
-      stack: "C#, .NET 8 / 9 / 10, NuGet",
+      stack: "C#, .NET, NuGet",
       url: "https://github.com/skuill/LyricsScraperNET",
       links: [{ label: "NuGet", url: "https://www.nuget.org/packages/LyricsScraperNET/" }],
       preview: {
@@ -106,10 +116,11 @@ Console.WriteLine(searchResult.LyricText);`,
     {
       name: "LyricsScraperApi",
       repo: "LyricsScraperApi",
-      hook: "The same search as a service",
+      family: "lyrics",
+      hook: "LyricsScraperApi",
       text: "A REST API over the library: post an artist and a song, get the lyrics.",
       stat: "800+ Docker pulls",
-      stack: "ASP.NET Core 10, OpenAPI, Serilog, FluentValidation, Docker",
+      stack: "ASP.NET Core, OpenAPI, Serilog, FluentValidation, Docker",
       url: "https://github.com/skuill/LyricsScraperApi",
       links: [{ label: "Docker Hub", url: "https://hub.docker.com/r/skuill/lyrics-scraper-api" }],
       preview: { image: lyricsApiSwagger, alt: "The Swagger page of LyricsScraperApi" },
@@ -118,9 +129,9 @@ Console.WriteLine(searchResult.LyricText);`,
       name: "ConcertBuddy",
       repo: "ConcertBuddy",
       urlLabel: "@concert_buddy_bot",
-      hook: "Your buddy before a concert",
-      text: "Write a band name to the Telegram bot and get its story, setlists, tracks and lyrics.",
-      stack: ".NET 10, Telegram.Bot, MusicBrainz, Last.fm, Setlist.fm, Docker",
+      hook: "Your music buddy in Telegram",
+      text: "Write a band name and get its story, setlists, tracks and lyrics.",
+      stack: ".NET, Telegram.Bot, MusicBrainz, Last.fm, Setlist.fm, Docker",
       url: "https://t.me/concert_buddy_bot",
       links: [{ label: "GitHub", url: "https://github.com/skuill/ConcertBuddy" }],
       // A sketch of what the bot does until there is a screenshot: replace with { image, alt }.
@@ -143,6 +154,7 @@ const interests = {
   images: [
     {
       img: caucasusCollage,
+      blur: photoPreviews["interests_caucasus-collage.webp"],
       alt: "A drawing of a bike trip across the Caucasus",
       distance: "1,164 km",
       label: "Caucasus Crossing, Armenia and Georgia, 2023",
@@ -150,6 +162,7 @@ const interests = {
     },
     {
       img: tourUniteStart,
+      blur: photoPreviews["interests_tourunite-start.webp"],
       alt: "At the start of the Tour Unite bikepacking route",
       distance: "1,333 km",
       label: "Tour Unite, Sortavala to Konakovo, 2021",
@@ -157,25 +170,29 @@ const interests = {
     },
     {
       img: mosaicBusStop,
+      blur: photoPreviews["interests_mosaic-skuill.webp"],
       alt: "In front of a Soviet mosaic bus stop",
       label: "Soviet mosaic bus stops, south of Russia, 2021",
+      url: "https://tatevikmamian.com/zins",
     },
     {
       img: caucasusZekari,
+      blur: photoPreviews["interests_caucasus-zekari.webp"],
       alt: "On the Zekar Pass among mountains and forests",
-      label: "Zekar Pass, Georgia, 2023",
+      label: "Zekar Pass on the Caucasus Crossing, 2023",
+      url: "https://www.strava.com/athletes/39721809/posts/24797729",
     },
   ],
 };
 
-// SKILLS SECTION
+// SKILLS SECTION: the first group is the headline of the screen, the last one a quiet closing line. The resume has more.
 const skills = {
   show: true,
   heading: "Skills",
   groups: [
     {
-      name: "Core",
-      items: ["C#", ".NET / ASP.NET Core", "Web API", "MS SQL Server (T-SQL)", "RabbitMQ", "Docker", "Kubernetes"],
+      name: "Main stack",
+      items: ["C#", ".NET / ASP.NET Core", "SQL Server", "RabbitMQ", "Docker", "Kubernetes"],
     },
     {
       name: "Architecture",
@@ -183,44 +200,19 @@ const skills = {
     },
     {
       name: "Payments and integrations",
-      items: [
-        "Third-party provider integrations",
-        "cross-border payments",
-        "webhooks",
-        "idempotency",
-        "retry and dead-letter handling",
-        "distributed locks",
-        "KYC",
-        "fraud and risk limits",
-      ],
+      items: ["Provider integrations", "cross-border payments", "webhooks", "idempotency", "KYC", "fraud and risk limits"],
     },
     {
-      name: "Observability",
-      items: ["Datadog", "Elasticsearch / Kibana", "Grafana", "Jaeger"],
-    },
-    {
-      name: "Testing",
-      items: ["xUnit", "NUnit", "integration and regression tests"],
+      name: "Observability and testing",
+      items: ["Datadog", "Elasticsearch / Kibana", "Grafana", "Jaeger", "xUnit", "NUnit"],
     },
     {
       name: "AI-assisted development",
-      items: ["Claude Code", "Cursor", "MCP servers", "agent skills", "CLAUDE.md / AGENTS.md context files"],
+      items: ["Claude Code", "Cursor", "MCP servers", "agent skills"],
     },
     {
       name: "Also worked with",
-      items: [
-        "Python",
-        "TypeScript / React",
-        "Java",
-        "PostgreSQL",
-        "Oracle",
-        "Redis",
-        "Apache Kafka",
-        "AWS (EC2, ECS, S3, CloudFront, SQS, SNS)",
-        "WPF",
-        "WCF",
-        "Ansible",
-      ],
+      items: ["Python", "TypeScript / React", "Java", "PostgreSQL", "Oracle", "Redis", "Apache Kafka", "AWS"],
     },
   ],
 };

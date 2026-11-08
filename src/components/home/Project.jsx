@@ -29,7 +29,16 @@ const statOf = (project, stars) =>
 
 const toStars = (repos) => Object.fromEntries(repos.map(({ name, stargazers_count }) => [name, stargazers_count]));
 
-const Project = ({ heading, github, items }) => {
+// Neighbouring projects of one family become a single group; the others stand alone.
+const groupByFamily = (items) =>
+  items.reduce((groups, project, index) => {
+    const last = groups[groups.length - 1];
+    if (project.family && last?.family === project.family) last.members.push({ project, index });
+    else groups.push({ family: project.family, members: [{ project, index }] });
+    return groups;
+  }, []);
+
+const Project = ({ heading, github, items, families }) => {
   const showRef = useRef(null);
   const near = useNearViewport(showRef, PRELOAD_MARGIN);
   const [stars, setStars] = useState(() => toStars(github.repos));
@@ -72,14 +81,24 @@ const Project = ({ heading, github, items }) => {
           </div>
         </div>
         <div className="picks">
-          {items.map((project, index) => {
-            const stat = statOf(project, stars);
+          {groupByFamily(items).map(({ family, members }) => {
+            const buttons = members.map(({ project, index }) => {
+              const stat = statOf(project, stars);
+              return (
+                <button key={project.name} className="pick" type="button" aria-pressed={index === selected} onClick={() => setSelected(index)}>
+                  <b>{project.hook}</b>
+                  <span>{project.text}</span>
+                  {stat && <em>{stat}</em>}
+                </button>
+              );
+            });
+            if (!family) return buttons;
             return (
-              <button key={project.name} className="pick" type="button" aria-pressed={index === selected} onClick={() => setSelected(index)}>
-                <b>{project.hook}</b>
-                <span>{project.text}</span>
-                {stat && <em>{stat}</em>}
-              </button>
+              <div key={family} className="pick-family">
+                <b>{families[family].title}</b>
+                <span>{families[family].text}</span>
+                {buttons}
+              </div>
             );
           })}
         </div>

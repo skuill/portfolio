@@ -5,6 +5,7 @@ One scrolling page built from screens: each screen has its own composition, and 
 ## Palette and type
 - Colours are CSS variables at the top of `src/scss/_base.scss`. The bands (`--sky`, `--sand`, `--deep`, `--sun`) come from the mosaic palette.
 - Headings: Big Shoulders Display 700. Text: Golos Text 400 and 500. Both are served with the site from `@fontsource` packages, Latin only (the site is in English only).
+- The fonts of the first screen are preloaded by a small Vite plugin (`scripts/preloadFonts.js`), and `font-display: block` hides text for the moment until its font arrives. Without this the first screen flashes a fallback of another width and the menu jumps.
 
 ## The mosaic
 `src/components/Mosaic/`:
@@ -33,7 +34,9 @@ Experience and Projects show one card at a time. All the cards stay on the page 
 All of it is in `src/editable-stuff/config.js`:
 - Experience lists the highlights of each job; the resume has the full list.
 - A project's `preview` is `{ image, alt }`, `{ code }` or `{ chat }`. A site screenshot must have the proportions of `.stage-box` (1280 by 770) to show whole.
+- Project texts avoid what goes stale: no versions and no counts that change. Figures like downloads are rounded down with a plus.
 - `interests.trip` is the featured trip. Photos in `interests.images` keep their portrait proportions and change order on every visit.
+- A new photo in Interests: name it `interests_<name>.webp`, about 600 px wide, run `npm run placeholders` (needs Python with Pillow) and set its `blur` from `photo-placeholders.json`. The blurred preview shows until the photo has loaded and faded in.
 
 ## Why rides are not loaded from Strava
 The [Strava API agreement](https://www.strava.com/legal/api) allows showing a user's data only to that same user, so a public feed does not fit it, even for one's own rides. Trips are curated in `config.js`, with links to Strava.

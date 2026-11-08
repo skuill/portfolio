@@ -38,6 +38,7 @@ const bot = {
   preview: { chat: { ask: "Band", reply: "What?", options: ["Lyrics", "Tracks"] } },
 };
 const items = [site, library, bot];
+const families = { tools: { title: "The tools", text: "About the tools" } };
 const github = {
   username,
   repos: [
@@ -61,7 +62,7 @@ beforeEach(() => {
 });
 afterEach(() => vi.restoreAllMocks());
 
-const renderProjects = () => render(<Project heading="Recent projects" github={github} items={items} />);
+const renderProjects = (shown = items) => render(<Project heading="Recent projects" github={github} items={shown} families={families} />);
 const picks = () => screen.getAllByRole("button").map((button) => ({ text: button.textContent, pressed: button.getAttribute("aria-pressed") }));
 const stats = (container) => [...container.querySelectorAll(".pick")].map((pick) => pick.querySelector("em")?.textContent);
 const metas = (container) =>
@@ -114,6 +115,23 @@ test("picking a project shows its own preview and details", () => {
   fireEvent.click(screen.getByRole("button", { name: /A bot/ }));
   expect(stage().textContent).toBe("BandWhat?LyricsTracks");
   expect(currentTitles()).toEqual(["@bot"]);
+});
+
+test("neighbouring projects of one family share a title and each stays selectable", () => {
+  githubAnswers({});
+  const shown = [site, { ...library, family: "tools" }, { ...bot, family: "tools" }];
+  const { container } = renderProjects(shown);
+
+  const family = container.querySelector(".pick-family");
+  expect(container.querySelectorAll(".pick-family")).toHaveLength(1);
+  expect([family.querySelector(":scope > b").textContent, family.querySelector(":scope > span").textContent]).toEqual(["The tools", "About the tools"]);
+  expect(within(family).getAllByRole("button").map((button) => button.querySelector("b").textContent)).toEqual(["A library", "A bot"]);
+  expect(container.querySelector(".picks > .pick b").textContent).toBe("A site");
+
+  fireEvent.click(within(family).getByRole("button", { name: /A bot/ }));
+
+  expect(container.querySelector(".stage-box").textContent).toBe("BandWhat?LyricsTracks");
+  expect(within(family).getAllByRole("button").map((button) => button.getAttribute("aria-pressed"))).toEqual(["false", "true"]);
 });
 
 test("replaces the snapshot stars with live ones once the reader scrolls near", async () => {

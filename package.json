@@ -18,7 +18,8 @@
     "test": "vitest run",
     "lint": "eslint .",
     "cv": "typst compile cv/cv.typ src/editable-stuff/CV_Vitaly_Kvashin.pdf",
-    "projects": "node scripts/github-projects.js"
+    "projects": "node scripts/github-projects.js",
+    "placeholders": "python scripts/photo_placeholders.py"
   },
   "engines": {
     "node": ">=24",
