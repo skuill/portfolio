@@ -1,64 +1,51 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import Project from "./Project";
 import { installIntersectionObserver } from "../../testing/intersectionObserver";
 
 const API = "https://api.github.com";
 const username = "skuill";
-const allReposUrl = `${API}/users/${username}/repos?sort=updated&direction=desc`;
-const languagesUrl = (name) => `${API}/repos/${username}/${name}/languages`;
+const repoUrl = (name) => `${API}/repos/${username}/${name}`;
 
-// A repository as the snapshot stores it and loadGithubProjects returns it.
-const project = (name, stars) => ({
-  name,
-  description: `${name} description`,
-  svn_url: `https://github.com/${username}/${name}`,
-  stargazers_count: stars,
-  pushed_at: "2026-10-01T10:00:00Z",
-  languages: { "C#": 750, HTML: 250 },
-});
-const snapshot = [project("old-a", 1), project("old-b", 2)];
-const live = [project("repo-a", 5), project("repo-b", 6)];
-const github = { username, latest: 2, specific: [], repos: snapshot };
-// The same repository as GitHub's list answers with it.
-const githubRepo = ({ name, description, svn_url, stargazers_count, pushed_at }) => ({
-  id: name,
-  name,
-  description,
-  svn_url,
-  stargazers_count,
-  pushed_at,
-  languages_url: languagesUrl(name),
-});
-const liveList = [...live, project("repo-c", 0)].map(githubRepo);
-
-// What a reader sees on a card.
-const expectedCard = ({ name, description, svn_url, stargazers_count }) => ({
-  title: name,
-  description,
-  links: [
-    ["Clone Project", `${svn_url}/archive/master.zip`],
-    ["Repo", svn_url],
-    ["C#: 75 %", `${svn_url}/search?l=C#`],
-    ["HTML: 25 %", `${svn_url}/search?l=HTML`],
-    [`Stars ${stargazers_count}`, `${svn_url}/stargazers`],
+const site = {
+  name: "site.com",
+  hook: "A site",
+  text: "About the site",
+  stack: "React",
+  url: "https://site.com/",
+  links: [],
+  preview: { image: "site.webp", alt: "The site" },
+};
+const library = {
+  name: "Library",
+  repo: "Library",
+  hook: "A library",
+  text: "About the library",
+  stat: "100+ downloads",
+  stack: "C#",
+  url: "https://github.com/skuill/Library",
+  links: [{ label: "NuGet", url: "https://nuget.org/library" }],
+  preview: { code: "var x = 1;" },
+};
+const bot = {
+  name: "Bot",
+  repo: "Bot",
+  urlLabel: "@bot",
+  hook: "A bot",
+  text: "About the bot",
+  stack: ".NET",
+  url: "https://t.me/bot",
+  links: [{ label: "GitHub", url: "https://github.com/skuill/Bot" }],
+  preview: { chat: { ask: "Band", reply: "What?", options: ["Lyrics", "Tracks"] } },
+};
+const items = [site, library, bot];
+const github = {
+  username,
+  repos: [
+    { name: "Library", stargazers_count: 1 },
+    { name: "Bot", stargazers_count: 2 },
   ],
-  updated: "Updated on October 1, 2026",
-});
-const renderedCards = () =>
-  screen.getAllByRole("heading", { level: 5 }).map((title) => {
-    const card = title.closest(".card");
-    return {
-      title: title.textContent,
-      description: card.querySelector(".card-text").textContent,
-      links: within(card)
-        .getAllByRole("link")
-        .map((link) => [link.textContent.trim(), link.getAttribute("href")]),
-      updated: within(card).getByText(/^Updated/).textContent,
-    };
-  });
-const requestedUrls = () => globalThis.fetch.mock.calls.map(([url]) => url).sort();
+};
 
-// Test double for the GitHub API: answers with `responses[url]`, a 403 for anything else.
 const githubAnswers = (responses) => {
   globalThis.fetch = vi.fn(async (url) =>
     url in responses
@@ -74,51 +61,82 @@ beforeEach(() => {
 });
 afterEach(() => vi.restoreAllMocks());
 
-const renderProjects = () =>
-  render(<Project heading="Recent Projects" github={github} projects={{ websites: [] }} />);
+const renderProjects = () => render(<Project heading="Recent projects" github={github} items={items} />);
+const picks = () => screen.getAllByRole("button").map((button) => ({ text: button.textContent, pressed: button.getAttribute("aria-pressed") }));
+const stats = (container) => [...container.querySelectorAll(".pick")].map((pick) => pick.querySelector("em")?.textContent);
+const metas = (container) =>
+  [...container.querySelectorAll(".show-meta > div")].map((meta) => ({
+    current: meta.classList.contains("current"),
+    title: within(meta).getByRole("heading", { level: 3 }).textContent,
+    stack: meta.querySelector(".tech").textContent,
+    links: within(meta).getAllByRole("link").map((link) => [link.textContent, link.getAttribute("href")]),
+  }));
 
-test("shows the snapshot at once and asks GitHub nothing until the reader scrolls near the projects", () => {
+test("shows the picks, the snapshot stars and asks GitHub nothing until the reader scrolls near", () => {
   githubAnswers({});
 
-  renderProjects();
+  const { container } = renderProjects();
 
-  expect(renderedCards()).toEqual(snapshot.map(expectedCard));
+  expect(picks()).toEqual([
+    { text: "A siteAbout the site", pressed: "true" },
+    { text: "A libraryAbout the library100+ downloads · ★ 1", pressed: "false" },
+    { text: "A botAbout the bot★ 2", pressed: "false" },
+  ]);
+  expect(stats(container)).toEqual([undefined, "100+ downloads · ★ 1", "★ 2"]);
   expect(globalThis.fetch).not.toHaveBeenCalled();
 });
 
-test("replaces the snapshot with live GitHub data once the reader scrolls near the projects", async () => {
+test("every project's title is the link to it, with its other links beside", () => {
+  githubAnswers({});
+
+  const { container } = renderProjects();
+
+  expect(metas(container)).toEqual([
+    { current: true, title: "site.com", stack: "React", links: [["site.com", "https://site.com/"]] },
+    { current: false, title: "Library", stack: "C#", links: [["Library", "https://github.com/skuill/Library"], ["NuGet", "https://nuget.org/library"]] },
+    { current: false, title: "@bot", stack: ".NET", links: [["@bot", "https://t.me/bot"], ["GitHub", "https://github.com/skuill/Bot"]] },
+  ]);
+});
+
+test("picking a project shows its own preview and details", () => {
+  githubAnswers({});
+  const { container } = renderProjects();
+  const stage = () => container.querySelector(".stage-box");
+  const currentTitles = () => metas(container).filter(({ current }) => current).map(({ title }) => title);
+
+  expect(within(stage()).getByRole("img")).toHaveAttribute("alt", "The site");
+  expect(currentTitles()).toEqual(["site.com"]);
+
+  fireEvent.click(screen.getByRole("button", { name: /A library/ }));
+  expect(stage().querySelector("pre")).toHaveTextContent("var x = 1;");
+  expect(currentTitles()).toEqual(["Library"]);
+
+  fireEvent.click(screen.getByRole("button", { name: /A bot/ }));
+  expect(stage().textContent).toBe("BandWhat?LyricsTracks");
+  expect(currentTitles()).toEqual(["@bot"]);
+});
+
+test("replaces the snapshot stars with live ones once the reader scrolls near", async () => {
   githubAnswers({
-    [allReposUrl]: liveList,
-    ...Object.fromEntries(live.map(({ name, languages }) => [languagesUrl(name), languages])),
+    [repoUrl("Library")]: { name: "Library", stargazers_count: 50 },
+    [repoUrl("Bot")]: { name: "Bot", stargazers_count: 60 },
   });
-  renderProjects();
+  const { container } = renderProjects();
 
   viewport.scrollThroughPage();
-  await screen.findByText("repo-a");
 
-  expect(renderedCards()).toEqual(live.map(expectedCard));
-  expect(requestedUrls()).toEqual([allReposUrl, ...live.map(({ name }) => languagesUrl(name))].sort());
+  await waitFor(() => expect(stats(container)).toEqual([undefined, "100+ downloads · ★ 50", "★ 60"]));
+  expect(globalThis.fetch.mock.calls.map(([url]) => url).sort()).toEqual([repoUrl("Bot"), repoUrl("Library")]);
   expect(console.error).not.toHaveBeenCalled();
 });
 
-test("keeps the snapshot when GitHub refuses the list", async () => {
-  githubAnswers({});
-  renderProjects();
+test("keeps the snapshot stars when GitHub refuses", async () => {
+  githubAnswers({ [repoUrl("Library")]: { name: "Library", stargazers_count: 50 } });
+  const { container } = renderProjects();
 
   viewport.scrollThroughPage();
   await waitFor(() => expect(console.error).toHaveBeenCalled());
 
-  expect(renderedCards()).toEqual(snapshot.map(expectedCard));
-  expect(console.error.mock.calls).toEqual([[`403 Forbidden: ${allReposUrl}`]]);
-});
-
-test("keeps the snapshot when the languages of one repository do not load", async () => {
-  githubAnswers({ [allReposUrl]: liveList, [languagesUrl("repo-a")]: live[0].languages });
-  renderProjects();
-
-  viewport.scrollThroughPage();
-  await waitFor(() => expect(console.error).toHaveBeenCalled());
-
-  expect(renderedCards()).toEqual(snapshot.map(expectedCard));
-  expect(console.error.mock.calls).toEqual([[`403 Forbidden: ${languagesUrl("repo-b")}`]]);
+  expect(stats(container)).toEqual([undefined, "100+ downloads · ★ 1", "★ 2"]);
+  expect(console.error.mock.calls).toEqual([[`403 Forbidden: ${repoUrl("Bot")}`]]);
 });

@@ -4,8 +4,9 @@ import { act } from "@testing-library/react";
 export const installIntersectionObserver = () => {
   const observers = new Set();
   window.IntersectionObserver = class {
-    constructor(callback) {
+    constructor(callback, options) {
       this.callback = callback;
+      this.options = options;
       this.targets = new Set();
       observers.add(this);
     }
@@ -20,14 +21,17 @@ export const installIntersectionObserver = () => {
       observers.delete(this);
     }
   };
+  const report = (matches, isIntersecting) =>
+    act(() => {
+      for (const observer of [...observers]) {
+        const entries = [...observer.targets].filter(matches).map((target) => ({ target, isIntersecting }));
+        if (entries.length) observer.callback(entries, observer);
+      }
+    });
   return {
     // What a reader scrolling down the whole page triggers: every observed element intersects once.
-    scrollThroughPage: () =>
-      act(() => {
-        for (const observer of [...observers]) {
-          const entries = [...observer.targets].map((target) => ({ target, isIntersecting: true }));
-          if (entries.length) observer.callback(entries, observer);
-        }
-      }),
+    scrollThroughPage: () => report(() => true, true),
+    // One element enters or leaves the viewport.
+    intersect: (element, isIntersecting = true) => report((target) => target === element, isIntersecting),
   };
 };

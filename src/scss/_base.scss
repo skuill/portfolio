@@ -1,0 +1,105 @@
+:root {
+  --paper: #fcfbf8;
+  --ink: #22282f;
+  --muted: #5a626c;
+  --line: #e3dfd5;
+  --ring: #d59a7c;
+  --link: #2f6f66;
+  --sky: #e6eef3;
+  --sand: #f5ecd9;
+  --deep: #3f5a73;
+  --sun: #f0d6a0;
+  --display: "Big Shoulders Display", Impact, sans-serif;
+  --stamp: clamp(96px, 10.5vw, 142px);
+  --medal: clamp(180px, 26svh, 220px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font: 400 17px/1.55 "Golos Text", "Segoe UI", system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+  transition: color 0.25s;
+
+  &:hover {
+    color: var(--link);
+  }
+}
+
+h1,
+h2,
+h3,
+p,
+ul,
+ol,
+dl,
+dd,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+h3 {
+  font-weight: 500;
+}
+
+h2 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: calc(clamp(38px, 4.5vw, 58px) * 1.12);
+  line-height: 1.1;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

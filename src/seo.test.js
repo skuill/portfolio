@@ -27,7 +27,7 @@ test("points search engines to skuill.com and gives link previews a title, a des
     canonical: [SITE],
     tags: {
       viewport: "width=device-width, initial-scale=1",
-      "theme-color": "#000000",
+      "theme-color": "#fcfbf8",
       description: tags.description,
       "og:type": "website",
       "og:site_name": name,

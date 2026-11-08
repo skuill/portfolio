@@ -1,80 +1,68 @@
-import React, { useState } from "react";
-import { useScrollPosition } from "../hooks/useScrollPosition";
-import useResizeObserver from "../hooks/useResizeObserver";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import { mainBody, repos, about, skills, experiences, interests, projects } from "../editable-stuff/config.js";
+import { useEffect, useState } from "react";
+import { about, experiences, getInTouch, interests, mainBody, projects, skills } from "../editable-stuff/config.js";
 
-// A menu link; the page is a single page, so links are plain anchors.
-const MenuLink = ({ href, children, ...rest }) => (
-  <Nav.Link href={href} {...rest}>
-    <span className="nav-item lead">{children}</span>
-  </Nav.Link>
-);
+const LINKS = [
+  { show: about.show, href: "#aboutme", label: "About" },
+  { show: experiences.show, href: "#experience", label: "Experience" },
+  { show: projects.show, href: "#projects", label: "Projects" },
+  { show: skills.show, href: "#skills", label: "Skills" },
+  { show: interests.show, href: "#interests", label: "Interests" },
+];
 
-const Navigation = React.forwardRef((props, ref) => {
-  const [isTop, setIsTop] = useState(true);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  const navbarMenuRef = React.useRef();
-  const navbarDimensions = useResizeObserver(navbarMenuRef);
-  const navBottom = navbarDimensions ? navbarDimensions.bottom : 0;
-  useScrollPosition(
-    ({ currPos }) => {
-      if (!navbarDimensions) return;
-      if (ref.current === undefined) return;
-      currPos.y + ref.current.offsetTop - navbarDimensions.bottom > 5 || (currPos.y === 0 && ref.current.offsetTop === 0)
-        ? setIsTop(true)
-        : setIsTop(false);
-      setScrollPosition(currPos.y);
-    },
-    [navBottom]
+// A menu of anchors on one page: settles once the first screen is gone and follows the section in view.
+const Navbar = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState(null);
+
+  useEffect(() => {
+    const heroObserver = new IntersectionObserver(([entry]) => setScrolled(!entry.isIntersecting), {
+      rootMargin: "-70px 0px 0px",
+    });
+    heroObserver.observe(document.getElementById("home"));
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        for (const { target, isIntersecting } of entries) {
+          setActive((current) => {
+            if (isIntersecting) return target.id;
+            return current === target.id ? null : current;
+          });
+        }
+      },
+      { rootMargin: "-45% 0px -50% 0px" }
+    );
+    document.querySelectorAll(".band").forEach((section) => sectionObserver.observe(section));
+
+    return () => {
+      heroObserver.disconnect();
+      sectionObserver.disconnect();
+    };
+  }, []);
+
+  const menuLink = (href, label) => (
+    <li key={href}>
+      <a href={href} className={active === href.slice(1) ? "active" : undefined}>
+        {label}
+      </a>
+    </li>
   );
-
-  React.useEffect(() => {
-    if (!navbarDimensions) return;
-    if (ref.current === undefined) return;
-    // The second condition fixed case when component with ref is on the top with fixed offset. 
-    navBottom - scrollPosition >= ref.current.offsetTop && !(-scrollPosition < navbarDimensions.bottom && ref.current.offsetTop === 0) 
-      ? setIsTop(false)
-      : setIsTop(true);
-  }, [navBottom, navbarDimensions, ref, scrollPosition]);
 
   return (
-    <Navbar
-      ref={navbarMenuRef}
-      className={`px-3 fixed-top  ${!isTop ? "navbar-white" : "navbar-transparent"
-        }`}
-      expand="lg"
-    >
-      <Navbar.Brand className="navbar-brand" href="#home">
-        {`<${mainBody.firstName} />`}
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" className="toggler" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="navbar-nav mr-auto">
-          {about.show && (
-            <MenuLink href="#aboutme">About</MenuLink>
-          )}
-          {experiences.show && (
-            <MenuLink href="#experience">Experiences</MenuLink>
-          )}
-          {(repos.show || projects.show) && (
-            <MenuLink href="#projects">Projects</MenuLink>
-          )}
-          {skills.show && (
-            <MenuLink href="#skills">Skills</MenuLink>
-          )}
-          {interests.show && (
-            <MenuLink href="#interests">Interests</MenuLink>
-          )}
-          <MenuLink href={about.resume} target="_blank" rel="noreferrer noopener">
+    <header className={`bar${scrolled ? " scrolled" : ""}`}>
+      <a className="brand" href="#home">
+        {mainBody.firstName} {mainBody.lastName}
+      </a>
+      <ul>
+        {LINKS.filter(({ show }) => show).map(({ href, label }) => menuLink(href, label))}
+        <li>
+          <a href={about.resume} target="_blank" rel="noreferrer noopener">
             Resume
-          </MenuLink>
-          <MenuLink href="#contact">Contact</MenuLink>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+          </a>
+        </li>
+        {getInTouch.show && menuLink("#contact", "Contact")}
+      </ul>
+    </header>
   );
-});
+};
 
-export default Navigation;
+export default Navbar;

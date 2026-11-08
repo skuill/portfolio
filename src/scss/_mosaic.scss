@@ -1,0 +1,44 @@
+.medallion {
+  all: unset;
+  position: relative;
+  display: block;
+  flex: none;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5px var(--ring);
+  cursor: pointer;
+
+  &:focus-visible {
+    outline: 2px solid var(--link);
+    outline-offset: 5px;
+  }
+
+  // The canvas is larger than the circle: tiles fly a little beyond its edge.
+  canvas {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+}
+
+#stamp {
+  order: 2;
+  width: var(--stamp);
+  height: var(--stamp);
+}
+
+#medal {
+  width: var(--medal);
+  height: var(--medal);
+}
+
+.crumble {
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  width: 100%;
+  height: 40px;
+  pointer-events: none;
+  z-index: 1;
+}
