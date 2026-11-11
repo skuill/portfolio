@@ -1,12 +1,13 @@
-const GetInTouch = ({ heading, message, email }) => {
-  return (
-    <div id="contact">
-      <h2 className="display-4 pb-3 text-center">{heading}</h2>
-      <p className="lead text-center pb-3">
-        {message} <a className="text-decoration-none" href={`mailto:${email}`}>{email}</a>.
-      </p>
-    </div>
-  );
-};
+import Section from "../Section";
+
+const GetInTouch = ({ heading, message, email }) => (
+  <Section id="contact" crumble>
+    <h2>{heading}</h2>
+    <p>{message}</p>
+    <a className="mail" href={`mailto:${email}`}>
+      {email}
+    </a>
+  </Section>
+);
 
 export default GetInTouch;

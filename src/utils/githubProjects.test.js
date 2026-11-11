@@ -2,27 +2,9 @@ import { loadGithubProjects } from "./githubProjects.js";
 
 const API = "https://api.github.com";
 const username = "skuill";
-const allReposUrl = `${API}/users/${username}/repos?sort=updated&direction=desc`;
+const repoUrl = (name) => `${API}/repos/${username}/${name}`;
 // A repository as GitHub answers with it (trimmed: the real one has dozens of fields).
-const githubRepo = (name) => ({
-  id: name,
-  name,
-  full_name: `${username}/${name}`,
-  description: `${name} description`,
-  svn_url: `https://github.com/${username}/${name}`,
-  stargazers_count: 3,
-  pushed_at: "2026-10-01T10:00:00Z",
-  languages_url: `${API}/repos/${username}/${name}/languages`,
-  fork: false,
-});
-const project = (name) => ({
-  name,
-  description: `${name} description`,
-  svn_url: `https://github.com/${username}/${name}`,
-  stargazers_count: 3,
-  pushed_at: "2026-10-01T10:00:00Z",
-  languages: { "C#": 1000, [name]: 1 },
-});
+const githubRepo = (name, stargazers_count) => ({ id: name, name, full_name: `${username}/${name}`, stargazers_count, fork: false });
 
 // Test double for the GitHub API: answers with `responses[url]`, a 403 for anything else.
 const githubAnswers = (responses) => {
@@ -32,29 +14,23 @@ const githubAnswers = (responses) => {
       : { ok: false, status: 403, statusText: "Forbidden", json: async () => ({}) }
   );
 };
-const languagesOf = (...names) =>
-  Object.fromEntries(names.map((name) => [githubRepo(name).languages_url, { "C#": 1000, [name]: 1 }]));
-const requestedUrls = () => globalThis.fetch.mock.calls.map(([url]) => url).sort();
 
-test("returns the latest repositories and the specific ones with their languages and only the fields the cards show", async () => {
-  githubAnswers({
-    [allReposUrl]: ["repo-a", "repo-b", "repo-c"].map(githubRepo),
-    [`${API}/repos/${username}/old-one`]: githubRepo("old-one"),
-    ...languagesOf("repo-a", "repo-b", "old-one"),
-  });
+const settings = { username, repos: [{ name: "repo-a", stargazers_count: 0 }, { name: "repo-b", stargazers_count: 0 }] };
 
-  const projects = await loadGithubProjects({ username, latest: 2, specific: ["old-one", "repo-a"] });
+test("returns only the name and the stars of each repository, one request each", async () => {
+  githubAnswers({ [repoUrl("repo-a")]: githubRepo("repo-a", 5), [repoUrl("repo-b")]: githubRepo("repo-b", 7) });
 
-  expect(projects).toEqual(["repo-a", "repo-b", "old-one"].map(project));
-  expect(requestedUrls()).toEqual(
-    [allReposUrl, `${API}/repos/${username}/old-one`, ...Object.keys(languagesOf("repo-a", "repo-b", "old-one"))].sort()
-  );
+  const projects = await loadGithubProjects(settings);
+
+  expect(projects).toEqual([
+    { name: "repo-a", stargazers_count: 5 },
+    { name: "repo-b", stargazers_count: 7 },
+  ]);
+  expect(globalThis.fetch.mock.calls.map(([url]) => url).sort()).toEqual([repoUrl("repo-a"), repoUrl("repo-b")]);
 });
 
 test("fails when GitHub refuses any request", async () => {
-  githubAnswers({ [allReposUrl]: ["repo-a", "repo-b"].map(githubRepo), ...languagesOf("repo-a") });
+  githubAnswers({ [repoUrl("repo-a")]: githubRepo("repo-a", 5) });
 
-  await expect(loadGithubProjects({ username, latest: 2, specific: [] })).rejects.toThrow(
-    new Error(`403 Forbidden: ${githubRepo("repo-b").languages_url}`)
-  );
+  await expect(loadGithubProjects(settings)).rejects.toThrow(new Error(`403 Forbidden: ${repoUrl("repo-b")}`));
 });

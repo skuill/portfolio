@@ -1,8 +1,20 @@
-// A full-width page section with a padded container (the markup Bootstrap 4's Jumbotron used to give).
-const Section = ({ id, className = "", style, children }) => (
-  <div id={id} className={`py-3 ${className}`} style={style ?? { backgroundColor: "#e9ecef" }}>
-    <div className="container py-5">{children}</div>
-  </div>
-);
+import { useRef } from "react";
+import CrumbleEdge from "./CrumbleEdge";
+import useNearViewport from "../hooks/useNearViewport";
+
+// One screen of the page. tall: fills the window; crumble: its top edge breaks into mosaic tiles.
+const Section = ({ id, tall = false, crumble = false, children }) => {
+  const contentRef = useRef(null);
+  const seen = useNearViewport(contentRef, "0px 0px -8% 0px");
+
+  return (
+    <section id={id} className={`band${tall ? " tall" : ""}`}>
+      {crumble && <CrumbleEdge />}
+      <div ref={contentRef} className={`wrap reveal${seen ? " in" : ""}`}>
+        {children}
+      </div>
+    </section>
+  );
+};
 
 export default Section;

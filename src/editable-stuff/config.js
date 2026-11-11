@@ -1,6 +1,7 @@
-import profilePicture from "./portfolio.webp";
+import portrait from "./portrait.webp";
 import resumePdf from "./CV_Vitaly_Kvashin.pdf";
 import tatevikWebsite from "./tatevik_mamian_website.webp";
+import lyricsApiSwagger from "./lyrics_scraper_api_swagger.webp";
 import caucasusCollage from "./interests_caucasus-collage.webp";
 import tourUniteStart from "./interests_tourunite-start.webp";
 import mosaicBusStop from "./interests_mosaic-skuill.webp";
@@ -11,6 +12,7 @@ import sbertechLogo from "../assets/img/sbertech.png";
 import mtsLogo from "../assets/img/MTS.png";
 import ikvaLogo from "../assets/img/ikva.png";
 import githubProjects from "./github-projects.json";
+import photoPreviews from "./photo-placeholders.json";
 
 // Navigation Bar SECTION
 const navBar = {
@@ -19,11 +21,9 @@ const navBar = {
 
 // Main Body SECTION
 const mainBody = {
-  gradientColors: "#6293ca, #1ad7c0, #f0b35d, #9c62b3, #cf7171, #d2eaf0",
   firstName: "Vitaly",
-  middleName: "",
   lastName: "Kvashin",
-  message: " Passionate Senior Software Developer ",
+  message: "Backend Developer, C# / .NET",
   icons: [
     {
       image: "fa-github",
@@ -44,144 +44,175 @@ const mainBody = {
     {
       image: "fa-strava",
       url: "https://www.strava.com/athletes/39721809",
-    }
+    },
   ],
 };
 
 // ABOUT SECTION
-// imageLink: an imported image (or an image URL); resume: an imported PDF (or a URL).
 const about = {
   show: true,
-  heading: "About Me",
-  imageLink: profilePicture,
-  imageSize: 375,
-  message:
-    "I have been developing software for over 12 years. After graduating in computer science from Moscow State University, I worked as a developer in a small startup specializing in computer vision for about 4 years. Then I grew to Senior .NET Developer at MTS, the largest telecom operator in Russia, where I worked on a platform that allows developers and businesses to monitor and troubleshoot interactions between complex distributed systems. In 2022 I moved to Armenia and joined EPAM, where I developed an alternative financial platform for one of the large clients in a distributed team. Since May 2025 I have been a backend developer at MAJORITY, a mobile financial app for migrants, where I build payment services and integrations with payment providers, from the first API investigation to a stable production flow, and work with the team on the stability of the wider platform. I enjoy solving complex problems, finding root causes instead of fixing symptoms, and helping other developers and customers create and deliver quality solutions. I have deep experience at all stages of the software development life cycle, and I use AI coding agents as a daily part of my work.",
+  heading: "About me",
+  image: portrait,
+  paragraphs: [
+    "I have been developing software for over 12 years, and I enjoy solving complex problems and finding root causes instead of fixing symptoms.",
+    "After graduating in computer science from Moscow State University, I spent about 4 years at a small startup specializing in computer vision. Then I grew to Senior .NET Developer at MTS, the largest telecom operator in Russia, working on a platform that lets developers and businesses monitor and troubleshoot interactions between complex distributed systems.",
+    "In 2022 I moved to Armenia and joined EPAM, where I developed an alternative financial platform for one of the large clients in a distributed team.",
+    "Since May 2025 I have been a backend developer at MAJORITY, a mobile financial app for migrants, where I build payment services and integrations with payment providers, from the first API investigation to a stable production flow. AI coding agents are a daily part of my work.",
+  ],
   resume: resumePdf,
 };
 
 // PROJECTS SECTION
-// GitHub projects live in github-projects.json: the username, how many recently updated repositories to show (latest),
-// extra repository names (specific) and the last snapshot of them. The page shows the snapshot at once and replaces it
-// with live data from GitHub when the reader scrolls to the section. Refresh the snapshot: npm run projects.
-const repos = {
-  show: true,
-  heading: "Recent Projects",
-  github: githubProjects,
-};
-
+// github: which repositories get live star counts (github-projects.json, snapshot refreshed with npm run projects).
+// repo: the name in that file. stat: a figure of the project, rounded down so it stays true.
+// family: neighbouring projects with the same family share one title from `families`.
+// preview: { image, alt } for a picture, { code } for a code sample, { chat } for a sketch of a conversation.
+// Keep the texts true over time: no versions and no counts that change.
 const projects = {
   show: true,
-  websites: [
+  heading: "Recent projects",
+  github: githubProjects,
+  families: {
+    lyrics: {
+      title: "Song lyrics in one call",
+      text: "One search across many lyrics sites, as a library or as a service.",
+    },
+  },
+  items: [
     {
-      imageLink: tatevikWebsite,
+      name: "tatevikmamian.com",
+      hook: "An architect's work, online",
+      text: "Projects, sketches, zines and museum floors, served by my own image API.",
+      stack: "React, TypeScript, Vite, ASP.NET Core, Nginx, Docker",
       url: "https://tatevikmamian.com/",
-      description: "Architect's personal website",
-      technologies: "C#, .NET 8, WebApi, Javascript, Typescript, React, Nginx, Docker"
-    }
+      links: [],
+      preview: { image: tatevikWebsite, alt: "The start page of tatevikmamian.com" },
+    },
+    {
+      name: "LyricsScraperNET",
+      repo: "LyricsScraperNET",
+      family: "lyrics",
+      hook: "LyricsScraperNET",
+      text: "A .NET library: one client for all the sites.",
+      stat: "8,600+ NuGet downloads",
+      stack: "C#, .NET, NuGet",
+      url: "https://github.com/skuill/LyricsScraperNET",
+      links: [{ label: "NuGet", url: "https://www.nuget.org/packages/LyricsScraperNET/" }],
+      preview: {
+        code: `ILyricsScraperClient lyricsScraperClient = new LyricsScraperClient()
+    .WithAllProviders();
+
+var searchRequest = new ArtistAndSongSearchRequest(
+    artist: "Metallica",
+    song: "Nothing Else Matters"
+);
+
+var searchResult = await lyricsScraperClient
+    .SearchLyricAsync(searchRequest);
+
+Console.WriteLine(searchResult.LyricText);`,
+      },
+    },
+    {
+      name: "LyricsScraperApi",
+      repo: "LyricsScraperApi",
+      family: "lyrics",
+      hook: "LyricsScraperApi",
+      text: "A REST API over the library: post an artist and a song, get the lyrics.",
+      stat: "800+ Docker pulls",
+      stack: "ASP.NET Core, OpenAPI, Serilog, FluentValidation, Docker",
+      url: "https://github.com/skuill/LyricsScraperApi",
+      links: [{ label: "Docker Hub", url: "https://hub.docker.com/r/skuill/lyrics-scraper-api" }],
+      preview: { image: lyricsApiSwagger, alt: "The Swagger page of LyricsScraperApi" },
+    },
+    {
+      name: "ConcertBuddy",
+      repo: "ConcertBuddy",
+      urlLabel: "@concert_buddy_bot",
+      hook: "Your music buddy in Telegram",
+      text: "Write a band name and get its story, setlists, tracks and lyrics.",
+      stack: ".NET, Telegram.Bot, MusicBrainz, Last.fm, Setlist.fm, Docker",
+      url: "https://t.me/concert_buddy_bot",
+      links: [{ label: "GitHub", url: "https://github.com/skuill/ConcertBuddy" }],
+      // A sketch of what the bot does until there is a screenshot: replace with { image, alt }.
+      preview: { chat: { ask: "Parkway Drive", reply: "What would you like to know?", options: ["Biography", "Setlists", "Tracks", "Lyrics"] } },
+    },
   ],
 };
 
 // Interests SECTION
+// The words next to the mosaic come from src/components/Mosaic/figures.js, one per picture.
 const interests = {
   show: true,
   heading: "Interests",
-  message:
-    "I love spending my free time immersed in nature. Whether it's cycling, bikepacking, or hiking, I seek out quiet, unpaved trails through forests, mountains, and along rivers, where I can truly unwind and recharge. Occasionally, I bring along my camera to capture stunning landscapes or unique architectural details. In the evenings, I find joy and relaxation in playing the ukulele and bass. To end the day, I often dive into the captivating worlds of fantasy and sci-fi literature, which inspire and relax me before bed.",
+  intro: {
+    before: "Nature and sport take up a big part of my life: bikepacking, rides and hikes on quiet unpaved trails through forests and mountains,",
+    after: ". Sometimes a camera comes along. In the evenings I play bass or ukulele, draw, or dive into fantasy and sci-fi books.",
+  },
+  strava: { label: "all of it on Strava", url: "https://www.strava.com/athletes/39721809" },
+  trip: { distance: "1,900 km", label: "across Sweden, summer 2026" },
   images: [
-    { 
-      img: caucasusCollage, 
-      label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
-      paragraph: "A picture drawn by my girlfriend Tata on the theme of my trip on a bike.",
-      links: [
-        {
-          description: "Post in Strava about the trip.",
-          url: "https://www.strava.com/athletes/39721809/posts/24797729"
-        }]
-    },
-    { 
-      img: tourUniteStart, 
-      label: "Tour Unite. Sortavala - Konakovo. 2021.", 
-      paragraph: "I rode part of the bikepacking route of the Tour Unite race in northern Russia.",
-      links: [
-        {
-          description: "Report about my trip.",
-          url: "https://www.tourunite.info/2021/09/tui-itt21-kvashin.html"
-        }
-      ]
-    },
-    { 
-      img: mosaicBusStop, 
-      label: "A trip to the south of Russia in 2021.", 
-      paragraph: "The purpose of the trip was to capture in photographs the Soviet heritage of mosaic bus stops.",
-      links: []
+    {
+      img: caucasusCollage,
+      blur: photoPreviews["interests_caucasus-collage.webp"],
+      alt: "A drawing of a bike trip across the Caucasus",
+      distance: "1,164 km",
+      label: "Caucasus Crossing, Armenia and Georgia, 2023",
+      url: "https://www.strava.com/athletes/39721809/posts/24797729",
     },
     {
-      img: caucasusZekari, 
-      label: "Caucasus Crossing. Armenia And Georgia in 2023.", 
-      paragraph: "In beautiful Georgia on the Zekar Pass among mountains and forests.",
-      links: []
+      img: tourUniteStart,
+      blur: photoPreviews["interests_tourunite-start.webp"],
+      alt: "At the start of the Tour Unite bikepacking route",
+      distance: "1,333 km",
+      label: "Tour Unite, Sortavala to Konakovo, 2021",
+      url: "https://www.tourunite.info/2021/09/tui-itt21-kvashin.html",
+    },
+    {
+      img: mosaicBusStop,
+      blur: photoPreviews["interests_mosaic-skuill.webp"],
+      alt: "In front of a Soviet mosaic bus stop",
+      label: "Soviet mosaic bus stops, south of Russia, 2021",
+      url: "https://tatevikmamian.com/zins",
+    },
+    {
+      img: caucasusZekari,
+      blur: photoPreviews["interests_caucasus-zekari.webp"],
+      alt: "On the Zekar Pass among mountains and forests",
+      label: "Zekar Pass on the Caucasus Crossing, 2023",
+      url: "https://www.strava.com/athletes/39721809/posts/24797729",
     },
   ],
-  imageSize: {
-    width:"615",
-    height:"700"
-  }
 };
 
-// SKILLS SECTION
+// SKILLS SECTION: the first group is the headline of the screen, the last one a quiet closing line. The resume has more.
 const skills = {
   show: true,
   heading: "Skills",
   groups: [
     {
-      name: "Core",
-      items: ["C#", ".NET / ASP.NET Core", "Web API", "MS SQL Server (T-SQL)", "RabbitMQ", "Docker", "Kubernetes"],
+      name: "Main stack",
+      items: ["C#", ".NET / ASP.NET Core", "SQL Server", "RabbitMQ", "Docker", "Kubernetes"],
     },
     {
       name: "Architecture",
-      items: ["Microservices", "Event-driven architecture", "DDD", "Distributed systems"],
+      items: ["Microservices", "event-driven architecture", "DDD", "distributed systems"],
     },
     {
-      name: "Payments and Integrations",
-      items: [
-        "Third-party payment provider integrations",
-        "Cross-border payments",
-        "Webhooks",
-        "Idempotency",
-        "Retry and dead-letter handling",
-        "Distributed locks",
-        "KYC",
-        "Fraud and risk limits",
-      ],
+      name: "Payments and integrations",
+      items: ["Provider integrations", "cross-border payments", "webhooks", "idempotency", "KYC", "fraud and risk limits"],
     },
     {
-      name: "Observability",
-      items: ["Datadog", "Elasticsearch / Kibana", "Grafana", "Jaeger"],
+      name: "Observability and testing",
+      items: ["Datadog", "Elasticsearch / Kibana", "Grafana", "Jaeger", "xUnit", "NUnit"],
     },
     {
-      name: "Testing",
-      items: ["xUnit", "NUnit", "Integration and regression tests"],
-    },
-    {
-      name: "AI-assisted Development",
-      items: ["Claude Code", "Cursor", "MCP servers", "Agent skills", "CLAUDE.md / AGENTS.md context files"],
+      name: "AI-assisted development",
+      items: ["Claude Code", "Cursor", "MCP servers", "agent skills"],
     },
     {
       name: "Also worked with",
-      items: [
-        "Python",
-        "TypeScript / React",
-        "Java",
-        "PostgreSQL",
-        "Oracle",
-        "Redis",
-        "Apache Kafka",
-        "AWS (EC2, ECS, S3, CloudFront, SQS, SNS)",
-        "WPF",
-        "WCF",
-        "Ansible",
-      ],
+      items: ["Python", "TypeScript / React", "Java", "PostgreSQL", "Oracle", "Redis", "Apache Kafka", "AWS"],
     },
   ],
 };
@@ -189,99 +220,77 @@ const skills = {
 // GET IN TOUCH SECTION
 const getInTouch = {
   show: true,
-  heading: "Get In Touch",
-  message:
-    "Have a question, an idea, or just want to say hi? Feel free to email me at",
+  heading: "Get in touch",
+  message: "Have a question, an idea, or just want to say hi?",
   email: "sativkv@gmail.com",
 };
 
+// EXPERIENCE SECTION: the highlights of each job; the resume has the full list.
 const experiences = {
   show: true,
-  heading: "Experiences",
+  heading: "Experience",
   data: [
     {
-      role: 'Backend Developer',
-      dates: '05 May 2025 - Present',
-      company: 'MAJORITY Sweden AB',
-      summary: "Backend developer in the Services team at MAJORITY, a mobile financial app for migrants. The team shares the backend for cross-border deposits, money transfers, phone plans and calling, built in C#/.NET with SQL Server, RabbitMQ and Kubernetes.",
+      role: "Backend Developer",
+      dates: "May 2025 to present",
+      company: "MAJORITY Sweden AB",
+      summary:
+        "Backend developer in the Services team at MAJORITY, a mobile financial app for migrants. The team shares the backend for cross-border deposits, money transfers, phone plans and calling.",
       achievements: [
         "Built a new deposit (on-ramping) service from scratch: a .NET microservice that lets users fund their digital wallet with local bank transfers in Latin America, including currency conversion, limits, notifications and regression tests.",
         "Designed and built a new payment provider integration service from scratch, from the provider's API documentation to the architecture and implementation.",
-        "Worked with the team on other payment provider integrations and hardened them after launch with idempotency, automatic retries and recovery, and expiry handling.",
         "Implemented fraud and risk controls for deposits, with rules the Risk team can configure without code changes.",
-        "Contributed to the stability and new features of the phone plan (eSIM) backend: renewals, payment pre-authorisations, provider webhooks and notifications.",
-        "Improved other parts of the platform: money-transfer reliability (payer routing, provider rate-limit handling), calling features, and lower database load with caching.",
         "Production on-call and support: root-cause analysis of incidents, permanent fixes instead of manual clean-ups, and production investigations for customer support.",
-        "Built AI tooling for development and testing: an MCP server for the test environment, tools for an AI customer-support assistant, and agent-ready documentation for services. I work inside an AI coding agent (Claude Code) every day."
       ],
       logo: majorityLogo,
     },
     {
-      role: 'Senior Software Engineer',
-      dates: '02 May 2022 - 10 Jun 2024',
-      company: 'EPAM Systems',
-      summary: "Contributed to the development of the alternative investment platform iLEVEL within an international, distributed team for S&P Global, one of the largest financial services providers.",
+      role: "Senior Software Engineer",
+      dates: "May 2022 to Jun 2024",
+      company: "EPAM Systems",
+      summary: "The alternative investment platform iLEVEL, within an international, distributed team for S&P Global.",
       achievements: [
-        "Stabilized and enhanced a legacy Publishing Service hosted on IIS, enabling clients to generate PDF reports with financial data displayed in charts and grids, sourced from FE reports or Excel worksheets.",
-        "Enhanced a financial data export service hosted in AWS, fixing CI/CD processes and improving integration with third-party libraries. Introduced a multithreaded feature for data export with grouping.",
-        "Developed Cake scripts to automate local deployment of services on Docker and IIS.",
         "Led the migration of backend services to modern technologies, upgrading microservices from .NET Core to .NET 6 and transitioning outdated third-party libraries to supported, latest versions.",
+        "Analyzed and optimized UI performance issues, resolving browser crashes caused by out-of-memory (OOM) errors when loading large datasets by enhancing the entity graph caching strategy.",
         "Remediated XSS vulnerabilities identified in vendor reports, ensuring secure and compliant applications.",
-        "Analyzed and optimized UI performance issues, resolving browser crashes caused by out-of-memory (OOM) errors when loading large datasets by enhancing the entity graph caching strategy",
-        "Mentored junior developers, facilitated meetings as Scrum Master, contributed to demo sessions, and managed roadmap creation in Azure DevOps."
+        "Mentored junior developers, facilitated meetings as Scrum Master, contributed to demo sessions, and managed roadmap creation in Azure DevOps.",
       ],
       logo: epamLogo,
     },
     {
-      role: 'Senior Software Developer',
-      summary: 'Contributed to the design and development of a helpdesk platform that streamlined internal processes using BPMN.',
-      dates: '09 Feb 2022 - 08 Apr 2022',
-      company: 'Sberbank-Technology',
+      role: "Senior Software Developer",
+      dates: "Feb 2022 to Apr 2022",
+      company: "Sberbank-Technology",
+      summary: "Contributed to the design and development of a helpdesk platform that streamlined internal processes using BPMN.",
+      achievements: [],
       logo: sbertechLogo,
     },
     {
-      dates: '17 Sep 2018 - 10 Jun 2021',
-      company: 'MTS Digital',
-      roles: [
-        { role: 'Senior Software Developer',
-          dates: '01 Mar 2020 - 10 Jun 2021',
-          achievements: [
-            "Contributed to the development of an Observability Platform, a SaaS technology solution that ensures the observability of the MTS product ecosystem. This platform leverages OpenTracing, ELK and Matomo to collect and analyze logs, metrics, distributed traces, and web analytics.",
-            "Led the development and support of the project throughout all stages of the software development life cycle, from the MVP to a Full-Scale Product.",
-            "Designed and implemented LDAP authorization and Single Sign-On solutions.",
-            "Facilitated the integration of new Java consumers by optimizing and stabilizing Maven packages.",
-            "Developed a .NET Core service that provides an API for gathering metrics and analyzing relationships between products.",
-            "Resolved critical incidents during production-like deployments and facilitated retrospectives.",
-            "Participated in bandwidth optimization and resource estimation for 2021."
-          ]
-         },
-        { role: 'Software Developer',
-          dates: '17 Sep 2018 - 01 Mar 2020',
-          achievements: [
-            "Contributed to the development of CentralLogging, a centralized logging and tracing system, which involved adding multithreading for data stream processing and performing load tests to ensure effective multitenancy support.",
-            "Developed the methodology and conducted load testing for the MVP of the Observability platform, presenting at the internal \"Demo Day\" conference attended by over 250 people.",
-            "Developed a prototype microservice for compatibility with the legacy CentralLogging system, which was a key component in the R&D phase of the Observability Platform.",
-            "Configured CI/CD for the Observability Platform using Ansible technologies in a Kubernetes environment from scratch using TFS.",
-            "Designed architectural solutions including data encryption, consumer connection tutorials, monitoring and deployment strategies in Kubernetes and Docker."
-          ]
-        },
+      role: "Senior Software Developer",
+      dates: "Sep 2018 to Jun 2021",
+      company: "MTS Digital",
+      summary: "From Software Developer to Senior Software Developer on the Observability Platform, a SaaS solution for the MTS product ecosystem.",
+      achievements: [
+        "Led the development and support of the project throughout all stages of the software development life cycle, from the MVP to a full-scale product.",
+        "Designed and implemented LDAP authorization and Single Sign-On solutions.",
+        'Developed the methodology and conducted load testing for the MVP, presenting at the internal "Demo Day" conference attended by over 250 people.',
+        "Configured CI/CD for the Observability Platform using Ansible in a Kubernetes environment from scratch.",
       ],
       logo: mtsLogo,
     },
     {
-      role: 'Software Developer',
-      dates: '15 Jul 2014 - 14 Sep 2018',
-      company: 'IKVA LLC',
+      role: "Software Developer",
+      dates: "Jul 2014 to Sep 2018",
+      company: "IKVA LLC",
+      summary: "A traffic enforcement system: desktop tooling, monitoring and computer vision.",
       achievements: [
-        "Developed a WPF desktop application for a management console, enabling remote and centralized operations for setting up, commissioning, and maintaining the traffic enforcement system.",
-        "Enhanced the Zabbix monitoring system by developing utilities, data collection scripts, and operational statistics for both software and hardware performance.",
-        "Developed an application for software provisioning, configuration management, and application deployment.",
-        "Contributed to the development of the system core, enhancing existing and creating new computer vision algorithms, as well as developing various utilities for analysis, data collection, and testing.",
-        "Developed a high-load multi-threaded system for processing and transmitting data using various protocols, including SOAP and ProtoBuf."
+        "Developed a WPF desktop application for a management console, enabling remote and centralized operations for the traffic enforcement system.",
+        "Contributed to the development of the system core, enhancing existing and creating new computer vision algorithms.",
+        "Developed a high-load multi-threaded system for processing and transmitting data using various protocols, including SOAP and ProtoBuf.",
       ],
       logo: ikvaLogo,
-    }
-  ]
-}
+    },
+  ],
+};
 
-export { navBar, mainBody, about, repos, projects, skills, interests, getInTouch, experiences };
+export { navBar, mainBody, about, projects, skills, interests, getInTouch, experiences };

@@ -1,94 +1,57 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import App from "./App";
 import { installIntersectionObserver } from "./testing/intersectionObserver";
-import {
-  mainBody,
-  about,
-  experiences,
-  repos,
-  skills,
-  interests,
-  getInTouch,
-} from "./editable-stuff/config";
+import { mainBody, about, experiences, projects, skills, interests, getInTouch } from "./editable-stuff/config";
 
 const API = "https://api.github.com";
-const allReposUrl = `${API}/users/${repos.github.username}/repos?sort=updated&direction=desc`;
-const repo = (name) => ({
-  id: name,
-  name,
-  description: `${name} description`,
-  svn_url: `https://github.com/${repos.github.username}/${name}`,
-  stargazers_count: 3,
-  languages_url: `${API}/repos/${repos.github.username}/${name}/languages`,
-  pushed_at: "2026-10-01T10:00:00Z",
-});
-const githubRepos = ["repo-a", "repo-b", "repo-c", "repo-d", "repo-e"].map(repo);
-const shownRepos = githubRepos.slice(0, repos.github.latest);
+const repoUrls = projects.github.repos.map(({ name }) => `${API}/repos/${projects.github.username}/${name}`);
 
-// Test doubles for the page's external clients: the GitHub API (fetch) and Google Analytics (gtag).
-const jsonResponse = (body) => ({ ok: true, status: 200, json: async () => body });
 let viewport;
 beforeEach(() => {
   viewport = installIntersectionObserver();
-  globalThis.fetch = vi.fn(async (url) => {
-    if (url === allReposUrl) return jsonResponse(githubRepos);
-    if (url.endsWith("/languages")) return jsonResponse({ "C#": 1000 });
-    throw new Error(`Unexpected request: ${url}`);
-  });
+  // Test doubles for the page's external clients: the GitHub API (fetch) and Google Analytics (gtag).
+  globalThis.fetch = vi.fn(async () => ({ ok: true, status: 200, json: async () => ({ stargazers_count: 3 }) }));
   window.gtag = vi.fn();
-  // jsdom has no ResizeObserver; the navbar only uses it to switch its background on scroll.
-  window.ResizeObserver = class {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-  };
 });
 
-const waitForRepos = async () => {
-  for (const { name } of shownRepos) {
-    await screen.findByText(name);
-  }
-};
-const renderPage = async () => {
+test("renders the name and every enabled section in order", () => {
   render(<App />);
-  viewport.scrollThroughPage();
-  await waitForRepos();
-};
 
-test("renders the name and every enabled section in order", async () => {
-  await renderPage();
-
-  expect(screen.getByRole("heading", { level: 1 }).textContent.replace(/\s+/g, " ").trim()).toBe(
-    `${mainBody.firstName} ${mainBody.middleName} ${mainBody.lastName}`.replace(/\s+/g, " ").trim()
-  );
+  expect(screen.getByRole("heading", { level: 1 }).textContent).toBe(`${mainBody.firstName} ${mainBody.lastName}`);
   expect(screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent)).toEqual([
     about.heading,
     experiences.heading,
-    repos.heading,
+    projects.heading,
     skills.heading,
     interests.heading,
     getInTouch.heading,
   ]);
 });
 
-test("loads the latest repositories and their languages from GitHub once the reader scrolls, nothing else", async () => {
+test("every section starts hidden and appears when the reader reaches it", () => {
+  const { container } = render(<App />);
+  const contents = () => [...container.querySelectorAll(".wrap")];
+  expect(contents().filter((content) => content.classList.contains("in"))).toEqual([]);
+
+  viewport.scrollThroughPage();
+
+  expect(contents().filter((content) => !content.classList.contains("in"))).toEqual([]);
+});
+
+test("loads the stars of the shown repositories from GitHub once the reader scrolls, nothing else", async () => {
   render(<App />);
   expect(globalThis.fetch).not.toHaveBeenCalled();
 
   viewport.scrollThroughPage();
-  await waitForRepos();
+  await screen.findAllByText(/★ 3/);
 
-  expect(globalThis.fetch.mock.calls.map(([url]) => url).sort()).toEqual(
-    [allReposUrl, ...shownRepos.map((r) => r.languages_url)].sort()
-  );
+  expect(globalThis.fetch.mock.calls.map(([url]) => url).sort()).toEqual([...repoUrls].sort());
 });
 
-test("reports a resume click to Google Analytics", async () => {
-  await renderPage();
+test("reports a resume click to Google Analytics", () => {
+  render(<App />);
 
   fireEvent.click(screen.getByRole("button", { name: "Resume/CV" }));
 
-  expect(window.gtag.mock.calls).toEqual([
-    ["event", "Click", { event_category: "Resume", event_label: "Resume Download" }],
-  ]);
+  expect(window.gtag.mock.calls).toEqual([["event", "Click", { event_category: "Resume", event_label: "Resume Download" }]]);
 });
