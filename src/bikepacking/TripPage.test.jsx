@@ -180,3 +180,17 @@ test("the arrows by the day title go to the neighbouring days and stop at the en
   fireEvent.click(screen.getByRole("button", { name: "Previous day" }));
   expect(dayHeading()).toBe("Day 2");
 });
+
+test("the strip of the full-screen view keeps the current photo in its middle", async () => {
+  window.history.replaceState(null, "", "#day-2");
+  await renderTrip();
+  fireEvent.click(screen.getByRole("button", { name: "Open photo 1" }));
+  const strip = screen.getByRole("dialog").querySelector(".filmstrip");
+  strip.scrollTo = vi.fn();
+  Object.defineProperty(strip, "clientWidth", { value: 300 });
+  Object.defineProperties(strip.children[2], { offsetLeft: { value: 400 }, clientWidth: { value: 60 } });
+
+  fireEvent.click(screen.getByRole("button", { name: "Photo 3" }));
+
+  expect(strip.scrollTo).toHaveBeenLastCalledWith({ left: 280, behavior: "smooth" });
+});

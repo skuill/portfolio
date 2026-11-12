@@ -18,7 +18,10 @@ const Lightbox = ({ slug, photos, index, label, onIndex, onClose }) => {
   }, []);
 
   useEffect(() => {
-    stripRef.current?.children[index]?.scrollIntoView?.({ block: "nearest", inline: "center", behavior: "smooth" });
+    // The current photo stays in the middle of the strip.
+    const strip = stripRef.current;
+    const current = strip?.children[index];
+    if (current) strip.scrollTo?.({ left: current.offsetLeft - (strip.clientWidth - current.clientWidth) / 2, behavior: "smooth" });
   }, [index]);
 
   useEffect(() => {

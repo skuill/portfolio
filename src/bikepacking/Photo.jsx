@@ -12,7 +12,7 @@ const Photo = ({ slug, photo, alt, size = "small", sizes, eager = false }) => {
     ? `${photoUrl(slug, photo.name, "small")} ${Math.round(photo.width * scale)}w, ${photoUrl(slug, photo.name, "large")} ${photo.width}w`
     : undefined;
   return (
-    <span className="trip-photo" style={{ "--blur": `url(${photo.blur})`, aspectRatio: `${photo.width} / ${photo.height}` }}>
+    <span className="trip-photo" style={{ "--blur": `url(${photo.blur})`, "--ratio": photo.width / photo.height, aspectRatio: `${photo.width} / ${photo.height}` }}>
       <img
         src={photoUrl(slug, photo.name, size)}
         srcSet={srcSet}
