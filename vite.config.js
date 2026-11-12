@@ -4,8 +4,9 @@ import { preloadFonts } from "./scripts/preloadFonts.js";
 import { readdirSync } from "node:fs";
 
 // Every page of the site: the main page, the list of trips and one page per trip (written by scripts/import_trips.py).
+// The main page's key names its files (index-*.js, index-*.css), which scripts/check-container.sh looks for.
 const pages = () => ({
-  main: "index.html",
+  index: "index.html",
   bikepacking: "bikepacking/index.html",
   ...Object.fromEntries(
     readdirSync("bikepacking", { withFileTypes: true })
