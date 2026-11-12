@@ -8,12 +8,13 @@
 [![Site preview](/public/social-image.png)](https://skuill.com/portfolio/)
 
 ## Stack
-React 19 built with Vite, Sass, react-icons, fonts from `@fontsource`; Vitest + Testing Library, ESLint. Node 24 or newer (CI and Docker use Node 26). Star counts of the projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `index.html`). Served by nginx in Docker and by GitHub Pages.
+React 19 built with Vite, Sass, react-icons, fonts from `@fontsource`, Leaflet for the trip maps (OpenStreetMap tiles); Vitest + Testing Library, ESLint. Node 24 or newer (CI and Docker use Node 26). Star counts of the projects: a snapshot in `src/editable-stuff/github-projects.json` is shown at once and replaced by live data from the GitHub API (browser `fetch`) when the reader scrolls near the section; if GitHub does not answer (60 requests per hour per IP without a token), the snapshot stays. Analytics: Google Analytics 4 (gtag snippet in `index.html`). Served by nginx in Docker and by GitHub Pages.
 
 ## Documentation
 | Topic | What is inside |
 |---|---|
 | [Design](docs/design.md) | Screens, palette and type, the mosaic and how to add a picture, how the content is organized |
+| [Bikepacking pages](docs/bikepacking.md) | The trip pages, how a trip is imported from the local archive and how to add one |
 
 ## Repository layout
 | Path | What |
@@ -23,6 +24,7 @@ React 19 built with Vite, Sass, react-icons, fonts from `@fontsource`; Vitest + 
 | `src/editable-stuff/github-projects.json` | Which GitHub repositories get live star counts (`username`, `repos`) and the snapshot of those counts |
 | `scripts/github-projects.js` | Refreshes that snapshot: `npm run projects` |
 | `src/components/` | Page sections (`home/`), navbar, the mosaic (`Mosaic/`) |
+| `bikepacking/`, `src/bikepacking/` | The pages of the trips and their code; `src/trips/` holds the data of every trip, written by `npm run trips` from `scripts/trips.json` |
 | `src/scss/` | Styles |
 | `index.html` | Page title, meta description, canonical address, link preview tags and structured data; the entry point of the build |
 | `public/` | Files served as they are: favicon, `social-image.png` (the link preview), `robots.txt` |

@@ -18,7 +18,7 @@ const App = () => (
     {projects.show && <Project heading={projects.heading} github={projects.github} items={projects.items} families={projects.families} />}
     {skills.show && <Skills heading={skills.heading} groups={skills.groups} />}
     {interests.show && (
-      <Interests heading={interests.heading} intro={interests.intro} strava={interests.strava} trip={interests.trip} images={interests.images} />
+      <Interests heading={interests.heading} intro={interests.intro} allTrips={interests.allTrips} trip={interests.trip} images={interests.images} />
     )}
     {getInTouch.show && <GetInTouch heading={getInTouch.heading} message={getInTouch.message} email={getInTouch.email} />}
   </>

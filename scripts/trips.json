@@ -1,0 +1,11 @@
+[
+  {
+    "slug": "gravel-land-saga",
+    "archive": "2026-06-27_GravelLand-Saga",
+    "title": "GravelLand Saga",
+    "dayTitlePrefix": "^GravelLand Saga Day \\d+\\.?\\s*",
+    "intro": "Nineteen days on gravel around southern Sweden in the summer of 2026: from Södertälje past Örebro, the Göta Canal and Lake Vänern, down the west coast to Skåne and back north along the east coast, with wild camps by the lakes.",
+    "trimStartKm": 0,
+    "trimEndKm": 0
+  }
+]

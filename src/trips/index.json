@@ -1,0 +1,18 @@
+[
+ {
+  "slug": "gravel-land-saga",
+  "title": "GravelLand Saga",
+  "intro": "Nineteen days on gravel around southern Sweden in the summer of 2026: from Södertälje past Örebro, the Göta Canal and Lake Vänern, down the west coast to Skåne and back north along the east coast, with wild camps by the lakes.",
+  "start": "2026-06-27",
+  "end": "2026-07-15",
+  "km": 1991,
+  "up": 14580,
+  "days": 19,
+  "cover": {
+   "name": "d02-01",
+   "width": 1200,
+   "height": 1600,
+   "blur": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAADwBACdASoSABgAPu1gqE4ppSOiMBgMATAdiWMAuwAQ198m9UH0DrfBrwI2yZfr8AAA/ufC8O4jBYAoG7xbbcvtUMzh9OI4DFBsdATr/v6Ld9WyAWioeJ+OCJrgyW1DepOoSJdc9EkV/DspmthBjB4c2J2B9nBhS9CVUUJlBqTZ+wmM4OiZw799WW/cAWfOj9RlBqTm1ChNCs+W1IiQ1+Hrtk2kNi7MAAA="
+  }
+ }
+]
