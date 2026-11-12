@@ -563,7 +563,7 @@
 
 .photos {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
 
   figure {
@@ -586,7 +586,8 @@
     }
   }
 
-  img {
+  // Only the photos fade in from their blurred preview; the trip card's cover is shown as it is.
+  figure img {
     position: relative;
     width: 100%;
     aspect-ratio: 0.82;
@@ -619,34 +620,10 @@
   }
 }
 
-.trip {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 6px;
-  padding: 16px 18px 40px;
-  border-radius: 12px;
-  background: var(--deep);
-  color: var(--paper);
-
-  strong {
-    font-family: var(--display);
-    font-weight: 700;
-    font-size: 47px;
-    line-height: 1;
-    white-space: nowrap;
-  }
-
-  span {
-    font-size: 18px;
-  }
-
-  .crumble {
-    bottom: 0;
-    height: 30px;
-  }
+.all-trips {
+  display: inline-block;
+  margin-top: 16px;
+  font-weight: 500;
 }
 
 /* Contact */
@@ -731,8 +708,4 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  .trip {
-    grid-column: 1 / -1;
-    min-height: 130px;
-  }
 }

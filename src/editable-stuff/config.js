@@ -5,7 +5,6 @@ import lyricsApiSwagger from "./lyrics_scraper_api_swagger.webp";
 import caucasusCollage from "./interests_caucasus-collage.webp";
 import tourUniteStart from "./interests_tourunite-start.webp";
 import mosaicBusStop from "./interests_mosaic-skuill.webp";
-import caucasusZekari from "./interests_caucasus-zekari.webp";
 import majorityLogo from "../assets/img/MAJORITY.png";
 import epamLogo from "../assets/img/epam.png";
 import sbertechLogo from "../assets/img/sbertech.png";
@@ -145,12 +144,16 @@ Console.WriteLine(searchResult.LyricText);`,
 const interests = {
   show: true,
   heading: "Interests",
-  intro: {
-    before: "Nature and sport take up a big part of my life: bikepacking, rides and hikes on quiet unpaved trails through forests and mountains,",
-    after: ". Sometimes a camera comes along. In the evenings I play bass or ukulele, draw, or dive into fantasy and sci-fi books.",
-  },
-  strava: { label: "all of it on Strava", url: "https://www.strava.com/athletes/39721809" },
-  trip: { distance: "1,900 km", label: "across Sweden, summer 2026" },
+  // Text and links in order; a link inside the site is written without the base path ("bikepacking/").
+  intro: [
+    "Nature and sport take up a big part of my life: ",
+    { text: "bikepacking", href: "bikepacking/" },
+    ", rides and hikes on quiet unpaved trails through forests and mountains, ",
+    { text: "all of it on Strava", href: "https://www.strava.com/athletes/39721809" },
+    ". Sometimes a camera comes along. In the evenings I play bass or ukulele, draw, or dive into fantasy and sci-fi books.",
+  ],
+  allTrips: { text: "All bikepacking trips →", href: "bikepacking/" },
+  trip: { slug: "gravel-land-saga", label: "across Sweden, summer 2026" },
   images: [
     {
       img: caucasusCollage,
@@ -174,13 +177,6 @@ const interests = {
       alt: "In front of a Soviet mosaic bus stop",
       label: "Soviet mosaic bus stops, south of Russia, 2021",
       url: "https://tatevikmamian.com/zins",
-    },
-    {
-      img: caucasusZekari,
-      blur: photoPreviews["interests_caucasus-zekari.webp"],
-      alt: "On the Zekar Pass among mountains and forests",
-      label: "Zekar Pass on the Caucasus Crossing, 2023",
-      url: "https://www.strava.com/athletes/39721809/posts/24797729",
     },
   ],
 };
