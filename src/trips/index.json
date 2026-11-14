@@ -14,5 +14,37 @@
    "height": 1600,
    "blur": "data:image/webp;base64,UklGRrQAAABXRUJQVlA4IKgAAADwBACdASoSABgAPu1gqE4ppSOiMBgMATAdiWMAuwAQ198m9UH0DrfBrwI2yZfr8AAA/ufC8O4jBYAoG7xbbcvtUMzh9OI4DFBsdATr/v6Ld9WyAWioeJ+OCJrgyW1DepOoSJdc9EkV/DspmthBjB4c2J2B9nBhS9CVUUJlBqTZ+wmM4OiZw799WW/cAWfOj9RlBqTm1ChNCs+W1IiQ1+Hrtk2kNi7MAAA="
   }
+ },
+ {
+  "slug": "caucasus-crossing",
+  "title": "Caucasus Crossing",
+  "intro": "Thirteen days in the mountains of Armenia and Georgia in June 2023: a loop from Gyumri to Tbilisi, over the Didgori monument, Lake Paravani and the Zekari Pass to the Black Sea at Batumi, and back over the Goderdzi Pass and past Vardzia, through rain, heat and shepherd dogs.",
+  "start": "2023-06-17",
+  "end": "2023-06-30",
+  "km": 1164,
+  "up": 15069,
+  "days": 13,
+  "cover": {
+   "name": "cover",
+   "width": 600,
+   "height": 759,
+   "blur": "data:image/webp;base64,UklGRu4AAABXRUJQVlA4IOIAAAAwBQCdASoTABgAPu1sqlEppaOiqAqpMB2JQBdgAi8PTWI5vSt0WUrWOu3q42dhANGtgAD+5+LyxmzdxzSUfuxgZQNq88brGaz6gXlys7ZnazmLaCyk7Ags020MJoMJVTG8Ly9ssi3OqxcTGDVyiTje4/6fJlIOMzwy5dr7uMqL2y7PvVNYwUC+yzgAsfLMS3WlofrsulsAu3H8Wtlq6qezvD7JOQYvQKMnyhX6vwG7Xd2pqjIbwpwCJEvObiZq8OAfeySajcRguyZVkyFtdsTPS6Ek4VQ2gh8iQosuckQRg+YA"
+  }
+ },
+ {
+  "slug": "tour-unite",
+  "title": "Tour Unite",
+  "intro": "Fourteen days in August 2021 on the Sortavala to Konakovo segment of Tour Unite, a self-supported route of forest and field roads: from the lakes and rocks of Karelia through the Leningrad region and Veliky Novgorod to the Volga at Konakovo. Alone, slowly and steadily, with a tent.",
+  "start": "2021-08-15",
+  "end": "2021-08-28",
+  "km": 1421,
+  "up": 9228,
+  "days": 14,
+  "cover": {
+   "name": "d01-01",
+   "width": 1600,
+   "height": 1200,
+   "blur": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAABQBACdASoYABIAPu1osFAppaSiqAqpMB2JQBjPgkTaTuFfh0PqIKAXyNCwAP5odkVF8fc6gyw6lD3Jy08y0UuMVyBEBKKeN1nSjVOosKk3FszGGtqGdMpcqdJMTwpk7T/KHC7YgT7MnI9ZzAzbiVkNMhsNcbv/U9iLxKls6e+ShOoA"
+  }
  }
 ]

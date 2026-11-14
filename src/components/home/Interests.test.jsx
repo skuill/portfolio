@@ -12,6 +12,7 @@ vi.mock("../../utils/shuffle", () => ({ shuffle: vi.fn() }));
 const images = [
   { img: "a.webp", blur: "data:blur-a", alt: "Photo A", distance: "1,000 km", label: "Trip A", url: "https://example.com/a" },
   { img: "b.webp", blur: "data:blur-b", alt: "Photo B", label: "Trip B" },
+  { img: "c.webp", blur: "data:blur-c", alt: "Photo C", label: "Trip C", trip: trips[0].slug },
 ];
 const props = {
   heading: "Interests",
@@ -31,7 +32,7 @@ const shownFigure = () => Mosaic.mock.lastCall[0].figure;
 const pressedWords = () => within(screen.getByRole("list")).getAllByRole("button").filter((b) => b.getAttribute("aria-pressed") === "true").map((b) => b.textContent);
 const word = (name) => screen.getByRole("button", { name });
 
-test("shows the intro with its links, a word per picture and the trip with the photos in shuffled order", () => {
+test("shows the intro with its links, a word per picture and the trip with the photos in shuffled order; a photo of a trip opens its page", () => {
   const { container } = render(<Interests {...props} />);
 
   expect(container.querySelector(".interests p").textContent).toBe("Before trips, then on Strava. After.");
@@ -47,6 +48,7 @@ test("shows the intro with its links, a word per picture and the trip with the p
     }))
   ).toEqual([
     { alt: "", caption: `${new Intl.NumberFormat("en-GB").format(trips[0].km)} kmacross Sweden`, link: `${import.meta.env.BASE_URL}bikepacking/${trips[0].slug}/` },
+    { alt: "Photo C", caption: `${new Intl.NumberFormat("en-GB").format(trips[0].km)} kmTrip C`, link: `${import.meta.env.BASE_URL}bikepacking/${trips[0].slug}/` },
     { alt: "Photo B", caption: "Trip B", link: undefined },
     { alt: "Photo A", caption: "1,000 kmTrip A", link: "https://example.com/a" },
   ]);
@@ -82,12 +84,12 @@ test("each photo shows its blurred preview and fades in on its own once it has l
   const figures = () => [...container.querySelectorAll("figure")];
   const loaded = () => figures().map((figure) => figure.querySelector("img").classList.contains("loaded"));
 
-  expect(figures().map((figure) => figure.style.getPropertyValue("--blur"))).toEqual([`url(${trips[0].cover.blur})`, "url(data:blur-b)", "url(data:blur-a)"]);
-  expect(loaded()).toEqual([false, false, false]);
+  expect(figures().map((figure) => figure.style.getPropertyValue("--blur"))).toEqual([`url(${trips[0].cover.blur})`, "url(data:blur-c)", "url(data:blur-b)", "url(data:blur-a)"]);
+  expect(loaded()).toEqual([false, false, false, false]);
 
   fireEvent.load(screen.getByAltText("Photo A"));
 
-  expect(loaded()).toEqual([false, false, true]);
+  expect(loaded()).toEqual([false, false, false, true]);
 });
 
 test("keeps one shuffled order while the reader plays with the words", () => {

@@ -59,6 +59,8 @@ npx vitest         # watch mode
 npm run lint       # ESLint
 ```
 
+On Windows, run the tests from a path with an upper-case drive letter (`C:\...`): from `c:\...` Vitest loads jest-dom's `expect` a second time and every `toHaveAttribute`-style matcher fails with "Invalid Chai property".
+
 CI runs lint, tests and the build on every pull request; `master` accepts only pull requests with a green `build` check.
 
 ## Performance (Lighthouse)

@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
-import { DAY_COLORS } from "./mapStyle";
+import { DAY_COLORS, labelColor } from "./mapStyle";
+
+// A rest day has no distance; it still gets a segment wide enough for its number, as wide as a day of this many km.
+const REST_WIDTH_KM = 20;
 
 // The trip as one bar: a segment per day, as wide as its distance, in the colour of its track on the map.
 const DayBar = ({ days, selected, onSelect }) => {
@@ -26,9 +29,9 @@ const DayBar = ({ days, selected, onSelect }) => {
             type="button"
             aria-pressed={selected === day.number}
             aria-label={`Day ${day.number}`}
-            title={`Day ${day.number} · ${day.km} km`}
+            title={`Day ${day.number} · ${day.km ? `${day.km} km` : "rest day"}`}
             className={selected !== null && selected !== day.number ? "faded" : undefined}
-            style={{ flexGrow: day.km, "--km": day.km, background: DAY_COLORS[index % DAY_COLORS.length] }}
+            style={{ flexGrow: Math.max(day.km, REST_WIDTH_KM), "--km": Math.max(day.km, REST_WIDTH_KM), background: DAY_COLORS[index % DAY_COLORS.length], color: labelColor(DAY_COLORS[index % DAY_COLORS.length]) }}
             onClick={() => onSelect(day.number)}
           >
             <span>{day.number}</span>

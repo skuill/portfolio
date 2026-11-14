@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react";
 import L from "leaflet";
 import TripMap from "./TripMap";
-import { dayStyle, DAY_COLORS } from "./mapStyle";
+import { dayStyle, DAY_COLORS, labelColor } from "./mapStyle";
 import { testRoute, testTrip } from "./testTrip";
 
 // Leaflet needs a real browser layout; the test double records what the map was asked to draw.
@@ -87,4 +87,8 @@ test("day styles: all days equal, or the picked one bold and the rest faded", ()
   expect(dayStyle(9, null)).toEqual({ color: DAY_COLORS[1], weight: 4, opacity: 0.9 });
   expect(dayStyle(0, 1)).toEqual({ color: DAY_COLORS[0], weight: 6, opacity: 1 });
   expect(dayStyle(1, 1)).toEqual({ color: DAY_COLORS[1], weight: 3, opacity: 0.3 });
+});
+
+test("the number on a day's colour is white where it is readable and dark ink on the light colours", () => {
+  expect(DAY_COLORS.map(labelColor)).toEqual(["#22282f", "#fff", "#22282f", "#22282f", "#22282f", "#fff", "#22282f", "#fff"]);
 });

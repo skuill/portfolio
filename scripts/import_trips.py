@@ -64,6 +64,47 @@ def parse_diary(text, title_prefix):
     return days
 
 
+def parse_translation(text):
+    """diary.en.md: the English title and story of every day it lists, by day number."""
+    days = {}
+    for block in re.split(r"\n(?=## Day \d+ · )", text)[1:]:
+        head, _, story = block.partition("\n")
+        number, title = re.match(r"## Day (\d+) · (.+)", head).groups()
+        days[int(number)] = {"title": title.strip(), "story": [p.strip() for p in story.split("\n\n") if p.strip()]}
+    return days
+
+
+def parse_general(text, config):
+    """The text about the whole trip from the archive's README.md, everything after its first "---" line, as blocks:
+    {"h": heading}, {"p": paragraph}, {"ul": [items]} or {"ol": [items]}. Inline links and bold stay in markdown.
+    config: "drop" lists headings whose sections are left out, "replace" pairs of [text, replacement]."""
+    body = text.split("\n---\n", 1)[1]
+    for old, new in config.get("replace", []):
+        if old not in body:
+            sys.exit(f"Not found in the general text: {old}")
+        body = body.replace(old, new)
+    sections = re.split(r"\n(?=## )", "\n" + body.strip())
+    kept = [s.strip() for s in sections if s.strip() and s.strip().partition("\n")[0][3:].strip() not in config.get("drop", [])]
+    blocks = []
+    for group in "\n\n".join(kept).split("\n\n"):
+        for line in group.strip().split("\n"):
+            item = re.match(r"(- |\d+\. )(.*)", line)
+            kind = ("ol" if item.group(1)[0].isdigit() else "ul") if item else None
+            if line.startswith("## "):
+                blocks.append({"h": line[3:].strip()})
+            elif kind and blocks and kind in blocks[-1] and blocks[-1].get("open"):
+                blocks[-1][kind].append(item.group(2).strip())
+            elif kind:
+                blocks.append({kind: [item.group(2).strip()], "open": True})
+            elif blocks and "p" in blocks[-1] and blocks[-1].get("open"):
+                blocks[-1]["p"] += " " + line.strip()
+            else:
+                blocks.append({"p": line.strip(), "open": True})
+        for block in blocks:
+            block.pop("open", None)
+    return {"title": config["title"], "blocks": blocks}
+
+
 def picked(selection, day_folder, all_photos):
     chosen = selection.get("days", {}).get(day_folder.name)
     if chosen:
@@ -199,7 +240,11 @@ def main():
     source_root = archive()
     trips = json.loads((ROOT / "scripts" / "trips.json").read_text(encoding="utf-8"))
     template = (ROOT / "scripts" / "trip-page.html").read_text(encoding="utf-8")
+    # npm run trips -- <slug> ...: only these trips; the list of all trips is written again either way.
+    only = set(sys.argv[1:])
     for config in trips:
+        if only and config["slug"] not in only:
+            continue
         source = source_root / config["archive"]
         target = ROOT / "src" / "trips" / config["slug"]
         (target / "photos").mkdir(parents=True, exist_ok=True)
@@ -209,6 +254,11 @@ def main():
         old_sources = json.loads(sources_file.read_text(encoding="utf-8")) if sources_file.exists() else {}
         sources = {}
         days = parse_diary((source / "diary.md").read_text(encoding="utf-8"), config.get("dayTitlePrefix"))
+        # A diary written in another language has its English days in diary.en.md: they replace the title and the story.
+        english = source / "diary.en.md"
+        if english.exists():
+            for number, text in parse_translation(english.read_text(encoding="utf-8")).items():
+                days[number - 1].update(text)
         selection_file = source / "selection.json"
         selection = json.loads(selection_file.read_text(encoding="utf-8")) if selection_file.exists() else {}
         day_folders = sorted((source / "photos").glob("day-*"))
@@ -224,6 +274,13 @@ def main():
                 written.update({f"{name}.webp", f"{name}-s.webp"})
                 if selection.get("cover") == f"{folder.name}/{photo}":
                     cover = name
+        # A cover that is not one of the day photos, such as the picture already shown on the main page.
+        cover_photo = None
+        if config.get("coverImage"):
+            cover_photo = save_photo(ROOT / config["coverImage"], target / "photos", "cover", old_sources.get("cover") == config["coverImage"])
+            cover = "cover"
+            sources["cover"] = config["coverImage"]
+            written.update({"cover.webp", "cover-s.webp"})
         sources_file.write_text(json.dumps(sources, indent=1) + "\n", encoding="utf-8")
         for stale in (target / "photos").glob("*.webp"):
             if stale.name not in written:
@@ -249,8 +306,13 @@ def main():
             "km": math.floor(sum(d["km"] for d in days) + 0.5),
             "up": sum(d["up"] for d in days),
             "cover": cover or next(d["photos"][0]["name"] for d in days if d["photos"]),
+            "links": config.get("links", []),
             "days": days,
         }
+        if cover_photo:
+            data["coverPhoto"] = cover_photo
+        if config.get("general"):
+            data["general"] = parse_general((source / "README.md").read_text(encoding="utf-8"), config["general"])
         shutil.copyfile(target / "photos" / f"{data['cover']}-s.webp", target / "cover.webp")
         (target / "trip.json").write_text(json.dumps(data, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
         (target / "route.json").write_text(json.dumps(route, separators=(",", ":")) + "\n", encoding="utf-8")
@@ -269,7 +331,7 @@ def write_index():
     entries = []
     for file in sorted((ROOT / "src" / "trips").glob("*/trip.json")):
         trip = json.loads(file.read_text(encoding="utf-8"))
-        cover = next(p for d in trip["days"] for p in d["photos"] if p["name"] == trip["cover"])
+        cover = trip.get("coverPhoto") or next(p for d in trip["days"] for p in d["photos"] if p["name"] == trip["cover"])
         entries.append({k: trip[k] for k in ("slug", "title", "intro", "start", "end", "km", "up")} | {"days": len(trip["days"]), "cover": cover})
     entries.sort(key=lambda e: e["start"], reverse=True)
     (ROOT / "src" / "trips" / "index.json").write_text(json.dumps(entries, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
