@@ -194,3 +194,51 @@ test("the strip of the full-screen view keeps the current photo in its middle", 
 
   expect(strip.scrollTo).toHaveBeenLastCalledWith({ left: 280, behavior: "smooth" });
 });
+
+const reportTrip = {
+  ...testTrip,
+  links: [{ text: "The original, in Russian", href: "https://example.com/original" }],
+  general: {
+    title: "Trip report",
+    blocks: [
+      { h: "The route" },
+      { p: "From [Gyumri](https://example.com/gyumri) to **Batumi** and back." },
+      { ol: ["Armenia", "Georgia"] },
+      { ul: ["Rain", "Dogs"] },
+    ],
+  },
+};
+const report = () => {
+  const article = document.querySelector(".story .general");
+  return article && [...article.children].map((node) => [node.tagName, node.innerHTML]);
+};
+const REPORT = [
+  ["H3", "Trip report"],
+  ["H4", "The route"],
+  ["P", 'From <a href="https://example.com/gyumri" target="_blank" rel="noopener noreferrer">Gyumri</a> to <b>Batumi</b> and back.'],
+  ["OL", "<li>Armenia</li><li>Georgia</li>"],
+  ["UL", "<li>Rain</li><li>Dogs</li>"],
+];
+
+test("a trip with a report links to the original and shows the report instead of the intro and under days without a story", async () => {
+  loadTrip.mockResolvedValue({ trip: reportTrip, route: testRoute });
+  await renderTrip();
+
+  expect([...document.querySelectorAll(".trip-links a")].map((a) => [a.textContent, a.getAttribute("href"), a.getAttribute("target")])).toEqual([
+    ["The original, in Russian ↗", "https://example.com/original", "_blank"],
+  ]);
+  expect(report()).toEqual(REPORT);
+  expect(story()).toEqual(["From Gyumri to Batumi and back."]);
+
+  fireEvent.click(screen.getByRole("button", { name: "Day 1" }));
+  expect(report()).toBeNull();
+  expect(story()).toEqual(["Day one, first paragraph.", "Day one, second paragraph."]);
+
+  fireEvent.click(screen.getByRole("button", { name: "Day 3" }));
+  expect(report()).toEqual(REPORT);
+});
+
+test("a trip without links shows no line for them", async () => {
+  await renderTrip();
+  expect(document.querySelector(".trip-links")).toBeNull();
+});

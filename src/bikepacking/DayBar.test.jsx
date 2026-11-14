@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import DayBar from "./DayBar";
-import { DAY_COLORS } from "./mapStyle";
+import { DAY_COLORS, labelColor } from "./mapStyle";
 import { testTrip } from "./testTrip";
 
 const segments = () =>
@@ -9,6 +9,7 @@ const segments = () =>
     title: b.getAttribute("title"),
     grow: b.style.flexGrow,
     color: b.style.background,
+    text: b.style.color,
     pressed: b.getAttribute("aria-pressed"),
     faded: b.classList.contains("faded"),
   }));
@@ -23,11 +24,20 @@ test("every day is a segment as wide as its distance, in its map colour", () => 
       title: `Day ${day.number} · ${day.km} km`,
       grow: String(day.km),
       color: rgb(DAY_COLORS[index]),
+      text: rgb(labelColor(DAY_COLORS[index]).replace("#fff", "#ffffff")),
       pressed: "false",
       faded: false,
     }))
   );
   expect(screen.getByRole("button", { name: "All" })).toHaveAttribute("aria-pressed", "true");
+});
+
+test("a rest day still gets a segment wide enough for its number", () => {
+  const rest = { ...testTrip.days[2], number: 4, km: 0 };
+  render(<DayBar days={[...testTrip.days, rest]} selected={null} onSelect={vi.fn()} />);
+
+  expect(segments()[3]).toMatchObject({ title: "Day 4 · rest day", grow: "20" });
+  expect(document.querySelectorAll(".day-segments button")[3].style.getPropertyValue("--km")).toBe("20");
 });
 
 test("the chosen day stands out and the others fade", () => {

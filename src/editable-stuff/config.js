@@ -154,22 +154,21 @@ const interests = {
   ],
   allTrips: { text: "All bikepacking trips →", href: "bikepacking/" },
   trip: { slug: "gravel-land-saga", label: "across Sweden, summer 2026" },
+  // An image with `trip` links to that trip's page and takes its distance from the trip data.
   images: [
     {
       img: caucasusCollage,
       blur: photoPreviews["interests_caucasus-collage.webp"],
       alt: "A drawing of a bike trip across the Caucasus",
-      distance: "1,164 km",
       label: "Caucasus Crossing, Armenia and Georgia, 2023",
-      url: "https://www.strava.com/athletes/39721809/posts/24797729",
+      trip: "caucasus-crossing",
     },
     {
       img: tourUniteStart,
       blur: photoPreviews["interests_tourunite-start.webp"],
       alt: "At the start of the Tour Unite bikepacking route",
-      distance: "1,333 km",
       label: "Tour Unite, Sortavala to Konakovo, 2021",
-      url: "https://www.tourunite.info/2021/09/tui-itt21-kvashin.html",
+      trip: "tour-unite",
     },
     {
       img: mosaicBusStop,

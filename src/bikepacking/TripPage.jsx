@@ -7,12 +7,15 @@ import DayBar from "./DayBar";
 import { dayNumbers, tripNumbers } from "./numbers";
 import Photo from "./Photo";
 import Lightbox from "./Lightbox";
+import { GeneralText } from "./RichText";
 import useDayInAddress from "./useDayInAddress";
 import { loadTrip, homeUrl, pageUrl } from "./trips";
 import { dateRange, formatNumber, shortDate } from "./format";
 
 // One trip: the map, a strip of days, the photos of the chosen day and its story. With no day chosen:
 // the first photo of every day (a click opens that day) and the intro of the trip.
+// A trip with a text about the whole of it (a report, an interview) shows that text instead of the intro,
+// and under every day that has no story of its own.
 const TripPage = ({ slug }) => {
   const [data, setData] = useState(null);
   const [selected, choose] = useDayInAddress();
@@ -45,6 +48,15 @@ const TripPage = ({ slug }) => {
           {dateRange(trip.start, trip.end)} · {trip.days.length} days · {formatNumber(trip.km)} km · ↑ {formatNumber(trip.up)} m
         </p>
         <p className="trip-intro">{trip.intro}</p>
+        {trip.links?.length > 0 && (
+          <p className="trip-links">
+            {trip.links.map((link) => (
+              <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer">
+                {link.text} ↗
+              </a>
+            ))}
+          </p>
+        )}
 
         <TripMap route={route} days={trip.days} selected={day ? day.number : null} onSelect={choose} />
 
@@ -85,9 +97,13 @@ const TripPage = ({ slug }) => {
           </div>
 
           <div className="story">
-            {(day ? day.story : [trip.intro]).map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
+            {day?.story.length ? (
+              day.story.map((paragraph) => <p key={paragraph}>{paragraph}</p>)
+            ) : trip.general ? (
+              <GeneralText general={trip.general} />
+            ) : (
+              !day && <p>{trip.intro}</p>
+            )}
           </div>
 
           {day && (

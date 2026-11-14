@@ -6,6 +6,8 @@
   border-radius: 50%;
   box-shadow: 0 0 0 1.5px var(--ring);
   cursor: pointer;
+  // No square flash on a tap on Android: the picture itself answers the tap.
+  -webkit-tap-highlight-color: transparent;
 
   &:focus-visible {
     outline: 2px solid var(--link);

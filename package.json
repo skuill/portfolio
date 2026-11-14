@@ -2,7 +2,7 @@
   "name": "developers-portfolio",
   "description": "A personal static website/portfolio hosted with GitHub Pages.",
   "homepage": "https://skuill.com/portfolio/",
-  "version": "6.1.0",
+  "version": "6.2.0",
   "type": "module",
   "dependencies": {
     "@fontsource/big-shoulders-display": "^5.3.0",

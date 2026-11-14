@@ -32,3 +32,10 @@ test("the whole trip adds up its days", () => {
     ["Highest point", "120 m"],
   ]);
 });
+
+test("a rest day only says so, and the average per day counts the riding days", () => {
+  const rest = { number: 4, date: "2026-06-30", title: "Rest", km: 0, up: 0, moving: "0:00", story: [], photos: [] };
+
+  expect(dayNumbers(rest)).toEqual([["Distance", "Rest day"]]);
+  expect(tripNumbers({ ...testTrip, days: [...testTrip.days, rest] })).toContainEqual(["Per day", "83 km"]);
+});

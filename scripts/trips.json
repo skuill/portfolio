@@ -1,11 +1,44 @@
 [
-  {
-    "slug": "gravel-land-saga",
-    "archive": "2026-06-27_GravelLand-Saga",
-    "title": "GravelLand Saga",
-    "dayTitlePrefix": "^GravelLand Saga Day \\d+\\.?\\s*",
-    "intro": "Nineteen days on gravel around southern Sweden in the summer of 2026: from Södertälje past Örebro, the Göta Canal and Lake Vänern, down the west coast to Skåne and back north along the east coast, with wild camps by the lakes.",
-    "trimStartKm": 0,
-    "trimEndKm": 0
-  }
+ {
+  "slug": "gravel-land-saga",
+  "archive": "2026-06-27_GravelLand-Saga",
+  "title": "GravelLand Saga",
+  "dayTitlePrefix": "^GravelLand Saga Day \\d+\\.?\\s*",
+  "intro": "Nineteen days on gravel around southern Sweden in the summer of 2026: from Södertälje past Örebro, the Göta Canal and Lake Vänern, down the west coast to Skåne and back north along the east coast, with wild camps by the lakes.",
+  "trimStartKm": 0,
+  "trimEndKm": 0
+ },
+ {
+  "slug": "caucasus-crossing",
+  "archive": "2023-06-17_Caucasus-Crossing",
+  "title": "Caucasus Crossing",
+  "coverImage": "src/editable-stuff/interests_caucasus-collage.webp",
+  "dayTitlePrefix": "",
+  "intro": "Thirteen days in the mountains of Armenia and Georgia in June 2023: a loop from Gyumri to Tbilisi, over the Didgori monument, Lake Paravani and the Zekari Pass to the Black Sea at Batumi, and back over the Goderdzi Pass and past Vardzia, through rain, heat and shepherd dogs.",
+  "links": [{ "text": "The original report on Strava, in Russian", "href": "https://www.strava.com/athletes/39721809/posts/24797729" }],
+  "general": {
+   "title": "Trip report",
+   "drop": ["Photos from the post"],
+   "replace": [
+    ["- Weight before / after the trip: 85.5 / 83.8 kg.\n", ""],
+    ["Tata gave me a bouquet of flowers and a painting she had made about my trip.", "I was met with a bouquet of flowers and a painting about my trip."]
+   ]
+  },
+  "trimStartKm": 1.5,
+  "trimEndKm": 1.5
+ },
+ {
+  "slug": "tour-unite",
+  "archive": "2021-08-15_Tour-Unite",
+  "title": "Tour Unite",
+  "dayTitlePrefix": "^TU\\. \\d+ день\\.?\\s*",
+  "intro": "Fourteen days in August 2021 on the Sortavala to Konakovo segment of Tour Unite, a self-supported route of forest and field roads: from the lakes and rocks of Karelia through the Leningrad region and Veliky Novgorod to the Volga at Konakovo. Alone, slowly and steadily, with a tent.",
+  "links": [{ "text": "The original interview on tourunite.info, in Russian", "href": "https://www.tourunite.info/2021/09/tui-itt21-kvashin.html" }],
+  "general": {
+   "title": "Interview after the ride",
+   "drop": ["Which town do you represent?"]
+  },
+  "trimStartKm": 0,
+  "trimEndKm": 0
+ }
 ]

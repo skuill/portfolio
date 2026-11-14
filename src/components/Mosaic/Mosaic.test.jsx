@@ -29,12 +29,12 @@ test("starts the engine on its own button and canvas with the given settings", (
   });
 });
 
-test("passes the pointer to the engine", () => {
+test("passes the mouse to the engine", () => {
   render(<Mosaic density={1} />);
 
-  fireEvent.mouseEnter(button());
+  fireEvent.pointerEnter(button(), { pointerType: "mouse" });
   fireEvent.click(button());
-  fireEvent.mouseLeave(button());
+  fireEvent.pointerLeave(button(), { pointerType: "mouse" });
 
   expect(engine.pointerEnter).toHaveBeenCalledTimes(1);
   expect(engine.click).toHaveBeenCalledTimes(1);
@@ -65,4 +65,16 @@ test("destroys the engine when it leaves the page", () => {
   unmount();
 
   expect(engine.destroy).toHaveBeenCalledTimes(1);
+});
+
+test("a finger does not hover: a tap is only a click, so the mosaic keeps changing by itself", () => {
+  render(<Mosaic density={1} auto />);
+
+  fireEvent.pointerEnter(button(), { pointerType: "touch" });
+  fireEvent.click(button());
+  fireEvent.pointerLeave(button(), { pointerType: "touch" });
+
+  expect(engine.pointerEnter).not.toHaveBeenCalled();
+  expect(engine.pointerLeave).not.toHaveBeenCalled();
+  expect(engine.click).toHaveBeenCalledTimes(1);
 });

@@ -9,18 +9,20 @@ const covers = import.meta.glob("../../trips/*/cover.webp", { eager: true, query
 
 const FIRST_FIGURE = 1;
 
-// The featured trip as a photo like the others: its cover, its exact distance from the trip data, a link to its page.
-const tripPhoto = ({ slug, label }) => {
-  const trip = trips.find((t) => t.slug === slug);
-  return {
-    img: covers[`../../trips/${slug}/cover.webp`],
-    blur: trip.cover.blur,
-    alt: "",
-    distance: `${new Intl.NumberFormat("en-GB").format(trip.km)} km`,
-    label,
-    url: `${import.meta.env.BASE_URL}bikepacking/${slug}/`,
-  };
-};
+// The exact distance of a trip from its data and a link to its page.
+const tripLink = (slug) => ({
+  distance: `${new Intl.NumberFormat("en-GB").format(trips.find((t) => t.slug === slug).km)} km`,
+  url: `${import.meta.env.BASE_URL}bikepacking/${slug}/`,
+});
+
+// The featured trip as a photo like the others: its cover from the trip data.
+const tripPhoto = ({ slug, label }) => ({
+  img: covers[`../../trips/${slug}/cover.webp`],
+  blur: trips.find((t) => t.slug === slug).cover.blur,
+  alt: "",
+  label,
+  ...tripLink(slug),
+});
 
 const Photo = ({ photo }) => {
   const [loaded, setLoaded] = useState(false);
@@ -42,7 +44,7 @@ const href = (link) => (/^https?:/.test(link) ? link : `${import.meta.env.BASE_U
 const Interests = ({ heading, intro, allTrips, trip, images }) => {
   const [figure, setFigure] = useState(FIRST_FIGURE);
   // A new order on every visit.
-  const [photos] = useState(() => shuffle(images));
+  const [photos] = useState(() => shuffle(images).map((image) => (image.trip ? { ...image, ...tripLink(image.trip) } : image)));
 
   return (
     <Section id="interests" tall crumble>
